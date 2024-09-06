@@ -1,0 +1,22 @@
+---
+import environment from '../environment';
+import Context from './context.astro';
+---
+
+<div><Context
+  identity="search"
+  ALGOLIA_APP_ID={environment.ALGOLIA_APP_ID}
+  ALGOLIA_INDEX_NAME={environment.ALGOLIA_INDEX_NAME}
+  ALGOLIA_SEARCH_API_KEY={environment.ALGOLIA_SEARCH_API_KEY}
+/>
+<form id="search-box"></form>
+<div id="refinement-list"></div>
+<output id="output-box"></output>
+<script src="./search.ts"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.5.0/themes/satellite-min.css"
+  integrity="sha256-woeV7a4SRDsjDc395qjBJ4+ZhDdFn8AqswN1rlTO64E="
+  crossorigin="anonymous"
+/>
+</div>

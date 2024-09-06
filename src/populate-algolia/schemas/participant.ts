@@ -1,6 +1,6 @@
 import * as v from 'valibot';
 
-import { nonEmptyString } from './non-empty-string.js';
+import { nonEmptyString } from '../../utils/non-empty-string.ts';
 
 export const participantSchema = v.pipe(
   v.object({

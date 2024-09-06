@@ -1,7 +1,7 @@
 import * as v from 'valibot';
 
 import { actTypeSchema } from './act_type.js';
-import { nonEmptyString } from './non-empty-string.js';
+import { nonEmptyString } from '../../utils/non-empty-string.ts';
 import { participantSchema } from './participant.js';
 
 export const actSchema = v.object({
