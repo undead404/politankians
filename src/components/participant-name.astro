@@ -1,0 +1,10 @@
+---
+import type { Participant } from '../schemas/participant'
+import getParticipantFullName from '../utils/get-participant-full-name';
+
+export interface Props {
+    participant: Participant;
+}
+const { participant } = Astro.props;
+---
+<span lang="ru">{getParticipantFullName(participant)}</span>

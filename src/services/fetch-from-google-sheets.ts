@@ -2,8 +2,7 @@ import { finished } from 'stream/promises';
 
 import { parse } from 'csv-parse';
 import * as v from 'valibot';
-
-import { rowSchema, type Row } from './schemas/row.js';
+import { rowSchema, type Row } from '../schemas/row.js';
 
 export default async function fetchFromGoogleSheets(
   url: string,

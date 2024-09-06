@@ -3,20 +3,102 @@ import environment from '../environment';
 import Context from './context.astro';
 ---
 
-<div><Context
-  identity="search"
-  ALGOLIA_APP_ID={environment.ALGOLIA_APP_ID}
-  ALGOLIA_INDEX_NAME={environment.ALGOLIA_INDEX_NAME}
-  ALGOLIA_SEARCH_API_KEY={environment.ALGOLIA_SEARCH_API_KEY}
-/>
-<form id="search-box"></form>
-<div id="refinement-list"></div>
-<output id="output-box"></output>
-<script src="./search.ts"></script>
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.5.0/themes/satellite-min.css"
-  integrity="sha256-woeV7a4SRDsjDc395qjBJ4+ZhDdFn8AqswN1rlTO64E="
-  crossorigin="anonymous"
-/>
+<div>
+  <Context
+    identity="search"
+    ALGOLIA_APP_ID={environment.ALGOLIA_APP_ID}
+    ALGOLIA_INDEX_NAME={environment.ALGOLIA_INDEX_NAME}
+    ALGOLIA_SEARCH_API_KEY={environment.ALGOLIA_SEARCH_API_KEY}
+  />
+  <form id="search-box"></form>
+  <div id="refinement-list"></div>
+  <output id="output-box"></output>
+  <script src="./search.ts"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.5.0/themes/satellite-min.css"
+    integrity="sha256-woeV7a4SRDsjDc395qjBJ4+ZhDdFn8AqswN1rlTO64E="
+    crossorigin="anonymous"
+  />
+  
+  <style is:global>
+    #search-box {
+      margin-bottom: 1rem;
+    }
+    .ais-SearchBox-form {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .ais-SearchBox-input {
+      width: 100%;
+      max-width: 600px;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .ais-SearchBox-submit {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin-left: 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .ais-SearchBox-submit:hover {
+      background-color: #45a049;
+    }
+    #refinement-list {
+      margin-bottom: 1rem;
+    }
+    .ais-RefinementList-item {
+      margin-bottom: 0.5rem;
+    }
+    .ais-RefinementList-label {
+      display: flex;
+      align-items: center;
+    }
+    .ais-RefinementList-checkbox {
+      margin-right: 0.5rem;
+    }
+    #output-box {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 600px) {
+      #output-box {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (min-width: 900px) {
+      #output-box {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+    .ais-Hits-item {
+      background-color: white;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .ais-Hits-item a {
+      text-decoration: none;
+      color: #333;
+    }
+    .ais-Hits-item a:hover {
+      text-decoration: underline;
+    }
+    .ais-Hits-item h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.2rem;
+      color: #4CAF50;
+    }
+    .ais-Hits-item p {
+      margin: 0;
+      color: #555;
+    }
+  </style>
 </div>

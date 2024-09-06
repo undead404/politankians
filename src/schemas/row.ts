@@ -1,8 +1,8 @@
 import { parse } from 'date-fns';
 import * as v from 'valibot';
 
-import { nonEmptyString } from './non-empty-string.js';
 import { actTypeSchema } from './act_type.js';
+import { nonEmptyString } from './non-empty-string.js';
 
 const refDate = new Date(0);
 

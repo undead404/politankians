@@ -1,4 +1,4 @@
-import type { Participant } from './schemas/participant.js';
+import type { Participant } from '../schemas/participant.js';
 
 export default function getParticipantFullName(participant: Participant) {
   const name = [

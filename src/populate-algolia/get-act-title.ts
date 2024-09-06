@@ -1,6 +1,6 @@
-import type { Act } from './schemas/act.js';
-import getParticipantFullName from './get-participant-full-name.js';
-import formatDate from './format-date.ts';
+import getParticipantFullName from '../utils/get-participant-full-name.js';
+import formatDate from './format-date.js';
+import type { Act } from '../schemas/act.js';
 
 function getBirthTitle(act: Act) {
   const baptized =

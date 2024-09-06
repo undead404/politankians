@@ -3,8 +3,8 @@ import instantsearch from 'instantsearch.js';
 import { searchBox, hits, refinementList } from 'instantsearch.js/es/widgets';
 import * as v from 'valibot';
 
-import { nonEmptyString } from '../utils/non-empty-string.ts';
-import getContext from '../utils/get-context.ts';
+import getContext from '../utils/get-context.js';
+import { nonEmptyString } from '../schemas/non-empty-string.js';
 
 const contextSchema = v.object({
   ALGOLIA_APP_ID: nonEmptyString,
@@ -30,10 +30,13 @@ search.addWidgets([
   hits({
     container: '#output-box',
     templates: {
-      item(hit: unknown, { html, components }) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      item(hit: { objectID: any }, { html, components }: any) {
         return html`
-          <h2>${components.Highlight({ hit, attribute: 'title' })}</h2>
-          <p>${components.Snippet({ hit, attribute: 'description' })}</p>
+          <a href="/event/${hit.objectID}"
+            ><h2>${components.Highlight({ hit, attribute: 'title' })}</h2>
+            <p>${components.Snippet({ hit, attribute: 'description' })}</p>
+          </a>
         `;
       },
     },

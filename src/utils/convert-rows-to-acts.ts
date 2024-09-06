@@ -1,11 +1,11 @@
 import * as v from 'valibot';
 
-import getActId from './get-act-id.js';
-import getActTitle from './get-act-title.js';
+import getActId from '../populate-algolia/get-act-id.js';
+import getActTitle from '../populate-algolia/get-act-title.js';
 import getParticipantFullName from './get-participant-full-name.js';
-import { actSchema, type Act } from './schemas/act.js';
-import type { Participant } from './schemas/participant.js';
-import type { Row } from './schemas/row.js';
+import type { Row } from '../schemas/row.js';
+import { actSchema, type Act } from '../schemas/act.js';
+import type { Participant } from '../schemas/participant.js';
 
 export default function convertRowsToActs(rows: Row[]) {
   const actRegister: Record<string, Act> = {};

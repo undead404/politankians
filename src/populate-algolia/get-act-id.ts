@@ -1,4 +1,4 @@
-import type { Row } from './schemas/row.js';
+import type { Row } from '../schemas/row.js';
 
 const typeKeyMapping: Record<Row['act_type'], string> = {
   відспівування: 'ml',
