@@ -1,5 +1,6 @@
-import * as v from 'valibot';
-export const actTypeSchema = v.picklist([
+import { z } from 'zod';
+
+export const actTypeSchema = z.enum([
   'відспівування',
   'миропомазання',
   'народження',

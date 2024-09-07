@@ -1,6 +1,6 @@
-import getParticipantFullName from '../utils/get-participant-full-name.js';
-import formatDate from './format-date.js';
 import type { Act } from '../schemas/act.js';
+import getParticipantFullName from '../utils/get-participant-full-name.js';
+import formatDate from '../utils/format-date.js';
 
 function getBirthTitle(act: Act) {
   const baptized =
@@ -49,5 +49,6 @@ export default function getActTitle(act: Act) {
   if (act.act_type === 'відспівування' || act.act_type === 'смерть') {
     return getDeathTitle(act);
   }
+  console.log(act);
   throw new Error(`Unknown act type: ${act.act_type}`);
 }

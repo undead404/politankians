@@ -1,20 +1,25 @@
-import * as v from 'valibot';
+import { z } from 'zod';
 
 import { nonEmptyString } from './non-empty-string.js';
 
-export const participantSchema = v.pipe(
-  v.object({
-    age: v.nullable(v.string()),
-    given_name: v.string(),
-    middle_name: v.string(),
-    note: v.nullable(v.string()),
+export const participantSchema = z
+  .object({
+    age: z.nullable(z.string()),
+    given_name: z.string(),
+    middle_name: z.string(),
+    note: z.nullable(z.string()),
     role: nonEmptyString,
-    surname: v.string(),
-  }),
+    surname: z.string(),
+  })
   // At least a name or a surname must be present
-  v.check((input) => {
-    return !!(input.given_name || input.middle_name || input.surname);
-  }, 'A participant must have at least either given name or middle name or surname'),
-);
+  .refine(
+    (input) => {
+      return !!(input.given_name || input.middle_name || input.surname);
+    },
+    {
+      message:
+        'A participant must have at least either given name or middle name or surname',
+    },
+  );
 
-export type Participant = v.InferOutput<typeof participantSchema>;
+export type Participant = z.infer<typeof participantSchema>;

@@ -1,12 +1,12 @@
 import { liteClient } from 'algoliasearch/lite';
 import instantsearch from 'instantsearch.js';
 import { searchBox, hits, refinementList } from 'instantsearch.js/es/widgets';
-import * as v from 'valibot';
+import { z } from 'zod';
 
 import getContext from '../utils/get-context.js';
 import { nonEmptyString } from '../schemas/non-empty-string.js';
 
-const contextSchema = v.object({
+const contextSchema = z.object({
   ALGOLIA_APP_ID: nonEmptyString,
   ALGOLIA_INDEX_NAME: nonEmptyString,
   ALGOLIA_SEARCH_API_KEY: nonEmptyString,
@@ -16,6 +16,7 @@ const context = getContext('search', contextSchema);
 
 const search = instantsearch({
   indexName: context.ALGOLIA_INDEX_NAME,
+  routing: true,
   searchClient: liteClient(
     context.ALGOLIA_APP_ID,
     context.ALGOLIA_SEARCH_API_KEY,
@@ -24,6 +25,7 @@ const search = instantsearch({
 search.addWidgets([
   searchBox({
     container: '#search-box',
+    showLoading: true,
     showSubmit: true,
   }),
 

@@ -1,53 +1,50 @@
-import { parse } from 'date-fns';
-import * as v from 'valibot';
+import { z } from 'zod';
 
 import { actTypeSchema } from './act_type.js';
 import { nonEmptyString } from './non-empty-string.js';
+import _ from 'lodash';
 
-const refDate = new Date(0);
+export const rowSchema = z
+  .object({
+    Акт: nonEmptyString.transform((input) => Number.parseInt(input)),
 
-export const rowSchema = v.pipe(
-  v.object({
-    Акт: v.pipe(
-      nonEmptyString,
-      v.transform((input) => Number.parseInt(input)),
-    ),
     Аркуш: nonEmptyString,
     Архів: nonEmptyString,
-    Вік: v.nullable(v.string()),
-    'Дата події': v.pipe(
-      nonEmptyString,
-      v.transform((input) => parse(input, 'dd.MM.yyyy', refDate)),
-    ),
-    "Ім'я": v.string(),
+    Вік: z.nullable(z.string()),
+    'Дата події': nonEmptyString.transform((input) => {
+      const [day, month, year] = input.split('.');
+      return [year, month, day]
+        .map((part) => _.padStart(part, 2, '0'))
+        .join('-');
+    }),
+    "Ім'я": z.string(),
     Опис: nonEmptyString,
-    'По-батькові': v.string(),
+    'По-батькові': z.string(),
     'Поселення храму': nonEmptyString,
     'Пошт. Індекс': nonEmptyString,
-    Прізвище: v.string(),
-    Примітка: v.nullable(v.string()),
+    Прізвище: z.string(),
+    Примітка: z.nullable(z.string()),
     роль: nonEmptyString,
     Справа: nonEmptyString,
     'Тип акту': actTypeSchema,
     Фонд: nonEmptyString,
-  }),
-  v.transform((input) => ({
+  })
+  .transform((input) => ({
     act: input['Акт'],
     act_type: input['Тип акту'],
-    age: input['Вік'],
+    age: input['Вік'] || null,
     archive: input['Архів'],
     date: input['Дата події'],
     fonds: input['Фонд'],
     given_name: input["Ім'я"],
     item: input['Справа'],
     middle_name: input['По-батькові'],
-    note: input['Примітка'],
+    note: input['Примітка'] || null,
     page: input['Аркуш'],
     role: input['роль'],
     series: input['Опис'],
     settlement: input['Поселення храму'],
     surname: input['Прізвище'],
-  })),
-);
+  }));
 
-export type Row = v.InferOutput<typeof rowSchema>;
+export type Row = z.infer<typeof rowSchema>;

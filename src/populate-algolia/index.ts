@@ -1,15 +1,11 @@
-import { readFile } from 'fs/promises';
-
-import processSpreadsheets from './process-spreadsheets.js';
+import getArchiveItems from './get-archive-items.js';
+import convertDocumentsToActs from '../utils/convert-documents-to-acts.js';
+import populateIndex from './populate-index.js';
 
 try {
-  // Read the URLs from the file
-  const data = await readFile('./spreadsheets.txt', 'utf8');
-  // Split the URLs into an array
-  const urls = data.split('\n').filter((url) => !!url);
-
-  // Process the spreadsheets
-  await processSpreadsheets(urls);
+  const archiveItems = await getArchiveItems();
+  const acts = convertDocumentsToActs(archiveItems);
+  await populateIndex(acts);
 } catch (error) {
   console.error(error);
   process.exit(1);

@@ -1,3 +1,3 @@
-import * as v from 'valibot';
+import { z } from 'zod';
 
-export const nonEmptyString = v.pipe(v.string(), v.nonEmpty());
+export const nonEmptyString = z.string().min(1);

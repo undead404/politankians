@@ -1,8 +1,7 @@
 <header>
     <style>
-      
       header {
-        background-image: url('/DSC04737.JPG'); /* Add your image path */
+        background-image: url('/DSC04737.JPG');
         background-size: cover;
         background-position: center;
         color: white;
@@ -23,6 +22,9 @@
       nav a:hover {
         text-decoration: underline;
       }
+      .home-link {
+        font-weight: bold;
+      }
       @media (max-width: 768px) {
         header {
           flex-direction: column;
@@ -32,9 +34,10 @@
           margin-bottom: 1rem;
         }
       }
-      </style>
+    </style>
     <div class="site-title">Політанчани</div>
     <nav>
-      <a href='/'>Перейти на головну</a>
+      <a href='/' class="home-link">Перейти на головну</a>
+      <a href="/document">Список проіндексованих архівних справ</a>
     </nav>
   </header>

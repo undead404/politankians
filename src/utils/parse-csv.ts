@@ -1,14 +1,8 @@
 import { finished } from 'stream/promises';
 
 import { parse } from 'csv-parse';
-import * as v from 'valibot';
-import { rowSchema, type Row } from '../schemas/row.js';
 
-export default async function fetchFromGoogleSheets(
-  url: string,
-): Promise<Row[]> {
-  const response = await fetch(url);
-  const csvString = await response.text();
+export default async function parseCsv(csvString: string) {
   const parser = parse(csvString, { columns: true });
   const rawData: unknown[] = [];
   parser.on('readable', function () {
@@ -20,7 +14,5 @@ export default async function fetchFromGoogleSheets(
     }
   });
   await finished(parser);
-  return rawData.map((rawDatum) => {
-    return v.parse(rowSchema, rawDatum);
-  });
+  return rawData;
 }

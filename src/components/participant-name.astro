@@ -1,10 +1,25 @@
 ---
-import type { Participant } from '../schemas/participant'
+import type { Participant } from '../schemas/participant';
 import getParticipantFullName from '../utils/get-participant-full-name';
 
 export interface Props {
     participant: Participant;
 }
 const { participant } = Astro.props;
+const fullName = getParticipantFullName(participant);
 ---
-<span lang="ru">{getParticipantFullName(participant)}</span>
+<a class="participant-link" href={`/?civil_acts%5Bquery%5D=${encodeURIComponent(fullName)}`} lang="ru" rel="nofollow" title="Шукати інші події за участі цієї особи">{fullName}</a>
+
+<style>
+  .participant-link {
+    color: #4CAF50;
+    text-decoration: underline;
+    font-weight: normal;
+    padding: 0;
+    border: none;
+    transition: color 0.3s;
+  }
+  .participant-link:hover {
+    color: #388E3C;
+  }
+</style>

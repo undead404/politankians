@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../components/layout.astro';
+
+const archiveItems = await getCollection('archive-items');
+---
+<Layout title="Включені проіндексовані архівні справи">
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #4caf50;
+      color: white;
+      font-family: 'Georgia', serif;
+    }
+    th a {
+      color: white;
+    }
+    th a:hover {
+      text-decoration: underline;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+    a {
+      text-decoration: none;
+      color: #4caf50;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <table>
+    <thead>
+      <tr>
+        <th>Архівна справа</th>
+        <th>Поселення</th>
+        <th>Представлені роки</th>
+      </tr>
+    </thead>
+    <tbody>
+      {archiveItems.map(item => (
+        <tr>
+          <th scope="row"><a href={`/document/${item.data.id}`}>{item.data.id}</a></th>
+          <td>{item.data.settlements}</td>
+          <td>{item.data.years}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</Layout>

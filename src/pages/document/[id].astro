@@ -1,0 +1,61 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+
+import Layout from '../../components/layout.astro';
+import { Document } from '../../schemas/document';
+import convertDocumentsToActs from '../../utils/convert-documents-to-acts';
+
+export const getStaticPaths = (async () => {
+  const archiveItems = await getCollection('archive-items');
+
+  return archiveItems.map((item) => ({
+    params: {
+      id: item.data.id,
+    },
+    props: { item: item.data },
+  }));
+}) satisfies GetStaticPaths;
+
+export interface Props {
+  item: Document;
+}
+const { item } = Astro.props;
+const acts = convertDocumentsToActs([item]);
+---
+
+<Layout title={item.id}>
+  <style>
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      background-color: #f9f9f9;
+      margin: 0.5rem 0;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    a {
+      text-decoration: none;
+      color: #4caf50;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    p {
+      margin: 0.5rem 0 0;
+      color: #555;
+    }
+  </style>
+  <ul>
+    {acts.map((act) => (
+      <li>
+        <a href={`/event/${act.objectID}`}>{act.title}</a>
+        <p>{act.description}</p>
+      </li>
+    ))}
+  </ul>
+</Layout>

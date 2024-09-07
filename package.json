@@ -8,21 +8,25 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "populate-algolia": "tsx ./src/populate-algolia/index.ts"
+    "populate-algolia": "tsx ./src/populate-algolia/index.ts",
+    "deploy": "surge ./dist --domain politanky.surge.sh",
+    "pull-data": "tsx ./src/pull-data/index.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.3",
     "algoliasearch": "^5.2.5",
     "astro": "^4.15.3",
     "csv-parse": "^5.5.6",
-    "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
+    "fs-extra": "^11.2.0",
     "instantsearch.js": "^4.74.0",
-    "typescript": "^5.5.4",
-    "valibot": "^0.41.0"
+    "lodash": "^4.17.21",
+    "typescript": "^5.5.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
+    "@types/fs-extra": "^11.0.4",
+    "@types/lodash": "^4.17.7",
     "@types/node": "^22.5.4",
     "@types/papaparse": "^5.3.14",
     "eslint": "^9.9.1",
@@ -30,6 +34,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "globals": "^15.9.0",
     "prettier": "^3.3.3",
+    "surge": "^0.24.6",
     "tsx": "^4.19.0",
     "typescript-eslint": "^8.4.0"
   }

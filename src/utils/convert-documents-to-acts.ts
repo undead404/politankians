@@ -1,13 +1,13 @@
-import * as v from 'valibot';
-
 import getActId from '../populate-algolia/get-act-id.js';
 import getActTitle from '../populate-algolia/get-act-title.js';
 import getParticipantFullName from './get-participant-full-name.js';
 import type { Row } from '../schemas/row.js';
 import { actSchema, type Act } from '../schemas/act.js';
+import type { Document } from '../schemas/document.js';
 import type { Participant } from '../schemas/participant.js';
 
-export default function convertRowsToActs(rows: Row[]) {
+export default function convertDocumentsToActs(documents: Document[]) {
+  const rows = documents.map(({ rows }) => rows).flat();
   const actRegister: Record<string, Act> = {};
   let currentActNumber = 0;
   let currentActId: string;
@@ -52,6 +52,9 @@ export default function convertRowsToActs(rows: Row[]) {
     ...act,
     title: getActTitle(act),
   }));
+  if (actsWithTitles.length === 0) {
+    throw new Error('no acts');
+  }
   // check to ensure all fields are set
-  return actsWithTitles.map((act) => v.parse(actSchema, act));
+  return actsWithTitles.map((act) => actSchema.parse(act));
 }

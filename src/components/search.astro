@@ -59,23 +59,17 @@ import Context from './context.astro';
       display: flex;
       align-items: center;
     }
+    .ais-RefinementList-list {
+      display: flex;
+      gap: 1rem;
+    }
     .ais-RefinementList-checkbox {
       margin-right: 0.5rem;
     }
     #output-box {
-      display: grid;
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-wrap: wrap;
       gap: 1rem;
-    }
-    @media (min-width: 600px) {
-      #output-box {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    @media (min-width: 900px) {
-      #output-box {
-        grid-template-columns: 1fr 1fr 1fr;
-      }
     }
     .ais-Hits-item {
       background-color: white;
@@ -83,6 +77,17 @@ import Context from './context.astro';
       border: 1px solid #ddd;
       border-radius: 4px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      flex: 1 1 calc(100% - 1rem);
+    }
+    @media (min-width: 600px) {
+      .ais-Hits-item {
+        flex: 1 1 calc(50% - 1rem);
+      }
+    }
+    @media (min-width: 900px) {
+      .ais-Hits-item {
+        flex: 1 1 calc(33.333% - 1rem);
+      }
     }
     .ais-Hits-item a {
       text-decoration: none;
