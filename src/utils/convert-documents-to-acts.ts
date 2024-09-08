@@ -19,11 +19,13 @@ export default function convertDocumentsToActs(documents: Document[]) {
       currentActType = row.act_type;
     }
     const currentAct: Act = actRegister[currentActId] || {
-      objectID: currentActId,
-      participants: {},
-      description: '',
       act_type: row.act_type,
       date: row.date,
+      description: '',
+      number: row.act,
+      objectID: currentActId,
+      page: row.page,
+      participants: {},
       settlement: row.settlement,
       title: '',
     };

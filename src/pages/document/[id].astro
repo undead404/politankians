@@ -5,6 +5,8 @@ import { getCollection } from 'astro:content';
 import Layout from '../../components/layout.astro';
 import { Document } from '../../schemas/document';
 import convertDocumentsToActs from '../../utils/convert-documents-to-acts';
+import getParticipantFullName from '../../utils/get-participant-full-name';
+import formatDate from '../../utils/format-date';
 
 export const getStaticPaths = (async () => {
   const archiveItems = await getCollection('archive-items');
@@ -26,16 +28,27 @@ const acts = convertDocumentsToActs([item]);
 
 <Layout title={item.id}>
   <style>
-    ul {
-      list-style-type: none;
-      padding: 0;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
     }
-    li {
-      background-color: #f9f9f9;
-      margin: 0.5rem 0;
+    th, td {
       padding: 0.75rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #4caf50;
+      color: white;
+      font-family: 'Georgia', serif;
+      text-align: center;
+    }
+    tr.act-even {
+      filter: brightness(0.95);
+    }
+    tr:hover {
+      filter: brightness(0.9);
     }
     a {
       text-decoration: none;
@@ -45,17 +58,70 @@ const acts = convertDocumentsToActs([item]);
     a:hover {
       text-decoration: underline;
     }
-    p {
-      margin: 0.5rem 0 0;
-      color: #555;
+    .memorial-service {
+      background-color: #ffe6e6; /* Light red */
+    }
+    .confirmation {
+      background-color: #cce5ff; /* Light blue */
+    }
+    .birth {
+      background-color: #ccffcc; /* Light green */
+    }
+    .death {
+      background-color: #f2f2f2; /* Light gray */
+    }
+    .baptism {
+      background-color: #fff2cc; /* Light yellow */
+    }
+    .marriage {
+      background-color: #e6ccff; /* Light purple */
     }
   </style>
-  <ul>
-    {acts.map((act) => (
-      <li>
-        <a href={`/event/${act.objectID}`}>{act.title}</a>
-        <p>{act.description}</p>
-      </li>
-    ))}
-  </ul>
+  <table>
+    <thead>
+      <tr>
+        <th>Тип</th>
+        <th>Дата</th>
+        <th>Роль</th>
+        <th>Учасник</th>
+        <th>Розворот</th>
+        <th>Акт</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {acts.map((act, index) => {
+        const participants = Object.values(act.participants);
+        const [firstParticipant, ...otherParticipants] = participants;
+        const actTypeClass = {
+          'відспівування': 'memorial-service',
+          'миропомазання': 'confirmation',
+          'народження': 'birth',
+          'смерть': 'death',
+          'хрещення': 'baptism',
+          'шлюб': 'marriage'
+        }[act.act_type];
+        const isEven = index % 2 === 0
+        return (
+          <>
+            <tr class:list={[actTypeClass, {'act-even': isEven, 'act-odd': !isEven}]}>
+              <td rowspan={participants.length}>{act.act_type}</td>
+              <td rowspan={participants.length}>{formatDate(act.date)}</td>
+              <td>{firstParticipant.role}</td>
+              <td>{getParticipantFullName(firstParticipant)}</td>
+              <td rowspan={participants.length}>{act.page}</td>
+              <td rowspan={participants.length}>{act.number}</td>
+              <td rowspan={participants.length}><a href={`/act/${act.objectID}`}>Відкрити</a></td>
+            </tr>
+            {otherParticipants.map((participant) => (
+              <tr class:list={[actTypeClass, {'act-even': isEven, 'act-odd': !isEven}]}>
+                <td>{participant.role}</td>
+                <td>{getParticipantFullName(participant)}</td>
+              </tr>
+            ))}
+          </>
+        );
+      })}
+    </tbody>
+  </table>
 </Layout>

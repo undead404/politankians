@@ -8,7 +8,9 @@ export const actSchema = z.object({
   act_type: actTypeSchema,
   date: z.string().regex(/\d{4}-\d{2}-\d{2}/),
   description: nonEmptyString,
+  number: z.number().min(1),
   objectID: nonEmptyString,
+  page: nonEmptyString,
   participants: z
     .record(nonEmptyString, participantSchema)
     .refine((input) => Object.entries(input).length > 0, {

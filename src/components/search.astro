@@ -1,6 +1,7 @@
 ---
 import environment from '../environment';
 import Context from './context.astro';
+
 ---
 
 <div>
@@ -61,7 +62,8 @@ import Context from './context.astro';
     }
     .ais-RefinementList-list {
       display: flex;
-      gap: 1rem;
+      flex-wrap: wrap;
+      gap: 0 1rem;
     }
     .ais-RefinementList-checkbox {
       margin-right: 0.5rem;
@@ -73,11 +75,15 @@ import Context from './context.astro';
     }
     .ais-Hits-item {
       background-color: white;
-      padding: 1rem;
+      padding: 0!important;
       border: 1px solid #ddd;
       border-radius: 4px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       flex: 1 1 calc(100% - 1rem);
+    }
+    .ais-Hits-item a {
+      flex-grow: 1;
+      padding: 1.5rem!important;
     }
     @media (min-width: 600px) {
       .ais-Hits-item {
@@ -104,6 +110,25 @@ import Context from './context.astro';
     .ais-Hits-item p {
       margin: 0;
       color: #555;
+    }
+    
+    .memorial-service {
+      background-color: #ffe6e6; /* Light red */
+    }
+    .confirmation {
+      background-color: #cce5ff; /* Light blue */
+    }
+    .birth {
+      background-color: #ccffcc; /* Light green */
+    }
+    .death {
+      background-color: #f2f2f2; /* Light gray */
+    }
+    .baptism {
+      background-color: #fff2cc; /* Light yellow */
+    }
+    .marriage {
+      background-color: #e6ccff; /* Light purple */
     }
   </style>
 </div>

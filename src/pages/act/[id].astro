@@ -25,6 +25,9 @@ export interface Props {
 }
 
 const { act } = Astro.props;
+
+const [archive, fonds, series, item] = act.objectID.split('-')
+const itemId = [archive, fonds, series, item].join('-')
 ---
 
 <Layout title={act.title}>
@@ -92,6 +95,6 @@ const { act } = Astro.props;
     </ul>
   </section>
   <footer>
-    <p><strong>Object ID:</strong> {act.objectID}</p>
+    <p>Справа <a href={`/document/${itemId}`}>{itemId}</a>, розворот {act.page}, акт {act.number}</p>
   </footer>
 </Layout>
