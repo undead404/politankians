@@ -1,17 +1,14 @@
-import fs from 'fs-extra';
-
 import downloadAndConvertToJSON from './download-and-convert-to-json.js';
+import getArchiveItems from './get-archive-items.ts';
 
 // Main function to read URLs from file and process them
 
+const OUTPUT_DIR = './src/content/parish-register-tables';
+
 export default async function processCSVFiles() {
-  const urlsFilePath = './spreadsheets.txt';
-  const outputDir = 'src/content/archive-items';
+  const archiveItems = await getArchiveItems();
 
-  const urls = await fs.readFile(urlsFilePath, 'utf-8');
-  const urlList = urls.split('\n').filter((url) => url.trim() !== '');
-
-  for (const url of urlList) {
-    await downloadAndConvertToJSON(url, outputDir);
+  for (const url of archiveItems.map(({ csvUrl }) => csvUrl)) {
+    await downloadAndConvertToJSON(url, OUTPUT_DIR);
   }
 }

@@ -1,9 +1,17 @@
 ---
 import { getCollection } from 'astro:content';
+
 import Layout from '../../components/layout.astro';
+import TitledLink from '../../components/titled-link.astro';
 
 const archiveItems = await getCollection('archive-items');
+const parishRegisterTables = await getCollection('parish-register-tables');
+const archiveItemTuples = archiveItems.map((archiveItem) => [
+  archiveItem,
+  parishRegisterTables.find(({ id }) => id === archiveItem.id),
+]);
 ---
+
 <Layout title="Включені проіндексовані архівні справи">
   <style>
     table {
@@ -11,15 +19,19 @@ const archiveItems = await getCollection('archive-items');
       border-collapse: collapse;
       margin-bottom: 2rem;
     }
-    th, td {
+    th,
+    td {
       padding: 0.75rem;
-      text-align: left;
+      text-align: center;
       border-bottom: 1px solid #ddd;
     }
     th {
       background-color: #4caf50;
       color: white;
       font-family: 'Georgia', serif;
+    }
+    td {
+      text-wrap: nowrap;
     }
     th a {
       color: white;
@@ -48,16 +60,25 @@ const archiveItems = await getCollection('archive-items');
         <th>Архівна справа</th>
         <th>Поселення</th>
         <th>Представлені роки</th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      {archiveItems.map(item => (
-        <tr>
-          <th scope="row"><a href={`/document/${item.data.id}`}>{item.data.id}</a></th>
-          <td>{item.data.settlements}</td>
-          <td>{item.data.years}</td>
-        </tr>
-      ))}
+      {
+        archiveItemTuples.map(([archiveItem, parishRegisterTable]) => (
+          <tr>
+            <th scope="row"><a href={`/parish-register/${archiveItem.data.title}`}>{archiveItem.data.title}</a></th>
+            <td>{parishRegisterTable.data.settlements}</td>
+            <td>{parishRegisterTable.data.years}</td>
+            <td>
+              <TitledLink href={archiveItem.data.gssUrl} /></td>
+            <td>
+              <TitledLink href={archiveItem.data.scansUrl} />
+            </td>
+          </tr>
+        ))
+      }
     </tbody>
   </table>
 </Layout>

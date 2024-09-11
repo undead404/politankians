@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'astro/zod';
 
 import { actTypeSchema } from './act_type.js';
 import { nonEmptyString } from './non-empty-string.js';

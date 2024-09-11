@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'astro/zod';
 
 import { actTypeSchema } from './act_type.js';
 import { nonEmptyString } from './non-empty-string.js';
@@ -36,6 +36,7 @@ export const actSchema = z.object({
     ),
   settlement: nonEmptyString,
   title: nonEmptyString,
+  year: z.number().min(1500).max(new Date().getFullYear()),
 });
 
 export type Act = z.infer<typeof actSchema>;

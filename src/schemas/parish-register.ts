@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import { z } from 'zod';
+import { z } from 'astro/zod';
 
-import { rowSchema, type Row } from './row.js';
-import getRowArchiveItemId from '../utils/get-row-archive-item-id.js';
+import { rowSchema, type Row } from './row.ts';
+import getRowArchiveItemId from '../utils/get-row-archive-item-id.ts';
 
 function getSettlements(rows: Row[]) {
   return _.uniqBy(rows, 'settlement')
@@ -22,7 +22,7 @@ function getYears(rows: Row[]) {
   return `${firstRow!.date.slice(0, 4)}-${lastRow!.date.slice(0, 4)}`;
 }
 
-export const documentSchema = z
+export const parishRegisterSchema = z
   .array(rowSchema)
   .refine(
     (rows) => {
@@ -35,7 +35,10 @@ export const documentSchema = z
         (row) => getRowArchiveItemId(row) === firstRowArchiveItemId,
       );
     },
-    { message: 'All rows in a document must belong to the same archive item' },
+    {
+      message:
+        'All rows in a parish register must belong to the same archive item',
+    },
   )
   .transform((rows) => ({
     id: getRowArchiveItemId(rows[0]!),
@@ -44,4 +47,4 @@ export const documentSchema = z
     years: getYears(rows),
   }));
 
-export type Document = z.infer<typeof documentSchema>;
+export type ParishRegister = z.infer<typeof parishRegisterSchema>;

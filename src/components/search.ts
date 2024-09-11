@@ -1,7 +1,13 @@
 import { liteClient } from 'algoliasearch/lite';
 import instantsearch from 'instantsearch.js';
-import { searchBox, hits, refinementList } from 'instantsearch.js/es/widgets';
-import { z } from 'zod';
+import {
+  searchBox,
+  hits,
+  refinementList,
+  numericMenu,
+  poweredBy,
+} from 'instantsearch.js/es/widgets';
+import { z } from 'astro/zod';
 
 import getContext from '../utils/get-context.js';
 import { nonEmptyString } from '../schemas/non-empty-string.js';
@@ -36,7 +42,9 @@ search.addWidgets([
     showLoading: true,
     showSubmit: true,
   }),
-
+  poweredBy({
+    container: '#powered-by',
+  }),
   hits({
     container: '#output-box',
     templates: {
@@ -59,6 +67,25 @@ search.addWidgets([
     attribute: 'act_type',
     container: '#refinement-list',
     sortBy: ['name'],
+  }),
+  numericMenu({
+    attribute: 'year',
+    container: '#refinement-list-year',
+    items: [
+      {
+        label: 'Усі роки',
+      },
+      {
+        end: 1799,
+        label: '1790-ті',
+        start: 1790,
+      },
+      {
+        end: 1809,
+        label: '1800-ті',
+        start: 1800,
+      },
+    ],
   }),
 ]);
 search.start();

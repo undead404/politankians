@@ -23,4 +23,4 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-src/content/archive-items/*.json
+src/content/parish-register-tables/*.json

@@ -1,10 +1,10 @@
-import getArchiveItems from './get-archive-items.js';
-import convertDocumentsToActs from '../utils/convert-documents-to-acts.js';
+import convertParishRegistersToActs from '../utils/convert-parish-registers-to-acts.ts';
+import getArchiveItems from './get-parish-register-tables.js';
 import populateIndex from './populate-index.js';
 
 try {
   const archiveItems = await getArchiveItems();
-  const acts = convertDocumentsToActs(archiveItems);
+  const acts = convertParishRegistersToActs(archiveItems);
   await populateIndex(acts);
 } catch (error) {
   console.error(error);

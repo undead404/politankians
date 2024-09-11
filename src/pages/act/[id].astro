@@ -5,13 +5,13 @@ import type { GetStaticPaths } from 'astro';
 import Layout from '../../components/layout.astro';
 import ParticipantName from '../../components/participant-name.astro';
 import type { Act } from '../../schemas/act';
-import convertDocumentsToActs from '../../utils/convert-documents-to-acts'
+import convertParishRegistersToActs from '../../utils/convert-parish-registers-to-acts'
 import formatDate from '../../utils/format-date';
 
 export const getStaticPaths = (async () => {
-  const archiveItems = await getCollection('archive-items');
+  const archiveItems = await getCollection('parish-register-tables');
 
-  const acts = convertDocumentsToActs(archiveItems.map(({data}) => data));
+  const acts = convertParishRegistersToActs(archiveItems.map(({data}) => data));
   return acts.map((act) => ({
     params: {
       id: act.objectID,
@@ -95,6 +95,6 @@ const itemId = [archive, fonds, series, item].join('-')
     </ul>
   </section>
   <footer>
-    <p>Справа <a href={`/document/${itemId}`}>{itemId}</a>, розворот {act.page}, акт {act.number}</p>
+    <p>Справа <a href={`/parish-register/${itemId}`}>{itemId}</a>, розворот {act.page}, акт {act.number}</p>
   </footer>
 </Layout>

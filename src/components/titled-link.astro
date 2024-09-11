@@ -1,0 +1,37 @@
+---
+export interface Props {
+  href: string;
+}
+
+const titlesMap = {
+  'docs.google.com': 'Google Docs',
+  'www.familysearch.org': 'FamilySearch',
+};
+const { href } = Astro.props;
+console.info(href);
+const url = new URL(href);
+const domain = url.hostname;
+---
+
+<a href={href} rel="noopener noreferrer" target="_blank"
+  >{titlesMap[domain] || domain}<span class="external-link-icon">🔗</span></a
+>
+<style>
+    a {
+  color: #3a5f0b; /* Dark green resembling the crops */
+  text-decoration: none; /* No underline for a cleaner look */
+  font-weight: bold; /* Bold text for better visibility */
+}
+
+a:hover {
+  color: #204705; /* Darker shade for hover effect */
+}
+
+.external-link-icon {
+  display: inline-block;
+  margin-left: 8px;
+  transform: translateY(-2px); /* Aligns icon with text */
+}
+
+
+</style>

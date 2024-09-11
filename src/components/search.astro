@@ -12,7 +12,9 @@ import Context from './context.astro';
     ALGOLIA_SEARCH_API_KEY={environment.ALGOLIA_SEARCH_API_KEY}
   />
   <form id="search-box"></form>
+  <div id="powered-by"></div>
   <div id="refinement-list"></div>
+  <div id="refinement-list-year"></div>
   <output id="output-box"></output>
   <script src="./search.ts"></script>
   <link
@@ -50,7 +52,10 @@ import Context from './context.astro';
     .ais-SearchBox-submit:hover {
       background-color: #45a049;
     }
-    #refinement-list {
+    .ais-PoweredBy {
+      justify-content: center;
+    }
+    #refinement-list, #refinement-list-year, #powered-by {
       margin-bottom: 1rem;
     }
     .ais-RefinementList-item {

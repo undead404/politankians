@@ -1,13 +1,15 @@
-import getActId from '../populate-algolia/get-act-id.js';
-import getActTitle from '../populate-algolia/get-act-title.js';
-import getParticipantFullName from './get-participant-full-name.js';
-import type { Row } from '../schemas/row.js';
-import { actSchema, type Act } from '../schemas/act.js';
-import type { Document } from '../schemas/document.js';
-import type { Participant } from '../schemas/participant.js';
+import getActId from '../populate-algolia/get-act-id.ts';
+import getActTitle from '../populate-algolia/get-act-title.ts';
+import getParticipantFullName from './get-participant-full-name.ts';
+import type { Row } from '../schemas/row.ts';
+import { actSchema, type Act } from '../schemas/act.ts';
+import type { ParishRegister } from '../schemas/parish-register.ts';
+import type { Participant } from '../schemas/participant.ts';
 
-export default function convertDocumentsToActs(documents: Document[]) {
-  const rows = documents.map(({ rows }) => rows).flat();
+export default function convertParishRegistersToActs(
+  parishRegisters: ParishRegister[],
+) {
+  const rows = parishRegisters.map(({ rows }) => rows).flat();
   const actRegister: Record<string, Act> = {};
   let currentActNumber = 0;
   let currentActId: string;
@@ -18,6 +20,7 @@ export default function convertDocumentsToActs(documents: Document[]) {
       currentActNumber = row.act;
       currentActType = row.act_type;
     }
+    const year = Number.parseInt(row.date.slice(0, 4));
     const currentAct: Act = actRegister[currentActId] || {
       act_type: row.act_type,
       date: row.date,
@@ -28,6 +31,7 @@ export default function convertDocumentsToActs(documents: Document[]) {
       participants: {},
       settlement: row.settlement,
       title: '',
+      year: year,
     };
 
     const participant: Participant = {
