@@ -1,37 +1,56 @@
 ---
+import { Icon } from 'astro-icon/components';
+
 export interface Props {
   href: string;
 }
 
 const titlesMap = {
+  'commons.wikimedia.org': 'WikiSource',
   'docs.google.com': 'Google Docs',
+  'drive.google.com': 'Google Drive',
+  'photos.google.com': 'Google Photos',
   'www.familysearch.org': 'FamilySearch',
 };
+const iconNamesMap = {
+  'commons.wikimedia.org': 'ooui:logo-wikisource',
+  'docs.google.com': 'arcticons:google-docs',
+  'drive.google.com': 'arcticons:google-drive',
+  'photos.google.com': 'arcticons:google-photos',
+  'www.familysearch.org': 'arcticons:familysearch-tree',
+};
 const { href } = Astro.props;
-console.info(href);
 const url = new URL(href);
 const domain = url.hostname;
+const iconName = iconNamesMap[domain];
 ---
 
 <a href={href} rel="noopener noreferrer" target="_blank"
-  >{titlesMap[domain] || domain}<span class="external-link-icon">🔗</span></a
+  >{titlesMap[domain] || domain}{
+    iconName ? (
+      <Icon name={iconName} />
+    ) : (
+      <span class="external-link-icon">🔗</span>
+    )
+  }</a
 >
 <style>
-    a {
-  color: #3a5f0b; /* Dark green resembling the crops */
-  text-decoration: none; /* No underline for a cleaner look */
-  font-weight: bold; /* Bold text for better visibility */
-}
+  a {
+    color: #3a5f0b; /* Dark green resembling the crops */
+    text-decoration: none; /* No underline for a cleaner look */
+    font-weight: bold; /* Bold text for better visibility */
+    display: flex;
+    align-items: center;
+    gap: 0.2em;
+  }
 
-a:hover {
-  color: #204705; /* Darker shade for hover effect */
-}
+  a:hover {
+    color: #204705; /* Darker shade for hover effect */
+  }
 
-.external-link-icon {
-  display: inline-block;
-  margin-left: 8px;
-  transform: translateY(-2px); /* Aligns icon with text */
-}
-
-
+  .external-link-icon {
+    display: inline-block;
+    margin-left: 8px;
+    transform: translateY(-2px); /* Aligns icon with text */
+  }
 </style>
