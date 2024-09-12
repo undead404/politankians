@@ -1,6 +1,13 @@
 {
+  "archivedAt": [
+    "https://www.familysearch.org/records/images/search-results?imageGroupNumbers=114926675"
+  ],
   "csvUrl": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQhr0RJjOJcotVPolQd2iSKGLW_JxGa7wMMAGqSF443EPoC1sJjIayOwYiBdo-NeWynzzD2N8SMi5qF/pub?gid=1532887418&single=true&output=csv",
+  "dateCreated": "1796",
+  "dateModified": "1954-06-22",
+  "genre": "Метрична книга повіту",
   "gssUrl": "https://docs.google.com/spreadsheets/d/1oambY-cIilV6i8O2yHZAV-ovmrqb2vxrCLAofs3TTwU/edit?usp=sharing",
-  "scansUrl": "https://www.familysearch.org/records/images/search-results?imageGroupNumbers=114926675",
-  "title": "ДАХмО-315-1-6679"
+  "identifier": "315-1-6679",
+  "inLanguage": "Russian",
+  "title": "Метрическая книга записей актов гражданского состояния о рождении, браке и смерти по церквям Ямпольского уезда за 1796 г. Ямполь, села А-Я"
 }

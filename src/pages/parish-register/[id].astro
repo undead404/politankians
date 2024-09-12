@@ -3,11 +3,13 @@ import type { GetStaticPaths } from 'astro';
 import { getCollection, getEntry } from 'astro:content';
 
 import Layout from '../../components/layout.astro';
+import Ld from '../../components/ld.astro';
+import TitledLink from '../../components/titled-link.astro';
+import getArchiveItemMicrodata from '../../ld/archive-item-microdata';
 import { ParishRegister } from '../../schemas/parish-register';
 import convertParishRegistersToActs from '../../utils/convert-parish-registers-to-acts';
-import getParticipantFullName from '../../utils/get-participant-full-name';
 import formatDate from '../../utils/format-date';
-import TitledLink from '../../components/titled-link.astro';
+import getParticipantFullName from '../../utils/get-participant-full-name';
 
 export const getStaticPaths = (async () => {
   const parishRegisters = await getCollection('parish-register-tables');
@@ -26,10 +28,13 @@ export interface Props {
 const { item } = Astro.props;
 const acts = convertParishRegistersToActs([item]);
 const archiveItem = await getEntry('archive-items', item.id);
+const archiveAbbreviation = item.id.split('-')[0]
+const archive = await getEntry('archives', archiveAbbreviation);
+const microdata = getArchiveItemMicrodata(archiveItem.data, archive.data);
 ---
 
-<Layout title={item.id}>
-  <style>
+<Layout title={archiveItem.id}>
+  <style slot="head">
     table {
       width: 100%;
       border-collapse: collapse;
@@ -80,11 +85,12 @@ const archiveItem = await getEntry('archive-items', item.id);
       background-color: #e6ccff; /* Light purple */
     }
   </style>
-  <p>{item.settlements}, {item.years}</p>
+  <Ld microdata={microdata} slot="head" />
+  <p lang="ru">{archiveItem.data.title}</p>
   <p>
-    Ця справа на інших ресурсах: <TitledLink href={archiveItem.data.gssUrl} />, <TitledLink
-      href={archiveItem.data.scansUrl}
-    />
+    Ця справа на інших ресурсах: <TitledLink href={archiveItem.data.gssUrl} />, {
+      archiveItem.data.archivedAt.map((scanUrl) => <TitledLink href={scanUrl} />)
+    }
   </p>
   <table>
     <thead>

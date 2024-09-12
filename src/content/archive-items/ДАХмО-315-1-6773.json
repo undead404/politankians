@@ -1,6 +1,13 @@
 {
+  "archivedAt": [
+    "https://www.familysearch.org/records/images/search-results?imageGroupNumbers=114929778"
+  ],
   "csvUrl": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQT2-foc7PKtAziIQ8ngOSu9Ar8b9qA6BZO75ncLSR6BwksW9smN81War26PY4FhScskgRQ-3Qz45Vm/pub?gid=1532887418&single=true&output=csv",
+  "dateCreated": "1800",
+  "dateModified": "1984",
+  "genre": "Метрична книга повіту",
   "gssUrl": "https://docs.google.com/spreadsheets/d/1wMuoF8WQCTJyiB4diaSMQB5GCWwF2nFmShECJupYiEM/edit?usp=sharing",
-  "scansUrl": "https://www.familysearch.org/records/images/search-results?imageGroupNumbers=114929778",
-  "title": "ДАХмО-315-1-6773"
+  "identifier": "315-1-6773",
+  "inLanguage": "Russian",
+  "title": "Метрическая книга записей актов гражданского состояния о рождении, браке и смерти по Ямпольскому уезду за 1800 год"
 }

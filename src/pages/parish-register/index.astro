@@ -68,13 +68,20 @@ const archiveItemTuples = archiveItems.map((archiveItem) => [
       {
         archiveItemTuples.map(([archiveItem, parishRegisterTable]) => (
           <tr>
-            <th scope="row"><a href={`/parish-register/${archiveItem.data.title}`}>{archiveItem.data.title}</a></th>
+            <th scope="row">
+              <a href={`/parish-register/${archiveItem.id}`}>
+                {archiveItem.id}
+              </a>
+            </th>
             <td>{parishRegisterTable.data.settlements}</td>
             <td>{parishRegisterTable.data.years}</td>
             <td>
-              <TitledLink href={archiveItem.data.gssUrl} /></td>
+              <TitledLink href={archiveItem.data.gssUrl} />
+            </td>
             <td>
-              <TitledLink href={archiveItem.data.scansUrl} />
+              {archiveItem.data.archivedAt.map((scanUrl) => (
+                <TitledLink href={scanUrl} />
+              ))}
             </td>
           </tr>
         ))

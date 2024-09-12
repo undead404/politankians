@@ -1,0 +1,21 @@
+---
+export interface Props {
+  microdata: unknown;
+}
+
+const { microdata } = Astro.props;
+---
+
+{
+  microdata ? (
+    <script
+      is:inline
+      set:html={JSON.stringify(
+        { '@context': 'https://schema.org', ...microdata },
+        null,
+        2,
+      )}
+      type="application/ld+json"
+    />
+  ) : null
+}
