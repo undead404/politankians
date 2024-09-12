@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://politanky.surge.sh/sitemap-index.xml
