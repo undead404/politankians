@@ -1,19 +1,19 @@
 import _ from 'lodash';
 import { z } from 'astro/zod';
 
-import {
-  parishRegisterRowSchema,
-  type ParishRegisterRow,
-} from './parish-register-row.ts';
 import getRowArchiveItemId from '../utils/get-row-archive-item-id.ts';
+import {
+  confessionalListRowSchema,
+  type ConfessionalListRow,
+} from './confessional-list-row.ts';
 
-function getSettlements(rows: ParishRegisterRow[]) {
+function getSettlements(rows: ConfessionalListRow[]) {
   return _.uniqBy(rows, 'settlement')
     .map((row) => row.settlement)
     .join(', ');
 }
 
-function getYears(rows: ParishRegisterRow[]) {
+function getYears(rows: ConfessionalListRow[]) {
   if (rows.length === 0) {
     throw new Error('No rows supplied');
   }
@@ -25,8 +25,8 @@ function getYears(rows: ParishRegisterRow[]) {
   return `${firstRow!.date.slice(0, 4)}-${lastRow!.date.slice(0, 4)}`;
 }
 
-export const parishRegisterSchema = z
-  .array(parishRegisterRowSchema)
+export const confessionalListSchema = z
+  .array(confessionalListRowSchema)
   .refine(
     (rows) => {
       const firstRow = rows.at(0);
@@ -50,4 +50,4 @@ export const parishRegisterSchema = z
     years: getYears(rows),
   }));
 
-export type ParishRegister = z.infer<typeof parishRegisterSchema>;
+export type ConfessionalList = z.infer<typeof confessionalListSchema>;

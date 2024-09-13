@@ -1,50 +1,40 @@
 import { z } from 'astro/zod';
 
-import { actTypeSchema } from './act_type.js';
-import { nonEmptyString } from './non-empty-string.js';
-import _ from 'lodash';
+import { nonEmptyString } from './non-empty-string.ts';
 
-export const rowSchema = z
+const LOOSE_DATE_REGEXP = /\d{4}(?:-\d{2}(?:-\d{2})?)?/;
+export const confessionalListRowSchema = z
   .object({
     Акт: nonEmptyString.transform((input) => Number.parseInt(input)),
-
-    Аркуш: nonEmptyString,
+    Аркуш: nonEmptyString.transform((input) => Number.parseInt(input)),
     Архів: nonEmptyString,
-    Вік: z.nullable(z.string()),
-    'Дата події': nonEmptyString.transform((input) => {
-      const [day, month, year] = input.split('.');
-      return [year, month, day]
-        .map((part) => _.padStart(part, 2, '0'))
-        .join('-');
-    }),
+    Вік: z.optional(z.string()),
+    'Дата події': nonEmptyString.regex(LOOSE_DATE_REGEXP),
     "Ім'я": z.string(),
     Опис: nonEmptyString,
     'По-батькові': z.string(),
-    'Поселення храму': nonEmptyString,
     'Пошт. Індекс': nonEmptyString,
+    'Поселення храму': nonEmptyString,
+    Примітка: z.string(),
     Прізвище: z.string(),
-    Примітка: z.nullable(z.string()),
-    роль: nonEmptyString,
     Справа: nonEmptyString,
-    'Тип акту': actTypeSchema,
     Фонд: nonEmptyString,
   })
   .transform((input) => ({
     act: input['Акт'],
-    act_type: input['Тип акту'],
-    age: input['Вік'] || null,
+    age: input['Вік'] || undefined,
     archive: input['Архів'],
     date: input['Дата події'],
     fonds: input['Фонд'],
     given_name: input["Ім'я"],
     item: input['Справа'],
     middle_name: input['По-батькові'],
-    note: input['Примітка'] || null,
+    note: input['Примітка'],
     page: input['Аркуш'],
-    role: input['роль'],
+    postal_code: input['Пошт. Індекс'],
     series: input['Опис'],
     settlement: input['Поселення храму'],
     surname: input['Прізвище'],
   }));
 
-export type Row = z.infer<typeof rowSchema>;
+export type ConfessionalListRow = z.infer<typeof confessionalListRowSchema>;

@@ -5,6 +5,9 @@ export const actTypeSchema = z.enum([
   'миропомазання',
   'народження',
   'смерть',
+  'сповідь',
   'хрещення',
   'шлюб',
 ]);
+
+export type ActType = z.infer<typeof actTypeSchema>;

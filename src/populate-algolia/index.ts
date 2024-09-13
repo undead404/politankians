@@ -1,11 +1,22 @@
+import { parishRegisterSchema } from '../schemas/parish-register.ts';
+import convertConfessionalListsToActs from '../utils/convert-confessional-list-to-acts.ts';
 import convertParishRegistersToActs from '../utils/convert-parish-registers-to-acts.ts';
-import getArchiveItems from './get-parish-register-tables.js';
+import getTables from './get-tables.ts';
 import populateIndex from './populate-index.js';
 
 try {
-  const archiveItems = await getArchiveItems();
-  const acts = convertParishRegistersToActs(archiveItems);
-  await populateIndex(acts);
+  const parishRegisters = await getTables(
+    './src/content/parish-register-tables',
+    parishRegisterSchema,
+  );
+  const parishRegisterActs = convertParishRegistersToActs(parishRegisters);
+  await populateIndex(parishRegisterActs);
+  const confessionalLists = await getTables(
+    './src/content/parish-register-tables',
+    parishRegisterSchema,
+  );
+  const confessionListActs = convertConfessionalListsToActs(confessionalLists);
+  await populateIndex(confessionListActs);
 } catch (error) {
   console.error(error);
   process.exit(1);

@@ -1,7 +1,7 @@
-import getActId from '../populate-algolia/get-act-id.ts';
+import getActId from './get-act-id.ts';
 import getActTitle from '../populate-algolia/get-act-title.ts';
 import getParticipantFullName from './get-participant-full-name.ts';
-import type { Row } from '../schemas/row.ts';
+import type { ParishRegisterRow } from '../schemas/parish-register-row.ts';
 import { actSchema, type Act } from '../schemas/act.ts';
 import type { ParishRegister } from '../schemas/parish-register.ts';
 import type { Participant } from '../schemas/participant.ts';
@@ -13,7 +13,7 @@ export default function convertParishRegistersToActs(
   const actRegister: Record<string, Act> = {};
   let currentActNumber = 0;
   let currentActId: string;
-  let currentActType: Row['act_type'];
+  let currentActType: ParishRegisterRow['act_type'];
   rows.forEach((row) => {
     if (row.act !== currentActNumber || currentActType !== row.act_type) {
       currentActId = getActId(row);
@@ -28,7 +28,7 @@ export default function convertParishRegistersToActs(
       number: row.act,
       objectID: currentActId,
       page: row.page,
-      participants: {},
+      participants: [],
       settlement: row.settlement,
       title: '',
       year: year,
@@ -42,7 +42,7 @@ export default function convertParishRegistersToActs(
       surname: row.surname,
       note: row.note,
     };
-    currentAct.participants[participant.role] = participant;
+    currentAct.participants.push(participant);
     // Update the description field
     const descriptionAddition = `${row.role}: ${getParticipantFullName(participant)}`;
     if (currentAct.description) {

@@ -1,11 +1,12 @@
 {
+  "archive": "ДАХмО",
   "archivedAt": [
     "https://www.familysearch.org/records/images/search-results?imageGroupNumbers=114929549"
   ],
   "csvUrl": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRqbh1xLDjST1SVaXNKWTJoI8XOTJpgpGltmv8upDKJwKdWx72_GP9GBQrWzhkuIZ-EWlZvVnT04AYA/pub?gid=1532887418&single=true&output=csv",
   "dateCreated": "1798",
   "dateModified": "1954-11-30",
-  "genre": "Метрична книга повіту",
+  "genre": "Parish register",
   "gssUrl": "https://docs.google.com/spreadsheets/d/175pnyhfyiYfrlAGELcoDx_txcJQwbvhsIpXcuf9a2Ts/edit?usp=sharing",
   "identifier": "315-1-6735",
   "inLanguage": "Russian",
