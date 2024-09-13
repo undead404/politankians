@@ -85,6 +85,11 @@ search.addWidgets([
         label: '1800-ті',
         start: 1800,
       },
+      {
+        end: 1819,
+        label: '1810-ті',
+        start: 1810,
+      },
     ],
   }),
 ]);
