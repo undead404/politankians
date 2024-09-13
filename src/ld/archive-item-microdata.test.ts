@@ -1,56 +1,68 @@
-import { describe, expect, it } from '@jest/globals';
-
-import type { Archive } from '../schemas/archive.ts';
-import type { ArchiveItem } from '../schemas/archive-item.ts';
-import getArchiveItemMicrodata from './archive-item-microdata.ts';
+import type { ArchiveItem } from '../schemas/archive-item.js';
+import type { Archive } from '../schemas/archive.js';
+import getArchiveItemMicrodata from './archive-item-microdata.js';
 
 describe('getArchiveItemMicrodata', () => {
-  it('should return the correct microdata object with valid input', () => {
-    const validArchiveItem: ArchiveItem = {
-      archive: 'ДАХмО',
-      archivedAt: ['2023-10-15'],
-      csvUrl: 'https://example.com/archive.csv',
-      dateCreated: '2023-09-01',
-      genre: 'Parish register',
-      gssUrl: 'https://example.com/gss',
-      identifier: '123-456-789',
-      inLanguage: 'Russian',
-      title: 'My Archive',
-    };
+  const archiveItem: ArchiveItem = {
+    archive: 'ДАХмО',
+    archivedAt: [
+      'https://example.com/records/images/search-results?imageGroupNumbers=123456789',
+    ],
+    csvUrl:
+      'https://example.com/spreadsheets/d/e/2PACX-1vTest/pub?gid=123456789&single=true&output=csv',
+    dateCreated: '1800',
+    dateModified: '1950-01-01',
+    genre: 'Parish register',
+    gssUrl: 'https://example.com/spreadsheets/d/123456789/edit?usp=sharing',
+    identifier: '123-1-1234',
+    inLanguage: 'Russian',
+    title: 'Test Title',
+  };
 
-    const validArchive: Archive = {
-      address: '123 Main St',
-      currenciesAccepted: ['USD', 'EUR'],
-      email: 'info@example.com',
-      foundingDate: '1900',
-      openingHours: 'Mon-Fri 9:00-17:00',
-      title: 'Example Archive',
-      url: 'https://example.com/archive',
-    };
+  const archive: Archive = {
+    address: '123 Test Street, Test City, Test Country',
+    currenciesAccepted: ['USD'],
+    email: 'test@example.com',
+    foundingDate: '1900',
+    openingHours: 'Mo,Tu,We,Th 9:00-17:00',
+    title: 'ДАХмО',
+    url: 'https://example.com',
+  };
 
-    const result = getArchiveItemMicrodata(validArchiveItem, validArchive);
-
+  it('should return the correct microdata for a given archive item and archive', () => {
+    const result = getArchiveItemMicrodata(archiveItem, archive);
     expect(result).toEqual({
       '@type': 'ArchiveComponent',
-      archivedAt: '2023-10-15',
-      dateCreated: '2023-09-01',
-      dateModified: null,
-      genre: 'Parish register',
+      archivedAt: archiveItem.archivedAt,
+      dateCreated: archiveItem.dateCreated,
+      dateModified: archiveItem.dateModified,
+      genre: archiveItem.genre,
       holdingArchive: {
         '@type': 'ArchiveOrganization',
-        address: '123 Main St',
-        currenciesAccepted: ['USD', 'EUR'],
-        email: 'info@example.com',
-        foundingDate: '1900',
-        openingHours: 'Mon-Fri 9:00-17:00',
-        title: 'Example Archive',
-        url: 'https://example.com/archive',
+        ...archive,
       },
-      identifier: '123-456-789',
-      inLanguage: 'Russian',
-      name: 'My Archive',
+      identifier: archiveItem.identifier,
+      inLanguage: archiveItem.inLanguage,
+      name: archiveItem.title,
     });
   });
 
-  // ... other test cases
+  it('should handle optional dateModified field', () => {
+    const modifiedArchiveItem = { ...archiveItem, dateModified: undefined };
+    const result = getArchiveItemMicrodata(modifiedArchiveItem, archive);
+    expect(result).toEqual({
+      '@type': 'ArchiveComponent',
+      archivedAt: modifiedArchiveItem.archivedAt,
+      dateCreated: modifiedArchiveItem.dateCreated,
+      dateModified: undefined,
+      genre: modifiedArchiveItem.genre,
+      holdingArchive: {
+        '@type': 'ArchiveOrganization',
+        ...archive,
+      },
+      identifier: modifiedArchiveItem.identifier,
+      inLanguage: modifiedArchiveItem.inLanguage,
+      name: modifiedArchiveItem.title,
+    });
+  });
 });

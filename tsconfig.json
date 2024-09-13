@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "module": "NodeNext",
-    "moduleResolution": "NodeNext"
+    "moduleResolution": "NodeNext",
+    "verbatimModuleSyntax": false
   },
   "extends": "astro/tsconfigs/strictest",
   "include": ["src/**/*.ts"]
