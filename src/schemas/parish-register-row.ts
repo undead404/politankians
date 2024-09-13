@@ -7,7 +7,7 @@ import _ from 'lodash';
 export const parishRegisterRowSchema = z
   .object({
     Акт: nonEmptyString.transform((input) => Number.parseInt(input)),
-    Аркуш: nonEmptyString,
+    Аркуш: nonEmptyString.transform((input) => Number.parseInt(input)),
     Архів: nonEmptyString,
     Вік: z.optional(z.string()),
     'Дата події': nonEmptyString.transform((input) => {

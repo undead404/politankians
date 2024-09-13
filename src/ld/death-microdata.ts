@@ -6,10 +6,16 @@ export default function getDeathMicrodata(act: Act, settlement: Settlement) {
   if (act.act_type !== 'смерть') {
     throw new Error('Wrong act_type: ' + act.act_type);
   }
-  const deceased = act.participants['померла особа'];
+  const deceased = act.participants.find(
+    ({ role }) => role === 'померла особа',
+  );
   if (!deceased) {
     throw new Error('No deceased in death');
   }
+  const reporter = act.participants.find(({ role }) => role === 'заявник');
+  const father = act.participants.find(({ role }) => role === 'батько');
+  const mother = act.participants.find(({ role }) => role === 'мати');
+  const spouse = act.participants.find(({ role }) => role === 'чоловік');
   const data = {
     ...getBaseMicrodata(deceased),
     deathDate: act.date,
@@ -17,20 +23,10 @@ export default function getDeathMicrodata(act: Act, settlement: Settlement) {
       '@type': 'City',
       ...settlement,
     },
-    knows: act.participants['заявник']
-      ? [getBaseMicrodata(act.participants['заявник'])]
-      : undefined,
+    knows: reporter ? [getBaseMicrodata(reporter)] : undefined,
     parent:
-      act.participants['батько'] || act.participants['мати']
-        ? [
-            getBaseMicrodata(
-              (act.participants['батько'] || act.participants['мати'])!,
-            ),
-          ]
-        : undefined,
-    spouse: act.participants['чоловік']
-      ? getBaseMicrodata(act.participants['чоловік']!)
-      : undefined,
+      father || mother ? [getBaseMicrodata((father || mother)!)] : undefined,
+    spouse: spouse ? getBaseMicrodata(spouse) : undefined,
   };
   return data;
 }

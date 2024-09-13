@@ -10,27 +10,31 @@ export default function getMarriageMicrodata(
   if (act.act_type !== 'шлюб') {
     throw new Error('Wrong act_type: ' + act.act_type);
   }
-  const groom = getBaseMicrodata(act.participants['наречений']!);
+  const groom = getBaseMicrodata(
+    act.participants.find(({ role }) => role === 'наречений')!,
+  );
   if (
-    act.participants['батько нареченого'] ||
-    act.participants['мати нареченого']
+    act.participants.find(({ role }) => role === 'батько нареченого') ||
+    act.participants.find(({ role }) => role === 'мати нареченого')
   ) {
     groom.parent = [
       getBaseMicrodata(
-        (act.participants['батько нареченого'] ||
-          act.participants['мати нареченого'])!,
+        (act.participants.find(({ role }) => role === 'батько нареченого') ||
+          act.participants.find(({ role }) => role === 'мати нареченого'))!,
       ),
     ];
   }
-  const bride = getBaseMicrodata(act.participants['наречена']!);
+  const bride = getBaseMicrodata(
+    act.participants.find(({ role }) => role === 'наречена')!,
+  );
   if (
-    act.participants['батько нареченої'] ||
-    act.participants['мати нареченої']
+    act.participants.find(({ role }) => role === 'батько нареченої') ||
+    act.participants.find(({ role }) => role === 'мати нареченої')
   ) {
     bride.parent = [
       getBaseMicrodata(
-        (act.participants['батько нареченої'] ||
-          act.participants['мати нареченої'])!,
+        (act.participants.find(({ role }) => role === 'батько нареченої') ||
+          act.participants.find(({ role }) => role === 'мати нареченої'))!,
       ),
     ];
   }
@@ -43,7 +47,7 @@ export default function getMarriageMicrodata(
       ...settlement,
     },
     object: bride,
-    participants: Object.values(act.participants)
+    participants: act.participants
       .filter(({ role }) => role.includes('поручитель'))
       .map(getBaseMicrodata),
   };

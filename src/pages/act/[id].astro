@@ -102,7 +102,7 @@ switch (act.act_type) {
     <h2>Учасники</h2>
     <ul>
       {
-        Object.values(act.participants).map((participant) => (
+        act.participants.map((participant) => (
           <li>
             <strong>{participant.role}:</strong>{' '}
             <ParticipantName  participant={participant} />

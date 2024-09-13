@@ -10,44 +10,39 @@ export default function getBirthMicrodata(
   if (act.act_type !== 'народження') {
     throw new Error('Wrong act_type: ' + act.act_type);
   }
-  const newlyBorn = act.participants['дитина'];
+  const newlyBorn = act.participants.find(({ role }) => role === 'дитина');
   if (!newlyBorn) {
     throw new Error('No baby in birth');
   }
+  const godfather = act.participants.find(({ role }) => role === 'хрещений');
   const godParents: Person[] = [];
-  if (act.participants['хрещений']) {
-    const godfather = getBaseMicrodata(act.participants['хрещений']);
-    if (
-      act.participants['батько хрещеного'] ||
-      act.participants['мати хрещеного']
-    ) {
-      godfather.parent = [
-        getBaseMicrodata(
-          (act.participants['батько хрещеного'] ||
-            act.participants['мати хрещеного'])!,
-        ),
-      ];
+  if (godfather) {
+    const godfatherMicrodata = getBaseMicrodata(godfather);
+    const godfatherParent = act.participants.find(
+      ({ role }) => role === 'батько хрещеного' || role === 'мати хрещеного',
+    );
+    if (godfatherParent) {
+      godfatherMicrodata.parent = [getBaseMicrodata(godfatherParent)];
     }
-    godParents.push(godfather);
+    godParents.push(godfatherMicrodata);
   }
 
-  if (act.participants['хрещена']) {
-    const godmother = getBaseMicrodata(act.participants['хрещена']);
-    if (
-      act.participants['батько хрещеної'] ||
-      act.participants['мати хрещеної']
-    ) {
-      godmother.parent = [
-        getBaseMicrodata(
-          (act.participants['батько хрещеної'] ||
-            act.participants['мати хрещеної'])!,
-        ),
-      ];
+  const godmother = act.participants.find(({ role }) => role === 'хрещена');
+  if (godmother) {
+    const godmotherMicrodata = getBaseMicrodata(godmother);
+    const godmotherParent = act.participants.find(
+      ({ role }) => role === 'батько хрещеного' || role === 'мати хрещеного',
+    );
+    if (godmotherParent) {
+      godmotherMicrodata.parent = [getBaseMicrodata(godmotherParent)];
     }
-    if (act.participants['чоловік хрещеної']) {
-      godmother.spouse = getBaseMicrodata(act.participants['чоловік хрещеної']);
+    const godmotherSpouse = act.participants.find(
+      ({ role }) => role === 'чоловік хрещеної',
+    );
+    if (godmotherSpouse) {
+      godmotherMicrodata.spouse = getBaseMicrodata(godmotherSpouse);
     }
-    godParents.push(godmother);
+    godParents.push(godmotherMicrodata);
   }
   return {
     ...getBaseMicrodata(newlyBorn),
@@ -57,7 +52,10 @@ export default function getBirthMicrodata(
       ...settlement,
     },
     knows: godParents,
-    parent: [act.participants['батько'], act.participants['мати']]
+    parent: [
+      act.participants.find(({ role }) => role === 'батько'),
+      act.participants.find(({ role }) => role === 'мати'),
+    ]
       .filter(Boolean)
       .map((parent) => getBaseMicrodata(parent!)),
   };
