@@ -11,7 +11,9 @@ export const actSchema = z.object({
   description: nonEmptyString,
   number: z.number().min(1),
   objectID: nonEmptyString,
-  page: nonEmptyString.transform((input) => Number.parseInt(input)),
+  page: z
+    .union([nonEmptyString, z.number().min(1)])
+    .transform((input) => Number.parseInt(`${input}`)),
   participants: z
     .array(participantSchema)
     .refine((input) => input.length > 0, {
