@@ -10,7 +10,8 @@
     "astro": "astro",
     "populate-algolia": "tsx ./src/populate-algolia/index.ts",
     "deploy": "surge ./dist --domain politanky.surge.sh",
-    "pull-data": "tsx ./src/pull-data/index.ts"
+    "pull-data": "tsx ./src/pull-data/index.ts",
+    "test": "jest"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.3",
@@ -37,8 +38,10 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "globals": "^15.9.0",
+    "jest": "^29.7.0",
     "prettier": "^3.3.3",
     "surge": "^0.24.6",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.0",
     "typescript-eslint": "^8.4.0"
   }
