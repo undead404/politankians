@@ -11,16 +11,11 @@ import getMarriageMicrodata from '../../ld/marriage-microdata';
 import type { Act } from '../../schemas/act';
 import convertParishRegistersToActs from '../../utils/convert-parish-registers-to-acts';
 import formatDate from '../../utils/format-date';
-import convertConfessionalListsToActs from '../../utils/convert-confessional-list-to-acts';
 
 export const getStaticPaths = (async () => {
   const parishRegisters = await getCollection('parish-register-tables');
-  const confessionLists = await getCollection('confessional-lists');
 
-  const acts = [
-    ...convertParishRegistersToActs(parishRegisters.map(({ data }) => data)),
-    ...convertConfessionalListsToActs(confessionLists.map(({ data }) => data)),
-  ];
+  const acts = convertParishRegistersToActs(parishRegisters.map(({ data }) => data))
   return acts.map((act) => ({
     params: {
       id: act.objectID,

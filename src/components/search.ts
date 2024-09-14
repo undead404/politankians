@@ -9,8 +9,9 @@ import {
 } from 'instantsearch.js/es/widgets';
 import { z } from 'astro/zod';
 
-import getContext from '../utils/get-context.js';
 import { nonEmptyString } from '../schemas/non-empty-string.js';
+import getContext from '../utils/get-context.js';
+import getHitPath from '../utils/get-hit-path.ts';
 
 const ACT_TYPE_CLASSES = {
   відспівування: 'memorial-service',
@@ -55,7 +56,7 @@ search.addWidgets([
             class=${(ACT_TYPE_CLASSES as Record<string, string>)[
               hit.act_type as string
             ]}
-            href="/act/${hit.objectID}"
+            href="${getHitPath(hit)}"
             ><h2>${components.Highlight({ hit, attribute: 'title' })}</h2>
             <p>${components.Snippet({ hit, attribute: 'description' })}</p>
           </a>

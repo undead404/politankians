@@ -2,14 +2,10 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection, getEntry } from 'astro:content';
 
-import Layout from '../../components/layout.astro';
-import Ld from '../../components/ld.astro';
+import ConfessionalList from '../../components/confessional-list.astro';
+import ParishRegister from '../../components/parish-register.astro';
 import TitledLink from '../../components/titled-link.astro';
 import getArchiveItemMicrodata from '../../ld/archive-item-microdata';
-import convertConfessionalListsToActs from '../../utils/convert-confessional-list-to-acts';
-import convertParishRegistersToActs from '../../utils/convert-parish-registers-to-acts';
-import formatDate from '../../utils/format-date';
-import getParticipantFullName from '../../utils/get-participant-full-name';
 import { ArchiveItem } from '../../schemas/archive-item';
 
 export const getStaticPaths = (async () => {
@@ -27,167 +23,33 @@ export interface Props {
   item: ArchiveItem;
 }
 
-async function getActs(item: ArchiveItem, itemId: string) {
-  switch (item.genre) {
-    case 'Confessional list': {
-      const confessionalList = await getEntry('confessional-lists', itemId);
-      return convertConfessionalListsToActs([confessionalList.data]);
-    }
-    case 'Parish register': {
-      const parishRegister = await getEntry('parish-register-tables', itemId);
-      return convertParishRegistersToActs([parishRegister.data]);
-    }
-    default: {
-      throw new Error('Unknown archive item genre');
-    }
-  }
-}
 const { item } = Astro.props;
 const { id: itemId } = Astro.params;
-const acts = await getActs(item, itemId);
 const archive = await getEntry('archives', item.archive);
 const microdata = getArchiveItemMicrodata(item, archive.data);
 ---
+{
+  item.genre === 'Confessional list' && (
+    <ConfessionalList item={item} itemId={itemId} microdata={microdata}>
+      <p>
+        Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />,{' '}
+        {item.archivedAt.map((scanUrl) => (
+          <TitledLink href={scanUrl} />
+        ))}
+      </p>
+    </ParishRegister>
+  )
+}
 
-<Layout title={itemId}>
-  <style slot="head">
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 2rem;
-    }
-    th,
-    td {
-      padding: 0.75rem;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-    th {
-      background-color: #4caf50;
-      color: white;
-      font-family: 'Georgia', serif;
-      text-align: center;
-    }
-    tr.act-even {
-      filter: brightness(0.95);
-    }
-    tr.confession.act-even {
-      background-color: #d3d3d345;
-    }
-    tr:hover {
-      filter: brightness(0.9);
-    }
-    a {
-      text-decoration: none;
-      color: #4caf50;
-      font-weight: bold;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .memorial-service {
-      background-color: #ffe6e6; /* Light red */
-    }
-    .confirmation {
-      background-color: #cce5ff; /* Light blue */
-    }
-    .birth {
-      background-color: #ccffcc; /* Light green */
-    }
-    .death {
-      background-color: #f2f2f2; /* Light gray */
-    }
-    .baptism {
-      background-color: #fff2cc; /* Light yellow */
-    }
-    .marriage {
-      background-color: #e6ccff; /* Light purple */
-    }
-  </style>
-  <Ld microdata={microdata} slot="head" />
-  <p lang="ru">{item.title}</p>
-  <p>
-    Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />, {
-      item.archivedAt.map((scanUrl) => <TitledLink href={scanUrl} />)
-    }
-  </p>
-  <table>
-    <thead>
-      <tr>
-        {item.genre === 'Confessional list' && <th>Примітка</th>}
-        {item.genre !== 'Confessional list' && <th>Тип</th>}
-        {item.genre !== 'Confessional list' && <th>Дата</th>}
-        {item.genre !== 'Confessional list' && <th>Роль</th>}
-        <th>Учасник</th>
-        <th>Розворот</th>
-        <th>Акт</th>
-        {item.genre !== 'Confessional list' && <th />}
-      </tr>
-    </thead>
-    <tbody>
-      {
-        acts.map((act, index) => {
-          const participants = act.participants;
-          const [firstParticipant, ...otherParticipants] = participants;
-          const actTypeClass = {
-            відспівування: 'memorial-service',
-            миропомазання: 'confirmation',
-            народження: 'birth',
-            смерть: 'death',
-            сповідь: 'confession',
-            хрещення: 'baptism',
-            шлюб: 'marriage',
-          }[act.act_type];
-          const isEven = index % 2 === 0;
-          return (
-            <>
-              <tr
-                class:list={[
-                  actTypeClass,
-                  { 'act-even': isEven, 'act-odd': !isEven },
-                ]}
-              >
-                {item.genre === 'Confessional list' && (
-                  <td>{firstParticipant.note}</td>
-                )}
-                {item.genre !== 'Confessional list' && (
-                  <td rowspan={participants.length}>{act.act_type}</td>
-                )}
-                {item.genre !== 'Confessional list' && (
-                  <td rowspan={participants.length}>{formatDate(act.date)}</td>
-                )}
-                {item.genre !== 'Confessional list' && (
-                  <td>{firstParticipant.role}</td>
-                )}
-                <td>{getParticipantFullName(firstParticipant)}</td>
-                <td rowspan={participants.length}>{act.page}</td>
-                <td rowspan={participants.length}>{act.number}</td>
-                {item.genre !== 'Confessional list' && (
-                  <td rowspan={participants.length}>
-                    <a href={`/act/${act.objectID}`}>Відкрити</a>
-                  </td>
-                )}
-              </tr>
-              {otherParticipants.map((participant) => (
-                <tr
-                  class:list={[
-                    actTypeClass,
-                    { 'act-even': isEven, 'act-odd': !isEven },
-                  ]}
-                >
-                  {item.genre === 'Confessional list' && (
-                    <td>{participant.note}</td>
-                  )}
-                  {item.genre !== 'Confessional list' && (
-                    <td>{participant.role}</td>
-                  )}
-                  <td>{getParticipantFullName(participant)}</td>
-                </tr>
-              ))}
-            </>
-          );
-        })
-      }
-    </tbody>
-  </table>
-</Layout>
+{
+  item.genre === 'Parish register' && (
+    <ParishRegister item={item} itemId={itemId} microdata={microdata}>
+      <p>
+        Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />,{' '}
+        {item.archivedAt.map((scanUrl) => (
+          <TitledLink href={scanUrl} />
+        ))}
+      </p>
+    </ParishRegister>
+  )
+}

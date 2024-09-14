@@ -1,0 +1,149 @@
+---
+import { getEntry } from 'astro:content';
+
+import type { ArchiveItem } from '../schemas/archive-item';
+import convertParishRegistersToActs from '../utils/convert-parish-registers-to-acts';
+import formatDate from '../utils/format-date';
+import getParticipantFullName from '../utils/get-participant-full-name';
+
+import Layout from './layout.astro';
+import Ld from './ld.astro';
+
+export interface Props {
+  item: ArchiveItem;
+  itemId: string;
+  microdata: unknown;
+}
+const { item, itemId, microdata } = Astro.props;
+const parishRegister = await getEntry('parish-register-tables', itemId);
+const acts = convertParishRegistersToActs([parishRegister.data]);
+---
+
+<Layout title={itemId}>
+  <style slot="head">
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+    th,
+    td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #4caf50;
+      color: white;
+      font-family: 'Georgia', serif;
+      text-align: center;
+    }
+    tr {
+      background-color: white;
+    }
+    tr.act-even {
+      filter: brightness(0.95);
+    }
+    tr.act-even:hover {
+        filter: brightness(1.2);
+    }
+    tr.confession.act-even {
+      background-color: #d3d3d345;
+    }
+    tr:hover {
+      filter: brightness(0.9);
+    }
+    a {
+      text-decoration: none;
+      color: #4caf50;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .memorial-service {
+      background-color: #ffe6e6; /* Light red */
+    }
+    .confirmation {
+      background-color: #cce5ff; /* Light blue */
+    }
+    .birth {
+      background-color: #ccffcc; /* Light green */
+    }
+    .death {
+      background-color: #f2f2f2; /* Light gray */
+    }
+    .baptism {
+      background-color: #fff2cc; /* Light yellow */
+    }
+    .marriage {
+      background-color: #e6ccff; /* Light purple */
+    }
+  </style>
+  <Ld microdata={microdata} slot="head" />
+  <p lang="ru">{item.title}</p>
+  <slot />
+  <table>
+    <thead>
+      <tr>
+        <th>Тип</th>
+        <th>Дата</th>
+        <th>Роль</th>
+        <th>Учасник</th>
+        <th>Розворот</th>
+        <th>Акт</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        acts.map((act, index) => {
+          const participants = act.participants;
+          const [firstParticipant, ...otherParticipants] = participants;
+          const actTypeClass = {
+            відспівування: 'memorial-service',
+            миропомазання: 'confirmation',
+            народження: 'birth',
+            смерть: 'death',
+            сповідь: 'confession',
+            хрещення: 'baptism',
+            шлюб: 'marriage',
+          }[act.act_type];
+          const isEven = index % 2 === 0;
+          return (
+            <>
+              <tr
+                class:list={[
+                  actTypeClass,
+                  { 'act-even': isEven, 'act-odd': !isEven },
+                ]}
+                id={`act-${index +1}`}
+              >
+                <td rowspan={participants.length}>{act.act_type}</td>
+                <td rowspan={participants.length}>{formatDate(act.date)}</td>
+                <td>{firstParticipant.role}</td>
+                <td>{getParticipantFullName(firstParticipant)}</td>
+                <td rowspan={participants.length}>{act.page}</td>
+                <td rowspan={participants.length}>{act.number}</td>
+                <td rowspan={participants.length}>
+                  <a href={`/act/${act.objectID}`}>Відкрити</a>
+                </td>
+              </tr>
+              {otherParticipants.map((participant) => (
+                <tr
+                  class:list={[
+                    actTypeClass,
+                    { 'act-even': isEven, 'act-odd': !isEven },
+                  ]}
+                >
+                  <td>{participant.role}</td>
+                  <td>{getParticipantFullName(participant)}</td>
+                </tr>
+              ))}
+            </>
+          );
+        })
+      }
+    </tbody>
+  </table>
+</Layout>
