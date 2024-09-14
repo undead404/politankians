@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "esModuleInterop": true,
+    "exactOptionalPropertyTypes": false,
+    "module": "NodeNext",
+    "moduleResolution": "Node",
+    "plugins": [
+      {
+        "name": "@astrojs/ts-plugin"
+      }
+    ],
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+  ],
+  "extends": "astro/tsconfigs/strictest",
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.astro",
+    "./*.ts"
+  ]
+}
