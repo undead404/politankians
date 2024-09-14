@@ -7,7 +7,7 @@ import ParishRegister from '../../components/parish-register.astro';
 import TitledLink from '../../components/titled-link.astro';
 import getArchiveItemMicrodata from '../../ld/archive-item-microdata';
 import { ArchiveItem } from '../../schemas/archive-item';
-import { getCollection, getEntry } from '../../services/astro-content'
+import { getCollection, getEntry } from '../../services/astro-content';
 
 export const getStaticPaths = (async () => {
   const archiveItems = await getCollection('archive-items');
@@ -38,15 +38,15 @@ const [, fonds, series, archiveItemNumber] = (itemId as any).split('-');
 <Layout title={itemId}>
   <slot name="head" slot="head" />
   <p>
-    {archive.data.title}, фонд {fonds}, опис {series}, справа {
-      archiveItemNumber
-    }
+    <a href={archive.data.url}>{archive.data.title}</a>, фонд {fonds}, опис {
+      series
+    }, справа {archiveItemNumber}
   </p>
   {
     item.genre === 'Confessional list' && (
       <ConfessionalList item={item} itemId={itemId} microdata={microdata}>
         <p>
-          Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />,{' '}
+          Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />{' '}
           {item.archivedAt.map((scanUrl) => (
             <TitledLink href={scanUrl} />
           ))}
@@ -59,7 +59,7 @@ const [, fonds, series, archiveItemNumber] = (itemId as any).split('-');
     item.genre === 'Parish register' && (
       <ParishRegister item={item} itemId={itemId} microdata={microdata}>
         <p>
-          Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />,{' '}
+          Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />{' '}
           {item.archivedAt.map((scanUrl) => (
             <TitledLink href={scanUrl} />
           ))}
