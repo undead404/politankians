@@ -1,43 +1,43 @@
 <header>
-    <style>
+  <style>
+    header {
+      background-image: url('/DSC04737.JPG');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    .site-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      margin-left: 1rem;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .home-link {
+      font-weight: bold;
+    }
+    @media (max-width: 768px) {
       header {
-        background-image: url('/DSC04737.JPG');
-        background-size: cover;
-        background-position: center;
-        color: white;
-        padding: 2rem;
-        text-align: center;
+        flex-direction: column;
+        align-items: flex-start;
       }
       .site-title {
-        font-size: 2rem;
-        font-weight: bold;
-        margin: 0;
+        margin-bottom: 1rem;
       }
-      nav a {
-        color: white;
-        text-decoration: none;
-        font-size: 1rem;
-        margin-left: 1rem;
-      }
-      nav a:hover {
-        text-decoration: underline;
-      }
-      .home-link {
-        font-weight: bold;
-      }
-      @media (max-width: 768px) {
-        header {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-        .site-title {
-          margin-bottom: 1rem;
-        }
-      }
-    </style>
-    <div class="site-title">Політанчани</div>
-    <nav>
-      <a href='/' class="home-link">Перейти на головну</a>
-      <a href="/archive-item">Список проіндексованих архівних справ</a>
-    </nav>
-  </header>
+    }
+  </style>
+  <div class="site-title">Політанчани</div>
+  <nav>
+    <a href="/" class="home-link">Перейти на головну</a>
+    <a href="/archive-item">Список проіндексованих архівних справ</a>
+  </nav>
+</header>

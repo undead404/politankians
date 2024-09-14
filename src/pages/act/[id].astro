@@ -1,5 +1,4 @@
 ---
-import { getCollection, getEntry } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 
 import Layout from '../../components/layout.astro';
@@ -9,6 +8,7 @@ import getBirthMicrodata from '../../ld/birth-microdata';
 import getDeathMicrodata from '../../ld/death-microdata';
 import getMarriageMicrodata from '../../ld/marriage-microdata';
 import type { Act } from '../../schemas/act';
+import { getCollection, getEntry } from '../../services/astro-content'
 import convertParishRegistersToActs from '../../utils/convert-parish-registers-to-acts';
 import formatDate from '../../utils/format-date';
 

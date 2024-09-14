@@ -1,21 +1,22 @@
 ---
-import { getCollection } from 'astro:content';
-
 import Layout from '../../components/layout.astro';
 import TitledLink from '../../components/titled-link.astro';
+import { getCollection } from '../../services/astro-content';
 
 const archiveItems = await getCollection('archive-items');
 const parishRegisterTables = await getCollection('parish-register-tables');
 const confessionalLists = await getCollection('confessional-lists');
 const archiveItemTuples = archiveItems.map((archiveItem) => [
-  archiveItem, archiveItem.data.genre ==='Parish register' ? 
-  parishRegisterTables.find(({ id }) => id === archiveItem.id) : confessionalLists.find(({ id }) => id === archiveItem.id),
+  archiveItem,
+  archiveItem.data.genre === 'Parish register'
+    ? parishRegisterTables.find(({ id }) => id === archiveItem.id)
+    : confessionalLists.find(({ id }) => id === archiveItem.id),
 ]);
 
 const ARCHIVE_ITEM_TYPES = {
   'Confessional list': 'Сповідний розпис',
-  'Parish register': "Метрична книга"
-}
+  'Parish register': 'Метрична книга',
+};
 ---
 
 <Layout title="Включені проіндексовані архівні справи">
@@ -64,13 +65,16 @@ const ARCHIVE_ITEM_TYPES = {
       flex-wrap: wrap;
       gap: 0.5rem;
     }
+    td.genre {
+      text-wrap: wrap;
+    }
   </style>
   <table>
     <thead>
       <tr>
         <th>Архівна справа</th>
         <th>Поселення</th>
-        <th>Представлені роки</th>
+        <th>Роки</th>
         <th>Різновид</th>
         <th></th>
         <th></th>
@@ -81,20 +85,20 @@ const ARCHIVE_ITEM_TYPES = {
         archiveItemTuples.map(([archiveItem, parishRegisterTable]) => (
           <tr>
             <th scope="row">
-              <a href={`/archive-item/${archiveItem.id}`}>
-                {archiveItem.id}
-              </a>
+              <a href={`/archive-item/${archiveItem.id}`}>{archiveItem.id}</a>
             </th>
             <td>{parishRegisterTable.data.settlements}</td>
             <td>{parishRegisterTable.data.years}</td>
-            <td>{ARCHIVE_ITEM_TYPES[archiveItem.data.genre]}</td>
+            <td class="genre">{ARCHIVE_ITEM_TYPES[archiveItem.data.genre]}</td>
             <td>
               <TitledLink href={archiveItem.data.gssUrl} />
             </td>
             <td>
-              <div class="flex-wrapper">{archiveItem.data.archivedAt.map((scanUrl) => (
-                <TitledLink href={scanUrl} />
-              ))}</div>
+              <div class="flex-wrapper">
+                {archiveItem.data.archivedAt.map((scanUrl) => (
+                  <TitledLink href={scanUrl} />
+                ))}
+              </div>
             </td>
           </tr>
         ))

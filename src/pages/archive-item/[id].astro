@@ -1,12 +1,13 @@
 ---
 import type { GetStaticPaths } from 'astro';
-import { getCollection, getEntry } from 'astro:content';
 
 import ConfessionalList from '../../components/confessional-list.astro';
+import Layout from '../../components/layout.astro';
 import ParishRegister from '../../components/parish-register.astro';
 import TitledLink from '../../components/titled-link.astro';
 import getArchiveItemMicrodata from '../../ld/archive-item-microdata';
 import { ArchiveItem } from '../../schemas/archive-item';
+import { getCollection, getEntry } from '../../services/astro-content'
 
 export const getStaticPaths = (async () => {
   const archiveItems = await getCollection('archive-items');
@@ -19,6 +20,10 @@ export const getStaticPaths = (async () => {
   }));
 }) satisfies GetStaticPaths;
 
+export interface Params {
+  id: string;
+}
+
 export interface Props {
   item: ArchiveItem;
 }
@@ -27,29 +32,39 @@ const { item } = Astro.props;
 const { id: itemId } = Astro.params;
 const archive = await getEntry('archives', item.archive);
 const microdata = getArchiveItemMicrodata(item, archive.data);
+const [, fonds, series, archiveItemNumber] = (itemId as any).split('-');
 ---
-{
-  item.genre === 'Confessional list' && (
-    <ConfessionalList item={item} itemId={itemId} microdata={microdata}>
-      <p>
-        Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />,{' '}
-        {item.archivedAt.map((scanUrl) => (
-          <TitledLink href={scanUrl} />
-        ))}
-      </p>
-    </ParishRegister>
-  )
-}
 
-{
-  item.genre === 'Parish register' && (
-    <ParishRegister item={item} itemId={itemId} microdata={microdata}>
-      <p>
-        Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />,{' '}
-        {item.archivedAt.map((scanUrl) => (
-          <TitledLink href={scanUrl} />
-        ))}
-      </p>
-    </ParishRegister>
-  )
-}
+<Layout title={itemId}>
+  <slot name="head" slot="head" />
+  <p>
+    {archive.data.title}, фонд {fonds}, опис {series}, справа {
+      archiveItemNumber
+    }
+  </p>
+  {
+    item.genre === 'Confessional list' && (
+      <ConfessionalList item={item} itemId={itemId} microdata={microdata}>
+        <p>
+          Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />,{' '}
+          {item.archivedAt.map((scanUrl) => (
+            <TitledLink href={scanUrl} />
+          ))}
+        </p>
+      </ConfessionalList>
+    )
+  }
+
+  {
+    item.genre === 'Parish register' && (
+      <ParishRegister item={item} itemId={itemId} microdata={microdata}>
+        <p>
+          Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />,{' '}
+          {item.archivedAt.map((scanUrl) => (
+            <TitledLink href={scanUrl} />
+          ))}
+        </p>
+      </ParishRegister>
+    )
+  }
+</Layout>
