@@ -56,7 +56,7 @@ describe('getMarriageTitle', () => {
         ({ role }) => role !== 'наречений',
       ),
     };
-    expect(() => getMarriageTitle(actWithoutGroom)).toThrowError(
+    expect(() => getMarriageTitle(actWithoutGroom)).toThrow(
       `No groom in this act: ${mockAct.objectID}`,
     );
   });
@@ -68,7 +68,7 @@ describe('getMarriageTitle', () => {
         ({ role }) => role !== 'наречена',
       ),
     };
-    expect(() => getMarriageTitle(actWithoutBride)).toThrowError(
+    expect(() => getMarriageTitle(actWithoutBride)).toThrow(
       `No bride in this act: ${mockAct.objectID}`,
     );
   });

@@ -18,7 +18,7 @@ describe('getMarriageMicrodata', () => {
       description: 'Birth record',
       number: 1,
       objectID: '1',
-      page: 1,
+      page: '1',
       participants: [],
       settlement: 'Dreamland City',
       title: 'Birth Act',
@@ -37,7 +37,7 @@ describe('getMarriageMicrodata', () => {
       description: 'Marriage record',
       number: 1,
       objectID: '1',
-      page: 1,
+      page: '1',
       participants: [
         {
           age: '30',

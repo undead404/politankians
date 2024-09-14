@@ -17,7 +17,7 @@ describe('getDeathMicrodata', () => {
       description: 'Birth record',
       number: 1,
       objectID: '1',
-      page: 1,
+      page: '1',
       participants: [],
       settlement: 'Dreamland City',
       title: 'Birth Act',
@@ -36,7 +36,7 @@ describe('getDeathMicrodata', () => {
       description: 'Death record',
       number: 1,
       objectID: '1',
-      page: 1,
+      page: '1',
       participants: [],
       settlement: 'Dreamland City',
       title: 'Death Act',
@@ -55,7 +55,7 @@ describe('getDeathMicrodata', () => {
       description: 'Death record',
       number: 1,
       objectID: '1',
-      page: 1,
+      page: '1',
       participants: [
         {
           age: '70',

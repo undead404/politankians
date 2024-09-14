@@ -10,7 +10,7 @@ describe('getBirthMicrodata', () => {
     description: 'Birth record',
     number: 1,
     objectID: '12345',
-    page: 1,
+    page: '1',
     participants: [
       {
         role: 'дитина',
