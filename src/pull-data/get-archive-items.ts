@@ -1,7 +1,7 @@
 import { readdir, readFile } from 'fs/promises';
 import path from 'path';
 
-import { archiveItemSchema } from '../schemas/archive-item.ts';
+import { archiveItemSchema } from '../schemas/archive-item.js';
 
 const ARCHIVE_ITEMS_FOLDER = './src/content/archive-items';
 

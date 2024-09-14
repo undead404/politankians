@@ -1,4 +1,4 @@
-import type { Participant } from '../schemas/participant.ts';
+import type { Participant } from '../schemas/participant.js';
 
 export default function participantsHaveRole(
   participants: Participant[],

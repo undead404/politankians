@@ -1,5 +1,5 @@
-import type { ActType } from '../schemas/act_type.ts';
-import type { ParishRegisterRow } from '../schemas/parish-register-row.ts';
+import type { ActType } from '../schemas/act_type.js';
+import type { ParishRegisterRow } from '../schemas/parish-register-row.js';
 
 const typeKeyMapping: Record<ParishRegisterRow['act_type'], string> = {
   відспівування: 'ml',
@@ -11,13 +11,13 @@ const typeKeyMapping: Record<ParishRegisterRow['act_type'], string> = {
   шлюб: 'me',
 };
 
-interface ArchiveItemRow {
+export interface ArchiveItemRow {
   act: number;
   act_type: ActType;
   archive: string;
   fonds: string;
   item: string;
-  page: number;
+  page: string;
   series: string;
 }
 

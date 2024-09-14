@@ -2,11 +2,11 @@ import { z } from 'astro/zod';
 
 import { nonEmptyString } from './non-empty-string.js';
 
-const LOOSE_DATE_REGEXP = /\d{4}(?:-\d{2}(?:-\d{2})?)?/;
+const LOOSE_DATE_REGEXP = /^\d{4}(?:-\d{2}(?:-\d{2})?)?$/;
 
 export const archiveItemSchema = z.object({
   archive: z.enum(['ДАХмО']),
-  archivedAt: z.array(nonEmptyString).min(1),
+  archivedAt: z.array(nonEmptyString),
   csvUrl: nonEmptyString,
   dateCreated: z.string().regex(LOOSE_DATE_REGEXP),
   dateModified: z.string().regex(LOOSE_DATE_REGEXP).optional(),

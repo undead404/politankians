@@ -1,5 +1,5 @@
 import downloadAndConvertToJSON from './download-and-convert-to-json.js';
-import getArchiveItems from './get-archive-items.ts';
+import getArchiveItems from './get-archive-items.js';
 
 // Main function to read URLs from file and process them
 

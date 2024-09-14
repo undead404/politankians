@@ -3,7 +3,7 @@ import { z } from 'astro/zod';
 import { actTypeSchema } from './act_type.js';
 import { nonEmptyString } from './non-empty-string.js';
 import { participantSchema } from './participant.js';
-import participantsHaveRole from '../utils/participants-have-role.ts';
+import participantsHaveRole from '../utils/participants-have-role.js';
 
 export const actSchema = z.object({
   act_type: actTypeSchema,
@@ -11,14 +11,10 @@ export const actSchema = z.object({
   description: nonEmptyString,
   number: z.number().min(1),
   objectID: nonEmptyString,
-  page: z
-    .union([nonEmptyString, z.number().min(1)])
-    .transform((input) => Number.parseInt(`${input}`)),
+  page: nonEmptyString,
   participants: z
     .array(participantSchema)
-    .refine((input) => input.length > 0, {
-      message: 'An act must have at least one participant',
-    })
+    .min(1)
     .refine(
       (input) => {
         if (
@@ -26,6 +22,7 @@ export const actSchema = z.object({
           (participantsHaveRole(input, 'наречений') ||
             participantsHaveRole(input, 'наречена'))
         ) {
+          console.log(input.map(({ role }) => role));
           return false;
         }
         if (
@@ -33,12 +30,14 @@ export const actSchema = z.object({
           (participantsHaveRole(input, 'наречений') ||
             participantsHaveRole(input, 'наречена'))
         ) {
+          console.log(input.map(({ role }) => role));
           return false;
         }
         if (
           participantsHaveRole(input, 'померла особа') &&
           participantsHaveRole(input, 'дитина')
         ) {
+          console.log(input.map(({ role }) => role));
           return false;
         }
         return true;

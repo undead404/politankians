@@ -1,32 +1,14 @@
-import _ from 'lodash';
 import { z } from 'astro/zod';
 
-import {
-  parishRegisterRowSchema,
-  type ParishRegisterRow,
-} from './parish-register-row.ts';
-import getRowArchiveItemId from '../utils/get-row-archive-item-id.ts';
+import getRowArchiveItemId from '../utils/get-row-archive-item-id.js';
+import getSettlements from '../utils/get-settlements.js';
+import getYears from '../utils/get-years.js';
 
-function getSettlements(rows: ParishRegisterRow[]) {
-  return _.uniqBy(rows, 'settlement')
-    .map((row) => row.settlement)
-    .join(', ');
-}
-
-function getYears(rows: ParishRegisterRow[]) {
-  if (rows.length === 0) {
-    throw new Error('No rows supplied');
-  }
-  const firstRow = _.minBy(rows, (row) => row.date.slice(0, 4));
-  const lastRow = _.maxBy(rows, (row) => row.date.slice(0, 4));
-  if (firstRow!.date.slice(0, 4) === lastRow!.date.slice(0, 4)) {
-    return `${firstRow!.date.slice(0, 4)}`;
-  }
-  return `${firstRow!.date.slice(0, 4)}-${lastRow!.date.slice(0, 4)}`;
-}
+import { parishRegisterRowSchema } from './parish-register-row.js';
 
 export const parishRegisterSchema = z
   .array(parishRegisterRowSchema)
+  .min(1)
   .refine(
     (rows) => {
       const firstRow = rows.at(0);

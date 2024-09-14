@@ -1,10 +1,11 @@
-import getActId from './get-act-id.ts';
-import getActTitle from '../populate-algolia/get-act-title.ts';
-import getParticipantFullName from './get-participant-full-name.ts';
-import type { ParishRegisterRow } from '../schemas/parish-register-row.ts';
-import { actSchema, type Act } from '../schemas/act.ts';
-import type { ParishRegister } from '../schemas/parish-register.ts';
-import type { Participant } from '../schemas/participant.ts';
+import type { ParishRegisterRow } from '../schemas/parish-register-row.js';
+import { actSchema, type Act } from '../schemas/act.js';
+import type { ParishRegister } from '../schemas/parish-register.js';
+import type { Participant } from '../schemas/participant.js';
+
+import getActTitle from './act-title/index.js';
+import getActId from './get-act-id.js';
+import getParticipantFullName from './get-participant-full-name.js';
 
 export default function convertParishRegistersToActs(
   parishRegisters: ParishRegister[],

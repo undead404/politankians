@@ -1,13 +1,14 @@
 import { z } from 'astro/zod';
-
-import { actTypeSchema } from './act_type.ts';
-import { nonEmptyString } from './non-empty-string.ts';
 import _ from 'lodash';
+
+import { actTypeSchema } from './act_type.js';
+import { nonEmptyString } from './non-empty-string.js';
+import { numericString } from './numeric-string.js';
 
 export const parishRegisterRowSchema = z
   .object({
-    Акт: nonEmptyString.transform((input) => Number.parseInt(input)),
-    Аркуш: nonEmptyString.transform((input) => Number.parseInt(input)),
+    Акт: numericString,
+    Аркуш: nonEmptyString,
     Архів: nonEmptyString,
     Вік: z.optional(z.string()),
     'Дата події': nonEmptyString.transform((input) => {

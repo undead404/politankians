@@ -1,4 +1,10 @@
-const esModules = ['astro/zod'].join('|');
+const ES_MODULES = [
+  'astro/zod',
+  'data-uri-to-buffer',
+  'fetch-blob',
+  'formdata-polyfill',
+  'node-fetch',
+].join('|');
 
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 export default {
@@ -14,5 +20,5 @@ export default {
       { isolatedModules: true, useESM: true, tsconfig: './tsconfig.jest.json' },
     ],
   },
-  transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
+  transformIgnorePatterns: [`/node_modules/(?!${ES_MODULES})`],
 };

@@ -1,10 +1,10 @@
-import getFamilyTitle from '../populate-algolia/get-act-title.ts';
-import getParticipantFullName from './get-participant-full-name.ts';
+import type { Participant } from '../schemas/participant.js';
+import { actSchema, type Act } from '../schemas/act.js';
+import type { ConfessionalList } from '../schemas/confessional-list.js';
 
-import type { Participant } from '../schemas/participant.ts';
-import { actSchema, type Act } from '../schemas/act.ts';
-import type { ConfessionalList } from '../schemas/confessional-list.ts';
-import getActId from './get-act-id.ts';
+import getActTitle from './act-title/index.js';
+import getActId from './get-act-id.js';
+import getParticipantFullName from './get-participant-full-name.js';
 
 export default function convertConfessionalListsToActs(
   confessionalLists: ConfessionalList[],
@@ -55,7 +55,7 @@ export default function convertConfessionalListsToActs(
 
   const actsWithTitles = Object.values(actRegister).map((act) => ({
     ...act,
-    title: getFamilyTitle(act),
+    title: getActTitle(act),
   }));
   if (actsWithTitles.length === 0) {
     throw new Error('no acts');

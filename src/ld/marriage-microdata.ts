@@ -1,7 +1,7 @@
 import type { Act } from '../schemas/act.js';
 import getBaseMicrodata from './participant-base-microdata.js';
 import type { MarryAction } from './types.js';
-import type { Settlement } from '../schemas/settlement.ts';
+import type { Settlement } from '../schemas/settlement.js';
 
 export default function getMarriageMicrodata(
   act: Act,

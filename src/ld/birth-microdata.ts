@@ -1,5 +1,5 @@
 import type { Act } from '../schemas/act.js';
-import type { Settlement } from '../schemas/settlement.ts';
+import type { Settlement } from '../schemas/settlement.js';
 import getBaseMicrodata from './participant-base-microdata.js';
 import type { Person } from './types.js';
 

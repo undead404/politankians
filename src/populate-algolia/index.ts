@@ -1,8 +1,8 @@
-import { confessionalListSchema } from '../schemas/confessional-list.ts';
-import { parishRegisterSchema } from '../schemas/parish-register.ts';
-import convertConfessionalListsToActs from '../utils/convert-confessional-list-to-acts.ts';
-import convertParishRegistersToActs from '../utils/convert-parish-registers-to-acts.ts';
-import getTables from './get-tables.ts';
+import { confessionalListSchema } from '../schemas/confessional-list.js';
+import { parishRegisterSchema } from '../schemas/parish-register.js';
+import convertConfessionalListsToActs from '../utils/convert-confessional-list-to-acts.js';
+import convertParishRegistersToActs from '../utils/convert-parish-registers-to-acts.js';
+import getTables from './get-tables.js';
 import populateIndex from './populate-index.js';
 
 try {

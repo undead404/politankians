@@ -3,7 +3,7 @@ import { nonEmptyString } from './non-empty-string.js';
 
 export const archiveSchema = z.object({
   address: nonEmptyString,
-  currenciesAccepted: z.array(nonEmptyString).min(1),
+  currenciesAccepted: z.array(nonEmptyString),
   email: z.string().email(),
   foundingDate: z.string().regex(/\d{4}/),
   openingHours: nonEmptyString,

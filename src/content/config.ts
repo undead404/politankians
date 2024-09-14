@@ -1,10 +1,10 @@
 import { defineCollection } from 'astro:content';
 
-import { archiveSchema } from '../schemas/archive.ts';
-import { archiveItemSchema } from '../schemas/archive-item.ts';
-import { confessionalListSchema } from '../schemas/confessional-list.ts';
-import { parishRegisterSchema } from '../schemas/parish-register.ts';
-import { settlementSchema } from '../schemas/settlement.ts';
+import { archiveSchema } from '../schemas/archive.js';
+import { archiveItemSchema } from '../schemas/archive-item.js';
+import { confessionalListSchema } from '../schemas/confessional-list.js';
+import { parishRegisterSchema } from '../schemas/parish-register.js';
+import { settlementSchema } from '../schemas/settlement.js';
 
 const archivesCollection = defineCollection({
   type: 'data',

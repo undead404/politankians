@@ -1,6 +1,7 @@
 import path from 'path';
 
 import fs from 'fs-extra';
+import fetch from 'node-fetch';
 
 import parseCsv from '../utils/parse-csv.js';
 
