@@ -33,7 +33,7 @@ describe('getConfessionTitle', () => {
 
   it('should return the correct confession title', () => {
     const result = getConfessionTitle(mockAct);
-    expect(result).toBe('сповідь (Test note John Doe Smith)');
+    expect(result).toBe('сповідь, 2023-09-14 (Test note John Doe Smith)');
   });
 
   it('should handle missing note gracefully', () => {
@@ -47,6 +47,6 @@ describe('getConfessionTitle', () => {
       ],
     };
     const result = getConfessionTitle(actWithoutNote);
-    expect(result).toBe('сповідь (John Doe Smith)');
+    expect(result).toBe('сповідь, 2023-09-14 (John Doe Smith)');
   });
 });
