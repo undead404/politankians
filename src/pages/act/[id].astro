@@ -34,6 +34,9 @@ const [archive, fonds, series, item] = act.objectID.split('-');
 const itemId = [archive, fonds, series, item].join('-');
 
 const settlement = await getEntry('settlements', act.settlement);
+if (!settlement) {
+  throw new Error('No settlement: '+ act.settlement)
+}
 let microdata: unknown;
 switch (act.act_type) {
   case 'народження':

@@ -1,4 +1,4 @@
-import { defineCollection } from 'astro:content';
+import { defineCollection } from 'astro/content/runtime';
 
 import { archiveSchema } from '../schemas/archive.js';
 import { archiveItemSchema } from '../schemas/archive-item.js';

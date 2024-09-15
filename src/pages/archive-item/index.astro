@@ -6,7 +6,10 @@ import { getCollection } from '../../services/astro-content';
 const archiveItems = await getCollection('archive-items');
 const parishRegisterTables = await getCollection('parish-register-tables');
 const confessionalLists = await getCollection('confessional-lists');
-const archiveItemTuples = archiveItems.map((archiveItem) => [
+const archiveItemTuples: [
+  (typeof archiveItems)[0],
+  (typeof parishRegisterTables)[0] | (typeof confessionalLists)[0] | undefined,
+][] = archiveItems.map((archiveItem) => [
   archiveItem,
   archiveItem.data.genre === 'Parish register'
     ? parishRegisterTables.find(({ id }) => id === archiveItem.id)
@@ -82,13 +85,13 @@ const ARCHIVE_ITEM_TYPES = {
     </thead>
     <tbody>
       {
-        archiveItemTuples.map(([archiveItem, parishRegisterTable]) => (
+        archiveItemTuples.map(([archiveItem, table]) => (
           <tr>
             <th scope="row">
               <a href={`/archive-item/${archiveItem.id}`}>{archiveItem.id}</a>
             </th>
-            <td>{parishRegisterTable.data.settlements}</td>
-            <td>{parishRegisterTable.data.years}</td>
+            <td>{table!.data.settlements}</td>
+            <td>{table!.data.years}</td>
             <td class="genre">{ARCHIVE_ITEM_TYPES[archiveItem.data.genre]}</td>
             <td>
               <TitledLink href={archiveItem.data.gssUrl} />
