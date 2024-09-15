@@ -1,10 +1,10 @@
 ---
 import type { ArchiveItem } from '../schemas/archive-item';
-import { getEntry } from '../services/astro-content'
+import { getEntry } from '../services/astro-content';
 import convertConfessionalListsToActs from '../utils/convert-confessional-list-to-acts';
-import getParticipantFullName from '../utils/get-participant-full-name';
 
 import Ld from './ld.astro';
+import ParticipantName from './participant-name.astro';
 
 export interface Props {
   item: ArchiveItem;
@@ -113,7 +113,9 @@ const acts = convertConfessionalListsToActs([confessionalList!.data]);
               id={`act-${index + 1}`}
             >
               <td>{firstParticipant.note}</td>
-              <td>{getParticipantFullName(firstParticipant)}</td>
+              <td>
+                <ParticipantName act={act} participant={firstParticipant} />
+              </td>
               <td rowspan={participants.length}>{act.page}</td>
               <td rowspan={participants.length}>{act.number}</td>
             </tr>
@@ -125,7 +127,9 @@ const acts = convertConfessionalListsToActs([confessionalList!.data]);
                 ]}
               >
                 <td>{participant.note}</td>
-                <td>{getParticipantFullName(participant)}</td>
+                <td>
+                  <ParticipantName act={act} participant={participant} />
+                </td>
               </tr>
             ))}
           </>

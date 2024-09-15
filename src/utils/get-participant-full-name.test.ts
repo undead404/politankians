@@ -66,4 +66,15 @@ describe('getParticipantFullName', () => {
     };
     expect(getParticipantFullName(participant)).toBe('John');
   });
+
+  it('should consider withAge argument', () => {
+    const participant: Participant = {
+      age: '12',
+      given_name: 'John',
+      middle_name: '',
+      role: 'Speaker',
+      surname: '',
+    };
+    expect(getParticipantFullName(participant, false)).toBe('John');
+  });
 });

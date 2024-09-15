@@ -1,6 +1,9 @@
 import type { Participant } from '../schemas/participant.js';
 
-export default function getParticipantFullName(participant: Participant) {
+export default function getParticipantFullName(
+  participant: Participant,
+  withAge = true,
+) {
   const name = [
     participant.surname,
     participant.given_name,
@@ -8,7 +11,7 @@ export default function getParticipantFullName(participant: Participant) {
   ]
     .filter(Boolean)
     .join(' ');
-  if (participant.age) {
+  if (withAge && participant.age) {
     return `${name} (${participant.age})`;
   }
   return name;

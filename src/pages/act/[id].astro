@@ -8,14 +8,16 @@ import getBirthMicrodata from '../../ld/birth-microdata';
 import getDeathMicrodata from '../../ld/death-microdata';
 import getMarriageMicrodata from '../../ld/marriage-microdata';
 import type { Act } from '../../schemas/act';
-import { getCollection, getEntry } from '../../services/astro-content'
+import { getCollection, getEntry } from '../../services/astro-content';
 import convertParishRegistersToActs from '../../utils/convert-parish-registers-to-acts';
 import formatDate from '../../utils/format-date';
 
 export const getStaticPaths = (async () => {
   const parishRegisters = await getCollection('parish-register-tables');
 
-  const acts = convertParishRegistersToActs(parishRegisters.map(({ data }) => data))
+  const acts = convertParishRegistersToActs(
+    parishRegisters.map(({ data }) => data),
+  );
   return acts.map((act) => ({
     params: {
       id: act.objectID,
@@ -35,7 +37,7 @@ const itemId = [archive, fonds, series, item].join('-');
 
 const settlement = await getEntry('settlements', act.settlement);
 if (!settlement) {
-  throw new Error('No settlement: '+ act.settlement)
+  throw new Error('No settlement: ' + act.settlement);
 }
 let microdata: unknown;
 switch (act.act_type) {
@@ -106,7 +108,7 @@ switch (act.act_type) {
         act.participants.map((participant) => (
           <li>
             <strong>{participant.role}:</strong>{' '}
-            <ParticipantName participant={participant} />
+            <ParticipantName act={act} participant={participant} />
             {participant.note && (
               <div class="participant-note">{participant.note}</div>
             )}
