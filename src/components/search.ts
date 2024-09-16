@@ -57,7 +57,7 @@ search.addWidgets([
               hit.act_type as string
             ]}
             href="${getHitPath(hit)}"
-            ><h2>${components.Highlight({ hit, attribute: 'title' })}</h2>
+            ><h2>${components.Snippet({ hit, attribute: 'title' })}</h2>
             <p>${components.Snippet({ hit, attribute: 'description' })}</p>
           </a>
         `;
