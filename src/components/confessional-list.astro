@@ -2,6 +2,7 @@
 import type { ArchiveItem } from '../schemas/archive-item';
 import { getEntry } from '../services/astro-content';
 import convertConfessionalListsToActs from '../utils/convert-confessional-list-to-acts';
+import getActParticipants from '../utils/get-act-participants';
 
 import Ld from './ld.astro';
 import ParticipantName from './participant-name.astro';
@@ -91,7 +92,7 @@ const acts = convertConfessionalListsToActs([confessionalList!.data]);
   <tbody>
     {
       acts.map((act, index) => {
-        const participants = act.participants;
+        const participants = getActParticipants(act);
         const [firstParticipant, ...otherParticipants] = participants;
         const actTypeClass = {
           відспівування: 'memorial-service',

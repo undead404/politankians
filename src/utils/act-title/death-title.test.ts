@@ -14,7 +14,7 @@ describe('getDeathTitle', () => {
     number: 1,
     objectID: '12345',
     page: '1',
-    participants: [
+    primaryParticipants: [
       {
         age: '70',
         given_name: 'Jane',
@@ -24,7 +24,9 @@ describe('getDeathTitle', () => {
         surname: 'Smith',
       },
     ],
+    secondaryParticipants: [],
     settlement: 'Test settlement',
+    tertiaryParticipants: [],
     title: 'Test title',
     year: 2023,
   };
@@ -42,12 +44,7 @@ describe('getDeathTitle', () => {
   it('should throw an error if there is no deceased participant', () => {
     const actWithoutDeceased = {
       ...mockAct,
-      participants: [
-        {
-          ...mockAct.participants[0]!,
-          role: 'сповідник',
-        },
-      ],
+      primaryParticipants: [],
     };
     expect(() => getDeathTitle(actWithoutDeceased)).toThrow(
       `No deceased in this act: ${mockAct.objectID}`,

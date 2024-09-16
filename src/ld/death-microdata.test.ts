@@ -18,8 +18,10 @@ describe('getDeathMicrodata', () => {
       number: 1,
       objectID: '1',
       page: '1',
-      participants: [],
+      primaryParticipants: [],
+      secondaryParticipants: [],
       settlement: 'Dreamland City',
+      tertiaryParticipants: [],
       title: 'Birth Act',
       year: 2023,
     };
@@ -37,8 +39,10 @@ describe('getDeathMicrodata', () => {
       number: 1,
       objectID: '1',
       page: '1',
-      participants: [],
+      primaryParticipants: [],
+      secondaryParticipants: [],
       settlement: 'Dreamland City',
+      tertiaryParticipants: [],
       title: 'Death Act',
       year: 2023,
     };
@@ -56,7 +60,7 @@ describe('getDeathMicrodata', () => {
       number: 1,
       objectID: '1',
       page: '1',
-      participants: [
+      primaryParticipants: [
         {
           age: '70',
           given_name: 'John',
@@ -65,6 +69,10 @@ describe('getDeathMicrodata', () => {
           role: 'померла особа',
           surname: 'Smith',
         },
+      ],
+      secondaryParticipants: [],
+      settlement: 'Dreamland City',
+      tertiaryParticipants: [
         {
           age: '40',
           given_name: 'Jane',
@@ -98,7 +106,6 @@ describe('getDeathMicrodata', () => {
           surname: 'Smith',
         },
       ],
-      settlement: 'Dreamland City',
       title: 'Death Act',
       year: 2023,
     };

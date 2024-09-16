@@ -9,7 +9,7 @@ describe('actSchema', () => {
       number: 1,
       objectID: '12345',
       page: '10',
-      participants: [
+      primaryParticipants: [
         {
           role: 'дитина',
           given_name: 'Іван',
@@ -17,7 +17,9 @@ describe('actSchema', () => {
           surname: 'Іванишин',
         },
       ],
+      secondaryParticipants: [],
       settlement: 'Київ',
+      tertiaryParticipants: [],
       title: 'Народження Івана',
       year: 2023,
     };
@@ -33,7 +35,7 @@ describe('actSchema', () => {
       number: 1,
       objectID: '12345',
       page: '10',
-      participants: [
+      primaryParticipants: [
         {
           role: 'дитина',
           given_name: 'Іван',
@@ -57,7 +59,7 @@ describe('actSchema', () => {
       number: 1,
       objectID: '12345',
       page: '10',
-      participants: [],
+      primaryParticipants: [],
       settlement: 'Київ',
       title: 'Народження Івана',
       year: 2023,
@@ -74,7 +76,7 @@ describe('actSchema', () => {
       number: 1,
       objectID: '12345',
       page: '10',
-      participants: [
+      primaryParticipants: [
         {
           role: 'дитина',
           given_name: 'Іван',

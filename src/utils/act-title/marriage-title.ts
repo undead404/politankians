@@ -3,11 +3,13 @@ import formatDate from '../format-date.js';
 import getParticipantFullName from '../get-participant-full-name.js';
 
 export default function getMarriageTitle(act: Act) {
-  const groom = act.participants.find(({ role }) => role === 'наречений');
+  const groom = act.primaryParticipants.find(
+    ({ role }) => role === 'наречений',
+  );
   if (!groom) {
     throw new Error(`No groom in this act: ${act.objectID}`);
   }
-  const bride = act.participants.find(({ role }) => role === 'наречена');
+  const bride = act.primaryParticipants.find(({ role }) => role === 'наречена');
   if (!bride) {
     throw new Error(`No bride in this act: ${act.objectID}`);
   }

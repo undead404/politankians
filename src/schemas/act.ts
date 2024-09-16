@@ -12,9 +12,9 @@ export const actSchema = z.object({
   number: z.number().min(1),
   objectID: nonEmptyString,
   page: nonEmptyString,
-  participants: z
+  primaryParticipants: z
     .array(participantSchema)
-    .min(1)
+    .min(1, 'Every act must have some primary participant')
     .refine(
       (input) => {
         if (
@@ -22,7 +22,6 @@ export const actSchema = z.object({
           (participantsHaveRole(input, 'наречений') ||
             participantsHaveRole(input, 'наречена'))
         ) {
-          console.log(input.map(({ role }) => role));
           return false;
         }
         if (
@@ -30,21 +29,21 @@ export const actSchema = z.object({
           (participantsHaveRole(input, 'наречений') ||
             participantsHaveRole(input, 'наречена'))
         ) {
-          console.log(input.map(({ role }) => role));
           return false;
         }
         if (
           participantsHaveRole(input, 'померла особа') &&
           participantsHaveRole(input, 'дитина')
         ) {
-          console.log(input.map(({ role }) => role));
           return false;
         }
         return true;
       },
       { message: 'Неприпустима комбінація учасників' },
     ),
+  secondaryParticipants: z.array(participantSchema),
   settlement: nonEmptyString,
+  tertiaryParticipants: z.array(participantSchema),
   title: nonEmptyString,
   year: z.number().min(1500).max(new Date().getFullYear()),
 });

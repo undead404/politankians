@@ -14,7 +14,7 @@ describe('getBirthTitle', () => {
     number: 1,
     objectID: '12345',
     page: '1',
-    participants: [
+    primaryParticipants: [
       {
         age: '1',
         given_name: 'John',
@@ -24,7 +24,9 @@ describe('getBirthTitle', () => {
         surname: 'Smith',
       },
     ],
+    secondaryParticipants: [],
     settlement: 'Test settlement',
+    tertiaryParticipants: [],
     title: 'Test title',
     year: 2023,
   };
@@ -40,7 +42,7 @@ describe('getBirthTitle', () => {
   });
 
   it('should throw an error if no baptized participant is found', () => {
-    const invalidAct = { ...mockAct, participants: [] };
+    const invalidAct = { ...mockAct, primaryParticipants: [] };
     expect(() => getBirthTitle(invalidAct)).toThrow(
       'No baptized in this act: 12345',
     );

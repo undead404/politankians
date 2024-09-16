@@ -24,8 +24,10 @@ describe('getParticipantSearchQuery', () => {
     number: 1,
     objectID: '12345',
     page: '1',
-    participants: [participant],
+    primaryParticipants: [participant],
+    secondaryParticipants: [],
     settlement: 'Test settlement',
+    tertiaryParticipants: [],
     title: 'Test title',
     year: 2023,
   };
@@ -58,14 +60,12 @@ describe('getParticipantSearchQuery', () => {
     const confessionAct: Act = {
       ...act,
       act_type: 'сповідь',
-      participants: [
-        { ...participant, surname: 'Petrov' },
-        { ...participant, surname: '' },
-      ],
+      primaryParticipants: [{ ...participant, surname: 'Petrov' }],
+      secondaryParticipants: [{ ...participant, surname: '' }],
     };
     mockCleanSurname.mockReturnValue('Petrov');
     const result = getParticipantSearchQuery(
-      confessionAct.participants[1]!,
+      confessionAct.secondaryParticipants[0]!,
       confessionAct,
     );
     expect(result).toBe('Petrov Ivan Ivanovich');

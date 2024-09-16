@@ -11,6 +11,7 @@ import type { Act } from '../../schemas/act';
 import { getCollection, getEntry } from '../../services/astro-content';
 import convertParishRegistersToActs from '../../utils/convert-parish-registers-to-acts';
 import formatDate from '../../utils/format-date';
+import getActParticipants from '../../utils/get-act-participants';
 
 export const getStaticPaths = (async () => {
   const parishRegisters = await getCollection('parish-register-tables');
@@ -105,7 +106,7 @@ switch (act.act_type) {
     <h2>Учасники</h2>
     <ul>
       {
-        act.participants.map((participant) => (
+        getActParticipants(act).map((participant) => (
           <li>
             <strong>{participant.role}:</strong>{' '}
             <ParticipantName act={act} participant={participant} />

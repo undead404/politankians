@@ -5,6 +5,7 @@ import type { ConfessionalList } from '../schemas/confessional-list.js';
 import getActTitle from './act-title/index.js';
 import getActId from './get-act-id.js';
 import getParticipantFullName from './get-participant-full-name.js';
+import addParticipant from './add-participant.ts';
 
 export default function convertConfessionalListsToActs(
   confessionalLists: ConfessionalList[],
@@ -27,8 +28,10 @@ export default function convertConfessionalListsToActs(
       number: row.act,
       objectID: currentFamilyId,
       page: row.page,
-      participants: [],
+      primaryParticipants: [],
+      secondaryParticipants: [],
       settlement: row.settlement,
+      tertiaryParticipants: [],
       title: '',
       year: Number.parseInt(row.date),
     };
@@ -41,7 +44,7 @@ export default function convertConfessionalListsToActs(
       surname: row.surname,
       note: row.note,
     };
-    currentFamily.participants.push(participant);
+    addParticipant(currentFamily, participant);
     // Update the description field
     const descriptionAddition = `${row.note} ${getParticipantFullName(participant)}`;
     if (currentFamily.description) {

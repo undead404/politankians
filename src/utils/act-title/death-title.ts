@@ -3,7 +3,7 @@ import formatDate from '../format-date.js';
 import getParticipantFullName from '../get-participant-full-name.js';
 
 export default function getDeathTitle(act: Act) {
-  const deceased = act.participants.find(
+  const deceased = act.primaryParticipants.find(
     ({ role }) => role === 'померла особа',
   );
   if (!deceased) {

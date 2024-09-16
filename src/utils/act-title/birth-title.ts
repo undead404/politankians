@@ -3,7 +3,7 @@ import formatDate from '../format-date.js';
 import getParticipantFullName from '../get-participant-full-name.js';
 
 export default function getBirthTitle(act: Act) {
-  const baptized = act.participants.find(({ role }) =>
+  const baptized = act.primaryParticipants.find(({ role }) =>
     ['дитина', 'миропомазаний', 'миропомазана'].includes(role),
   );
   if (!baptized) {

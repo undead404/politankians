@@ -10,15 +10,19 @@ export default function getBirthMicrodata(
   if (act.act_type !== 'народження') {
     throw new Error('Wrong act_type: ' + act.act_type);
   }
-  const newlyBorn = act.participants.find(({ role }) => role === 'дитина');
+  const newlyBorn = act.primaryParticipants.find(
+    ({ role }) => role === 'дитина',
+  );
   if (!newlyBorn) {
     throw new Error('No baby in birth');
   }
-  const godfather = act.participants.find(({ role }) => role === 'хрещений');
+  const godfather = act.tertiaryParticipants.find(
+    ({ role }) => role === 'хрещений',
+  );
   const godParents: Person[] = [];
   if (godfather) {
     const godfatherMicrodata = getBaseMicrodata(godfather);
-    const godfatherParent = act.participants.find(
+    const godfatherParent = act.tertiaryParticipants.find(
       ({ role }) => role === 'батько хрещеного' || role === 'мати хрещеного',
     );
     if (godfatherParent) {
@@ -27,16 +31,18 @@ export default function getBirthMicrodata(
     godParents.push(godfatherMicrodata);
   }
 
-  const godmother = act.participants.find(({ role }) => role === 'хрещена');
+  const godmother = act.tertiaryParticipants.find(
+    ({ role }) => role === 'хрещена',
+  );
   if (godmother) {
     const godmotherMicrodata = getBaseMicrodata(godmother);
-    const godmotherParent = act.participants.find(
+    const godmotherParent = act.tertiaryParticipants.find(
       ({ role }) => role === 'батько хрещеного' || role === 'мати хрещеного',
     );
     if (godmotherParent) {
       godmotherMicrodata.parent = [getBaseMicrodata(godmotherParent)];
     }
-    const godmotherSpouse = act.participants.find(
+    const godmotherSpouse = act.tertiaryParticipants.find(
       ({ role }) => role === 'чоловік хрещеної',
     );
     if (godmotherSpouse) {
@@ -53,8 +59,8 @@ export default function getBirthMicrodata(
     },
     knows: godParents,
     parent: [
-      act.participants.find(({ role }) => role === 'батько'),
-      act.participants.find(({ role }) => role === 'мати'),
+      act.secondaryParticipants.find(({ role }) => role === 'батько'),
+      act.secondaryParticipants.find(({ role }) => role === 'мати'),
     ]
       .filter(Boolean)
       .map((parent) => getBaseMicrodata(parent!)),

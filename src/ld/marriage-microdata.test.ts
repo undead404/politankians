@@ -19,8 +19,10 @@ describe('getMarriageMicrodata', () => {
       number: 1,
       objectID: '1',
       page: '1',
-      participants: [],
+      primaryParticipants: [],
+      secondaryParticipants: [],
       settlement: 'Dreamland City',
+      tertiaryParticipants: [],
       title: 'Birth Act',
       year: 2023,
     };
@@ -38,7 +40,7 @@ describe('getMarriageMicrodata', () => {
       number: 1,
       objectID: '1',
       page: '1',
-      participants: [
+      primaryParticipants: [
         {
           age: '30',
           given_name: 'John',
@@ -55,6 +57,8 @@ describe('getMarriageMicrodata', () => {
           role: 'наречена',
           surname: 'Smith',
         },
+      ],
+      secondaryParticipants: [
         {
           age: '60',
           given_name: 'Michael',
@@ -87,6 +91,9 @@ describe('getMarriageMicrodata', () => {
           role: 'мати нареченої',
           surname: 'Smith',
         },
+      ],
+      settlement: 'Dreamland City',
+      tertiaryParticipants: [
         {
           age: '35',
           given_name: 'Paul',
@@ -96,7 +103,6 @@ describe('getMarriageMicrodata', () => {
           surname: 'Brown',
         },
       ],
-      settlement: 'Dreamland City',
       title: 'Marriage Act',
       year: 2023,
     };

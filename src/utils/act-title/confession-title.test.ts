@@ -12,7 +12,7 @@ describe('getConfessionTitle', () => {
     number: 1,
     objectID: '12345',
     page: '1',
-    participants: [
+    primaryParticipants: [
       {
         age: '30',
         given_name: 'John',
@@ -22,7 +22,9 @@ describe('getConfessionTitle', () => {
         surname: 'Smith',
       },
     ],
+    secondaryParticipants: [],
     settlement: 'Test settlement',
+    tertiaryParticipants: [],
     title: 'Test title',
     year: 2023,
   };
@@ -39,9 +41,9 @@ describe('getConfessionTitle', () => {
   it('should handle missing note gracefully', () => {
     const actWithoutNote: Act = {
       ...mockAct,
-      participants: [
+      primaryParticipants: [
         {
-          ...mockAct.participants[0]!,
+          ...mockAct.primaryParticipants[0]!,
           note: undefined,
         },
       ],

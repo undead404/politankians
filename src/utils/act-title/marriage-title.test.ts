@@ -14,7 +14,7 @@ describe('getMarriageTitle', () => {
     number: 1,
     objectID: '12345',
     page: '1',
-    participants: [
+    primaryParticipants: [
       {
         age: '30',
         given_name: 'John',
@@ -32,7 +32,9 @@ describe('getMarriageTitle', () => {
         surname: 'Doe',
       },
     ],
+    secondaryParticipants: [],
     settlement: 'Test settlement',
+    tertiaryParticipants: [],
     title: 'Test title',
     year: 2023,
   };
@@ -52,7 +54,7 @@ describe('getMarriageTitle', () => {
   it('should throw an error if there is no groom', () => {
     const actWithoutGroom = {
       ...mockAct,
-      participants: mockAct.participants.filter(
+      primaryParticipants: mockAct.primaryParticipants.filter(
         ({ role }) => role !== 'наречений',
       ),
     };
@@ -64,7 +66,7 @@ describe('getMarriageTitle', () => {
   it('should throw an error if there is no bride', () => {
     const actWithoutBride = {
       ...mockAct,
-      participants: mockAct.participants.filter(
+      primaryParticipants: mockAct.primaryParticipants.filter(
         ({ role }) => role !== 'наречена',
       ),
     };

@@ -1,0 +1,150 @@
+{
+  "settings": {
+    "minWordSizefor1Typo": 3,
+    "minWordSizefor2Typos": 6,
+    "hitsPerPage": 20,
+    "maxValuesPerFacet": 100,
+    "searchableAttributes": [
+      "unordered(title)",
+      "unordered(participants)",
+      "date",
+      "unordered(note)"
+    ],
+    "numericAttributesForFiltering": [
+      "year"
+    ],
+    "attributesToRetrieve": null,
+    "advancedSyntax": true,
+    "unretrievableAttributes": null,
+    "optionalWords": null,
+    "queryLanguages": [
+      "uk",
+      "ru"
+    ],
+    "attributesForFaceting": [
+      "searchable(act_type)"
+    ],
+    "attributesToSnippet": [
+      "description:10",
+      "title:10"
+    ],
+    "attributesToHighlight": null,
+    "paginationLimitedTo": 1000,
+    "attributeForDistinct": null,
+    "exactOnSingleWordQuery": "attribute",
+    "ranking": [
+      "typo",
+      "words",
+      "filters",
+      "proximity",
+      "attribute",
+      "exact",
+      "custom"
+    ],
+    "customRanking": [
+      "desc(date)"
+    ],
+    "separatorsToIndex": "",
+    "removeWordsIfNoResults": "allOptional",
+    "queryType": "prefixLast",
+    "highlightPreTag": "<em>",
+    "highlightPostTag": "</em>",
+    "alternativesAsExact": [
+      "ignorePlurals",
+      "singleWordSynonym"
+    ],
+    "renderingContent": {
+      "facetOrdering": {
+        "facets": {
+          "order": []
+        }
+      }
+    }
+  },
+  "rules": [],
+  "synonyms": [
+    {
+      "type": "onewaysynonym",
+      "input": "Олійник",
+      "synonyms": [
+        "Гуцолюк"
+      ],
+      "objectID": "syn-1726217247894-47"
+    },
+    {
+      "type": "synonym",
+      "synonyms": [
+        "Иван",
+        "Иоанн"
+      ],
+      "objectID": "syn-1726217200093-43"
+    },
+    {
+      "type": "synonym",
+      "synonyms": [
+        "Бартко",
+        "Варфоломей"
+      ],
+      "objectID": "syn-1726217165227-39"
+    },
+    {
+      "type": "synonym",
+      "synonyms": [
+        "Томко",
+        "Тимофей",
+        "Фома"
+      ],
+      "objectID": "syn-1726217143426-35"
+    },
+    {
+      "type": "onewaysynonym",
+      "input": "Панько",
+      "synonyms": [
+        "Комар"
+      ],
+      "objectID": "syn-1726217098770-28"
+    },
+    {
+      "type": "onewaysynonym",
+      "input": "Маліхатко",
+      "synonyms": [
+        "Луговый"
+      ],
+      "objectID": "syn-1726217078104-24"
+    },
+    {
+      "type": "onewaysynonym",
+      "input": "Доскоч",
+      "synonyms": [
+        "Судома"
+      ],
+      "objectID": "syn-1726217059051-20"
+    },
+    {
+      "type": "synonym",
+      "synonyms": [
+        "Матфей",
+        "Тимофей"
+      ],
+      "objectID": "syn-1726216740874-13"
+    },
+    {
+      "type": "onewaysynonym",
+      "input": "Івасик",
+      "synonyms": [
+        "Ивасык",
+        "Ивасов",
+        "Оликсына"
+      ],
+      "objectID": "syn-1726216723348-9"
+    },
+    {
+      "type": "onewaysynonym",
+      "input": "Білоус",
+      "synonyms": [
+        "Шаповал"
+      ],
+      "objectID": "syn-1726216697651-5"
+    }
+  ]
+}

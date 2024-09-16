@@ -18,7 +18,7 @@ describe('getActTitle', () => {
     number: 1,
     objectID: '12345',
     page: '1',
-    participants: [
+    primaryParticipants: [
       {
         age: '30',
         given_name: 'John',
@@ -36,7 +36,9 @@ describe('getActTitle', () => {
         surname: 'Doe',
       },
     ],
+    secondaryParticipants: [],
     settlement: 'Test settlement',
+    tertiaryParticipants: [],
     title: 'Test title',
     year: 2023,
   };

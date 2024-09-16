@@ -6,6 +6,7 @@ import type { Participant } from '../schemas/participant.js';
 import getActTitle from './act-title/index.js';
 import getActId from './get-act-id.js';
 import getParticipantFullName from './get-participant-full-name.js';
+import addParticipant from './add-participant.ts';
 
 export default function convertParishRegistersToActs(
   parishRegisters: ParishRegister[],
@@ -29,8 +30,10 @@ export default function convertParishRegistersToActs(
       number: row.act,
       objectID: currentActId,
       page: row.page,
-      participants: [],
+      primaryParticipants: [],
+      secondaryParticipants: [],
       settlement: row.settlement,
+      tertiaryParticipants: [],
       title: '',
       year: year,
     };
@@ -43,7 +46,7 @@ export default function convertParishRegistersToActs(
       surname: row.surname,
       note: row.note,
     };
-    currentAct.participants.push(participant);
+    addParticipant(currentAct, participant);
     // Update the description field
     const descriptionAddition = `${row.role}: ${getParticipantFullName(participant)}`;
     if (currentAct.description) {

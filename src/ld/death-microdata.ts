@@ -6,16 +6,20 @@ export default function getDeathMicrodata(act: Act, settlement: Settlement) {
   if (act.act_type !== 'смерть') {
     throw new Error('Wrong act_type: ' + act.act_type);
   }
-  const deceased = act.participants.find(
+  const deceased = act.primaryParticipants.find(
     ({ role }) => role === 'померла особа',
   );
   if (!deceased) {
     throw new Error('No deceased in death');
   }
-  const reporter = act.participants.find(({ role }) => role === 'заявник');
-  const father = act.participants.find(({ role }) => role === 'батько');
-  const mother = act.participants.find(({ role }) => role === 'мати');
-  const spouse = act.participants.find(({ role }) => role === 'чоловік');
+  const reporter = act.tertiaryParticipants.find(
+    ({ role }) => role === 'заявник',
+  );
+  const father = act.tertiaryParticipants.find(({ role }) => role === 'батько');
+  const mother = act.tertiaryParticipants.find(({ role }) => role === 'мати');
+  const spouse = act.tertiaryParticipants.find(
+    ({ role }) => role === 'чоловік',
+  );
   const data = {
     ...getBaseMicrodata(deceased),
     deathDate: act.date,

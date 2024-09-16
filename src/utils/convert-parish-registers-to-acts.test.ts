@@ -159,7 +159,7 @@ describe('convertParishRegistersToActs', () => {
       number: 1,
       objectID: 'ДАХмО-315-1-1-285-me-1',
       page: '285',
-      participants: [
+      primaryParticipants: [
         {
           age: '',
           role: 'наречений',
@@ -170,19 +170,21 @@ describe('convertParishRegistersToActs', () => {
         },
         {
           age: '',
-          role: 'батько нареченого',
-          given_name: 'Иванн',
-          middle_name: '',
-          surname: 'Ткач',
-          note: '',
-        },
-        {
-          age: '',
           role: 'наречена',
           given_name: 'Агафия',
           middle_name: 'Петрова',
           surname: 'Чернопиская',
           note: 'первым браком',
+        },
+      ],
+      secondaryParticipants: [
+        {
+          age: '',
+          role: 'батько нареченого',
+          given_name: 'Иванн',
+          middle_name: '',
+          surname: 'Ткач',
+          note: '',
         },
         {
           age: '',
@@ -204,7 +206,7 @@ describe('convertParishRegistersToActs', () => {
       number: 1,
       objectID: 'ДАХмО-315-1-1-286-dh-1',
       page: '286',
-      participants: [
+      primaryParticipants: [
         {
           age: '60',
           given_name: 'Тимофей',

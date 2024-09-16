@@ -11,13 +11,15 @@ describe('getBirthMicrodata', () => {
     number: 1,
     objectID: '12345',
     page: '1',
-    participants: [
+    primaryParticipants: [
       {
         role: 'дитина',
         given_name: 'Ivan',
         middle_name: 'Ivanovich',
         surname: 'Ivanov',
       },
+    ],
+    secondaryParticipants: [
       {
         role: 'батько',
         given_name: 'Petr',
@@ -30,6 +32,9 @@ describe('getBirthMicrodata', () => {
         middle_name: 'Ivanovna',
         surname: 'Ivanova',
       },
+    ],
+    settlement: 'Test Settlement',
+    tertiaryParticipants: [
       {
         role: 'хрещений',
         given_name: 'Sergey',
@@ -43,7 +48,6 @@ describe('getBirthMicrodata', () => {
         surname: 'Anatolieva',
       },
     ],
-    settlement: 'Test Settlement',
     title: 'Birth Act',
     year: 2023,
   };
@@ -63,7 +67,9 @@ describe('getBirthMicrodata', () => {
   it('should throw an error if no baby is found in participants', () => {
     const invalidAct = {
       ...mockAct,
-      participants: mockAct.participants.filter((p) => p.role !== 'дитина'),
+      primaryParticipants: mockAct.primaryParticipants.filter(
+        (p) => p.role !== 'дитина',
+      ),
     };
     expect(() => getBirthMicrodata(invalidAct, mockSettlement)).toThrow(
       'No baby in birth',

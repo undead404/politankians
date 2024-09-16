@@ -75,7 +75,7 @@ describe('convertConfessionalListsToActs', () => {
       number: 1,
       objectID: 'act-1',
       page: '1',
-      participants: [
+      primaryParticipants: [
         {
           age: '30',
           role: 'прихожанин',
@@ -84,6 +84,8 @@ describe('convertConfessionalListsToActs', () => {
           surname: 'Smith',
           note: 'Note 1',
         },
+      ],
+      secondaryParticipants: [
         {
           age: '25',
           role: 'прихожанин',
@@ -94,6 +96,7 @@ describe('convertConfessionalListsToActs', () => {
         },
       ],
       settlement: 'Some Settlement',
+      tertiaryParticipants: [],
       title: 'Act Title',
       year: 2023,
     });
