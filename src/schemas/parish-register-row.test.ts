@@ -42,6 +42,32 @@ describe('parishRegisterRowSchema', () => {
       });
     }
   });
+  it('should validate a correct parish register row with American date', () => {
+    const result = parishRegisterRowSchema.safeParse({
+      ...validRow,
+      'Дата події': '1/3/1800',
+    });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data).toEqual({
+        act: 1,
+        act_type: 'відспівування',
+        age: '89',
+        archive: 'ДАХмО',
+        date: '1800-01-03',
+        fonds: '315',
+        given_name: 'Михаил',
+        item: '6773',
+        middle_name: '',
+        note: undefined,
+        page: '561',
+        role: 'померла особа',
+        series: '1',
+        settlement: 'Політанки',
+        surname: 'Гуминюк',
+      });
+    }
+  });
 
   it('should throw an error for an invalid numeric string in "Акт"', () => {
     const invalidRow = {

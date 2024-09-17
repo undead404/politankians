@@ -12,7 +12,12 @@ export const parishRegisterRowSchema = z
     Архів: nonEmptyString,
     Вік: z.optional(z.string()),
     'Дата події': nonEmptyString.transform((input) => {
-      const [day, month, year] = input.split('.');
+      let day: string, month: string, year: string;
+      if (input.includes('/')) {
+        [month = '', day = '', year = ''] = input.split('/');
+      } else {
+        [day = '', month = '', year = ''] = input.split('.');
+      }
       return [year, month, day]
         .map((part) => _.padStart(part, 2, '0'))
         .join('-');

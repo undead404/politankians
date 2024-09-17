@@ -1,4 +1,6 @@
 ---
+import _ from 'lodash';
+
 import Layout from '../../components/layout.astro';
 import TitledLink from '../../components/titled-link.astro';
 import { getCollection } from '../../services/astro-content';
@@ -9,12 +11,15 @@ const confessionalLists = await getCollection('confessional-lists');
 const archiveItemTuples: [
   (typeof archiveItems)[0],
   (typeof parishRegisterTables)[0] | (typeof confessionalLists)[0] | undefined,
-][] = archiveItems.map((archiveItem) => [
-  archiveItem,
-  archiveItem.data.genre === 'Parish register'
-    ? parishRegisterTables.find(({ id }) => id === archiveItem.id)
-    : confessionalLists.find(({ id }) => id === archiveItem.id),
-]);
+][] = _.sortBy(
+  archiveItems.map((archiveItem) => [
+    archiveItem,
+    archiveItem.data.genre === 'Parish register'
+      ? parishRegisterTables.find(({ id }) => id === archiveItem.id)
+      : confessionalLists.find(({ id }) => id === archiveItem.id),
+  ]),
+  ['1.data.years'],
+);
 
 const ARCHIVE_ITEM_TYPES = {
   'Confessional list': 'Сповідний розпис',

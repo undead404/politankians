@@ -111,6 +111,16 @@ search.addWidgets([
         label: '1860-ті',
         start: 1860,
       },
+      {
+        end: 1879,
+        label: '1870-ті',
+        start: 1870,
+      },
+      {
+        end: 1889,
+        label: '1880-ті',
+        start: 1880,
+      },
     ],
   }),
 ]);
