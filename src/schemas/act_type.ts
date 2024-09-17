@@ -2,6 +2,7 @@ import { z } from 'astro/zod';
 
 export const actTypeSchema = z.enum([
   'відспівування',
+  'долучення',
   'миропомазання',
   'народження',
   'смерть',

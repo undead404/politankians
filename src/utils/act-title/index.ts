@@ -9,6 +9,7 @@ export default function getActTitle(act: Act) {
     case 'хрещення':
     case 'народження':
     case 'миропомазання':
+    case 'долучення':
       return getBirthTitle(act);
     case 'шлюб':
       return getMarriageTitle(act);

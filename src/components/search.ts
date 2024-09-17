@@ -15,6 +15,7 @@ import getHitPath from '../utils/get-hit-path.ts';
 
 const ACT_TYPE_CLASSES = {
   відспівування: 'memorial-service',
+  долучення: 'conversion',
   миропомазання: 'confirmation',
   народження: 'birth',
   смерть: 'death',

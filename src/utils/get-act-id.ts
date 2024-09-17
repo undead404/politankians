@@ -3,6 +3,7 @@ import type { ParishRegisterRow } from '../schemas/parish-register-row.js';
 
 const typeKeyMapping: Record<ParishRegisterRow['act_type'], string> = {
   відспівування: 'ml',
+  долучення: 'cv',
   миропомазання: 'cn',
   народження: 'bh',
   смерть: 'dh',

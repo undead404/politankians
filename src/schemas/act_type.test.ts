@@ -6,6 +6,7 @@ describe('actTypeSchema', () => {
   it('should validate correct act types', () => {
     const validActTypes = [
       'відспівування',
+      'долучення',
       'миропомазання',
       'народження',
       'смерть',
