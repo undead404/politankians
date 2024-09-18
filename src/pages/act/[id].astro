@@ -111,7 +111,7 @@ switch (act.act_type) {
             <strong>{participant.role}:</strong>{' '}
             <ParticipantName act={act} participant={participant} />
             {participant.note && (
-              <div class="participant-note">{participant.note}</div>
+              <p class="participant-note"><i>{participant.note}</i></p>
             )}
           </li>
         ))

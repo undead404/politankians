@@ -61,20 +61,14 @@ const acts = convertConfessionalListsToActs([confessionalList!.data]);
   .memorial-service {
     background-color: #ffe6e6; /* Light red */
   }
-  .confirmation {
-    background-color: #cce5ff; /* Light blue */
-  }
-  .birth {
-    background-color: #ccffcc; /* Light green */
-  }
-  .death {
-    background-color: #f2f2f2; /* Light gray */
-  }
-  .baptism {
-    background-color: #fff2cc; /* Light yellow */
-  }
-  .marriage {
-    background-color: #e6ccff; /* Light purple */
+  .participant-note {
+    background-color: #f9f9f9;
+    border-left: 4px solid #4caf50;
+    border-radius: 4px;
+    color: #555;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
   }
 </style>
 <Ld microdata={microdata} slot="head" />
@@ -94,22 +88,12 @@ const acts = convertConfessionalListsToActs([confessionalList!.data]);
       acts.map((act, index) => {
         const participants = getActParticipants(act);
         const [firstParticipant, ...otherParticipants] = participants;
-        const actTypeClass = {
-          відспівування: 'memorial-service',
-          долучення: 'conversion',
-          миропомазання: 'confirmation',
-          народження: 'birth',
-          смерть: 'death',
-          сповідь: 'confession',
-          хрещення: 'baptism',
-          шлюб: 'marriage',
-        }[act.act_type];
         const isEven = index % 2 === 0;
         return (
           <>
             <tr
               class:list={[
-                actTypeClass,
+                'confession',
                 { 'act-even': isEven, 'act-odd': !isEven },
               ]}
               id={`act-${index + 1}`}
@@ -117,6 +101,11 @@ const acts = convertConfessionalListsToActs([confessionalList!.data]);
               <td>{firstParticipant.role}</td>
               <td>
                 <ParticipantName act={act} participant={firstParticipant} />
+                {firstParticipant.note && (
+                  <p class="participant-note">
+                    <i>{firstParticipant.note}</i>
+                  </p>
+                )}
               </td>
               <td rowspan={participants.length}>{act.page}</td>
               <td rowspan={participants.length}>{act.number}</td>
@@ -124,13 +113,18 @@ const acts = convertConfessionalListsToActs([confessionalList!.data]);
             {otherParticipants.map((participant) => (
               <tr
                 class:list={[
-                  actTypeClass,
+                  'confession',
                   { 'act-even': isEven, 'act-odd': !isEven },
                 ]}
               >
                 <td>{participant.role}</td>
                 <td>
                   <ParticipantName act={act} participant={participant} />
+                  {participant.note && (
+                    <p class="participant-note">
+                      <i>{participant.note}</i>
+                    </p>
+                  )}
                 </td>
               </tr>
             ))}

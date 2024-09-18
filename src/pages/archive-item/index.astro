@@ -93,7 +93,12 @@ const ARCHIVE_ITEM_TYPES = {
         archiveItemTuples.map(([archiveItem, table]) => (
           <tr>
             <th scope="row">
-              <a href={`/archive-item/${archiveItem.id}`}>{archiveItem.id}</a>
+              <a
+                href={`/archive-item/${archiveItem.id}`}
+                title={archiveItem.data.title}
+              >
+                {archiveItem.id}
+              </a>
             </th>
             <td>{table!.data.settlements}</td>
             <td>{table!.data.years}</td>

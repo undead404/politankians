@@ -1,7 +1,6 @@
 ---
 import environment from '../environment';
 import Context from './context.astro';
-
 ---
 
 <div>
@@ -23,7 +22,7 @@ import Context from './context.astro';
     integrity="sha256-woeV7a4SRDsjDc395qjBJ4+ZhDdFn8AqswN1rlTO64E="
     crossorigin="anonymous"
   />
-  
+
   <style is:global>
     #search-box {
       margin-bottom: 1rem;
@@ -41,7 +40,7 @@ import Context from './context.astro';
       border-radius: 4px;
     }
     .ais-SearchBox-submit {
-      background-color: #4CAF50;
+      background-color: #4caf50;
       color: white;
       border: none;
       padding: 0.5rem 1rem;
@@ -55,7 +54,9 @@ import Context from './context.astro';
     .ais-PoweredBy {
       justify-content: center;
     }
-    #refinement-list, #refinement-list-year, #powered-by {
+    #refinement-list,
+    #refinement-list-year,
+    #powered-by {
       margin-bottom: 1rem;
     }
     .ais-RefinementList-item {
@@ -80,7 +81,7 @@ import Context from './context.astro';
     }
     .ais-Hits-item {
       background-color: white;
-      padding: 0!important;
+      padding: 0 !important;
       border: 1px solid #ddd;
       border-radius: 4px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -88,7 +89,7 @@ import Context from './context.astro';
     }
     .ais-Hits-item a {
       flex-grow: 1;
-      padding: 1.5rem!important;
+      padding: 1.5rem !important;
     }
     .ais-NumericMenu-list {
       display: flex;
@@ -115,13 +116,13 @@ import Context from './context.astro';
     .ais-Hits-item h2 {
       margin: 0 0 0.5rem 0;
       font-size: 1.2rem;
-      color: #4CAF50;
+      color: #4caf50;
     }
     .ais-Hits-item p {
       margin: 0;
       color: #555;
     }
-    
+
     .memorial-service {
       background-color: #ffe6e6; /* Light red */
     }
@@ -139,6 +140,9 @@ import Context from './context.astro';
     }
     .marriage {
       background-color: #e6ccff; /* Light purple */
+    }
+    .conversion {
+      background-color: #96c6ff; /* Soft blue */
     }
   </style>
 </div>

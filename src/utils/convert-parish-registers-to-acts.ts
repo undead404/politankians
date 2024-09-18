@@ -16,18 +16,24 @@ export default function convertParishRegistersToActs(
   let currentActNumber = 0;
   let currentActId: string;
   let currentActType: ParishRegisterRow['act_type'];
+  let currentActDate: string;
   rows.forEach((row) => {
-    if (row.act !== currentActNumber || currentActType !== row.act_type) {
+    if (
+      row.act !== currentActNumber ||
+      currentActType !== row.act_type ||
+      currentActDate !== row.date
+    ) {
       currentActId = getActId(row);
       currentActNumber = row.act;
       currentActType = row.act_type;
+      currentActDate = row.date;
     }
     const year = Number.parseInt(row.date.slice(0, 4));
     const currentAct: Act = actRegister[currentActId] || {
-      act_type: row.act_type,
-      date: row.date,
+      act_type: currentActType,
+      date: currentActDate,
       description: '',
-      number: row.act,
+      number: currentActNumber,
       objectID: currentActId,
       page: row.page,
       primaryParticipants: [],
