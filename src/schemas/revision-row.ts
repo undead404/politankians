@@ -33,12 +33,13 @@ export const revisionRowSchema = z.preprocess(
     age: z.optional(z.string()),
     archive: nonEmptyString,
     date: nonEmptyString.transform((input) => {
-      console.log(input);
       let day: string, month: string, year: string;
       if (input.includes('/')) {
         [month = '', day = '', year = ''] = input.split('/');
-      } else {
+      } else if (input.includes('.')) {
         [day = '', month = '', year = ''] = input.split('.');
+      } else {
+        return input;
       }
       return [year, month, day]
         .map((part) => _.padStart(part, 2, '0'))
