@@ -17,6 +17,7 @@ export default function getActTitle(act: Act) {
     case 'смерть':
       return getDeathTitle(act);
     case 'сповідь':
+    case 'ревізія':
       return getConfessionTitle(act);
     default:
       throw new Error(`Unknown act type: ${act.act_type}`);

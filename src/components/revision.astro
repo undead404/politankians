@@ -1,0 +1,136 @@
+---
+import type { ArchiveItem } from '../schemas/archive-item';
+import { getEntry } from '../services/astro-content';
+import convertRevisionsToActs from '../utils/convert-revisions-to-acts';
+import getActParticipants from '../utils/get-act-participants';
+
+import Ld from './ld.astro';
+import ParticipantName from './participant-name.astro';
+
+export interface Props {
+  item: ArchiveItem;
+  itemId: string;
+  microdata: unknown;
+}
+const { item, itemId, microdata } = Astro.props;
+const revision = await getEntry('revision-tables', itemId);
+const acts = convertRevisionsToActs([revision!.data]);
+---
+
+<style slot="head">
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+  }
+  th,
+  td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  th {
+    background-color: #4caf50;
+    color: white;
+    font-family: 'Georgia', serif;
+    text-align: center;
+  }
+  tr {
+    background-color: white;
+  }
+  tr.act-even {
+    filter: brightness(0.95);
+  }
+  tr.act-even:hover {
+    filter: brightness(1.2);
+  }
+  tr.confession.act-even {
+    background-color: #d3d3d345;
+  }
+  tr.act-odd:hover {
+    filter: brightness(0.9);
+  }
+  a {
+    text-decoration: none;
+    color: #4caf50;
+    font-weight: bold;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .memorial-service {
+    background-color: #ffe6e6; /* Light red */
+  }
+  .participant-note {
+    background-color: #f9f9f9;
+    border-left: 4px solid #4caf50;
+    border-radius: 4px;
+    color: #555;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+  }
+</style>
+<Ld microdata={microdata} slot="head" />
+<p lang="ru">{item.title}</p>
+<slot />
+<table>
+  <thead>
+    <tr>
+      <th>Примітка</th>
+      <th>Учасник</th>
+      <th>Розворот</th>
+      <th>Акт</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      acts.map((act, index) => {
+        const participants = getActParticipants(act);
+        const [firstParticipant, ...otherParticipants] = participants;
+        const isEven = index % 2 === 0;
+        return (
+          <>
+            <tr
+              class:list={[
+                'confession',
+                { 'act-even': isEven, 'act-odd': !isEven },
+              ]}
+              id={`act-${index + 1}`}
+            >
+              <td>{firstParticipant.role}</td>
+              <td>
+                <ParticipantName act={act} participant={firstParticipant} />
+                {firstParticipant.note && (
+                  <p class="participant-note">
+                    <i>{firstParticipant.note}</i>
+                  </p>
+                )}
+              </td>
+              <td rowspan={participants.length}>{act.page}</td>
+              <td rowspan={participants.length}>{act.number}</td>
+            </tr>
+            {otherParticipants.map((participant) => (
+              <tr
+                class:list={[
+                  'confession',
+                  { 'act-even': isEven, 'act-odd': !isEven },
+                ]}
+              >
+                <td>{participant.role}</td>
+                <td>
+                  <ParticipantName act={act} participant={participant} />
+                  {participant.note && (
+                    <p class="participant-note">
+                      <i>{participant.note}</i>
+                    </p>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </>
+        );
+      })
+    }
+  </tbody>
+</table>

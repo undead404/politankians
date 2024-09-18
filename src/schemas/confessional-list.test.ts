@@ -69,7 +69,7 @@ describe('confessionalListSchema', () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.errors[0]!.message).toBe(
-        'All rows in a parish register must belong to the same archive item',
+        'All rows in a confessional list must belong to the same archive item',
       );
     }
   });

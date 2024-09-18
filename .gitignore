@@ -25,3 +25,4 @@ pnpm-debug.log*
 
 src/content/parish-register-tables/*.json
 src/content/confessional-lists/*.json
+src/content/revision-tables/*.json

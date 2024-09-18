@@ -3,7 +3,7 @@ import { Participant } from '../schemas/participant.ts';
 import getParticipantImportance from './get-participant-importance.ts';
 
 export default function addParticipant(act: Act, participant: Participant) {
-  if (act.act_type === 'сповідь') {
+  if (act.act_type === 'сповідь' || act.act_type === 'ревізія') {
     if (act.primaryParticipants.length === 0) {
       act.primaryParticipants.push(participant);
       return;

@@ -4,13 +4,18 @@ import getRowArchiveItemId from '../utils/get-row-archive-item-id.js';
 import getSettlements from '../utils/get-settlements.js';
 import getYears from '../utils/get-years.js';
 
-import { confessionalListRowSchema } from './confessional-list-row.js';
+import { revisionRowSchema } from './revision-row.js';
 
-export const confessionalListSchema = z
-  .array(confessionalListRowSchema)
+export const revisionSchema = z
+  .array(revisionRowSchema)
+  //   .transform((rows) => rows.map((row) => revisionRowSchema.parse(row)))
   .refine(
     (rows) => {
       const firstRow = rows.at(0);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((firstRow as any)['Акт']) {
+        throw new Error('Did not transform...');
+      }
       if (!firstRow) {
         return false;
       }
@@ -20,8 +25,7 @@ export const confessionalListSchema = z
       );
     },
     {
-      message:
-        'All rows in a confessional list must belong to the same archive item',
+      message: 'All rows in a revision must belong to the same archive item',
     },
   )
   .transform((rows) => ({
@@ -35,4 +39,4 @@ export const confessionalListSchema = z
     return !!settlements && !!years;
   });
 
-export type ConfessionalList = z.infer<typeof confessionalListSchema>;
+export type Revision = z.infer<typeof revisionSchema>;

@@ -6,6 +6,7 @@ const typeKeyMapping: Record<ParishRegisterRow['act_type'], string> = {
   долучення: 'cv',
   миропомазання: 'cn',
   народження: 'bh',
+  ревізія: 'rn',
   смерть: 'dh',
   сповідь: 'cl',
   хрещення: 'bm',

@@ -4,6 +4,7 @@ import type { GetStaticPaths } from 'astro';
 import ConfessionalList from '../../components/confessional-list.astro';
 import Layout from '../../components/layout.astro';
 import ParishRegister from '../../components/parish-register.astro';
+import Revision from '../../components/revision.astro';
 import TitledLink from '../../components/titled-link.astro';
 import getArchiveItemMicrodata from '../../ld/archive-item-microdata';
 import { ArchiveItem } from '../../schemas/archive-item';
@@ -65,6 +66,18 @@ const [, fonds, series, archiveItemNumber] = (itemId as any).split('-');
           ))}
         </p>
       </ParishRegister>
+    )
+  }
+  {
+    item.genre === 'Revision' && (
+      <Revision item={item} itemId={itemId} microdata={microdata}>
+        <p>
+          Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />{' '}
+          {item.archivedAt.map((scanUrl) => (
+            <TitledLink href={scanUrl} />
+          ))}
+        </p>
+      </Revision>
     )
   }
 </Layout>

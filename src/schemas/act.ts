@@ -10,7 +10,7 @@ export const actSchema = z
     act_type: actTypeSchema,
     date: z.string().regex(/\d{4}(?:-\d{2}(?:-\d{2})?)?/),
     description: nonEmptyString,
-    number: z.number().min(1),
+    number: z.number(),
     objectID: nonEmptyString,
     page: nonEmptyString,
     primaryParticipants: z
@@ -49,7 +49,7 @@ export const actSchema = z
     year: z.number().min(1500).max(new Date().getFullYear()),
   })
   .refine((input) => {
-    if (input.act_type !== 'сповідь') {
+    if (input.act_type !== 'сповідь' && input.act_type !== 'ревізія') {
       return [
         ...input.primaryParticipants,
         ...input.secondaryParticipants,
