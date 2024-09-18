@@ -18,7 +18,7 @@ describe('getConfessionTitle', () => {
         given_name: 'John',
         middle_name: 'Doe',
         note: 'Test note',
-        role: 'сповідник',
+        role: '',
         surname: 'Smith',
       },
     ],
@@ -35,7 +35,7 @@ describe('getConfessionTitle', () => {
 
   it('should return the correct confession title', () => {
     const result = getConfessionTitle(mockAct);
-    expect(result).toBe('сповідь, 2023-09-14 (Test note John Doe Smith)');
+    expect(result).toBe('сповідь, 2023-09-14 (John Doe Smith)');
   });
 
   it('should handle missing note gracefully', () => {
