@@ -27,17 +27,6 @@ describe('participantSchema', () => {
     }
   });
 
-  it('should throw an error if role is an empty string', () => {
-    const invalidParticipant = { ...validParticipant, role: '' };
-    const result = participantSchema.safeParse(invalidParticipant);
-    expect(result.success).toBe(false);
-    if (!result.success) {
-      expect(result.error.errors[0]!.message).toBe(
-        'String must contain at least 1 character(s)',
-      );
-    }
-  });
-
   it('should validate a participant without optional fields', () => {
     const minimalParticipant = {
       given_name: 'Jane',

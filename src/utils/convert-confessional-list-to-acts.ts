@@ -38,7 +38,7 @@ export default function convertConfessionalListsToActs(
 
     const participant: Participant = {
       age: row.age,
-      role: 'прихожанин',
+      role: row.role,
       given_name: row.given_name,
       middle_name: row.middle_name,
       surname: row.surname,
@@ -46,7 +46,9 @@ export default function convertConfessionalListsToActs(
     };
     addParticipant(currentFamily, participant);
     // Update the description field
-    const descriptionAddition = `${row.note} ${getParticipantFullName(participant)}`;
+    const descriptionAddition = [row.role, getParticipantFullName(participant)]
+      .filter(Boolean)
+      .join(' ');
     if (currentFamily.description) {
       currentFamily.description += `;\n${descriptionAddition}`;
     } else {

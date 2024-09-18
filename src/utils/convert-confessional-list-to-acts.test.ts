@@ -32,6 +32,7 @@ describe('convertConfessionalListsToActs', () => {
           series: '1',
           item: '1',
           postal_code: '21000',
+          role: '',
         },
         {
           act: 1,
@@ -48,6 +49,7 @@ describe('convertConfessionalListsToActs', () => {
           series: '1',
           item: '1',
           postal_code: '21000',
+          role: 'жена его',
         },
       ],
       settlements: 'City, Town',
@@ -71,14 +73,14 @@ describe('convertConfessionalListsToActs', () => {
     expect(result[0]).toMatchObject({
       act_type: 'сповідь',
       date: '2023-01-01',
-      description: 'Note 1 John Smith;\nNote 2 Jane Smith',
+      description: 'John Smith;\nжена его Jane Smith',
       number: 1,
       objectID: 'act-1',
       page: '1',
       primaryParticipants: [
         {
           age: '30',
-          role: 'прихожанин',
+          role: '',
           given_name: 'John',
           middle_name: 'Doe',
           surname: 'Smith',
@@ -88,7 +90,7 @@ describe('convertConfessionalListsToActs', () => {
       secondaryParticipants: [
         {
           age: '25',
-          role: 'прихожанин',
+          role: 'жена его',
           given_name: 'Jane',
           middle_name: 'Doe',
           surname: 'Smith',

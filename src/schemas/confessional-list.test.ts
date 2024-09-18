@@ -17,6 +17,7 @@ describe('confessionalListSchema', () => {
       'Дата події': '1820',
       'Пошт. Індекс': '23542',
       'Поселення храму': 'Політанки',
+      Роль: '',
     },
     {
       Примітка: 'у него жена',
@@ -33,6 +34,7 @@ describe('confessionalListSchema', () => {
       'Дата події': '1820',
       'Пошт. Індекс': '23542',
       'Поселення храму': 'Політанки',
+      Роль: 'жена его',
     },
   ];
 
@@ -59,6 +61,7 @@ describe('confessionalListSchema', () => {
         'Дата події': '1820',
         'Пошт. Індекс': '23542',
         'Поселення храму': 'Політанки',
+        Роль: '',
       },
     ];
 
@@ -88,6 +91,7 @@ describe('confessionalListSchema', () => {
           note: '',
           page: '974',
           postal_code: '23542',
+          role: '',
           series: '1',
           settlement: 'Політанки',
           surname: 'Гуцол',
@@ -104,6 +108,7 @@ describe('confessionalListSchema', () => {
           note: 'у него жена',
           page: '974',
           postal_code: '23542',
+          role: 'жена его',
           series: '1',
           settlement: 'Політанки',
           surname: '',

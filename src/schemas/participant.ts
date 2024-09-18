@@ -1,13 +1,11 @@
 import { z } from 'astro/zod';
 
-import { nonEmptyString } from './non-empty-string.js';
-
 export const participantSchema = z.object({
   age: z.optional(z.string()),
   given_name: z.string(),
   middle_name: z.string(),
   note: z.optional(z.string()),
-  role: nonEmptyString,
+  role: z.string(),
   surname: z.string(),
 });
 // At least a name or a surname must be present

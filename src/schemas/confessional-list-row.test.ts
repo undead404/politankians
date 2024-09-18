@@ -19,6 +19,7 @@ describe('confessionalListRowSchema', () => {
       'Дата події': '1820',
       'Пошт. Індекс': '23542',
       'Поселення храму': 'Політанки',
+      Роль: '',
     };
 
     expect(() => confessionalListRowSchema.parse(validRow)).not.toThrow();
@@ -40,6 +41,7 @@ describe('confessionalListRowSchema', () => {
       'Дата події': '20-1820',
       'Пошт. Індекс': '23542',
       'Поселення храму': 'Політанки',
+      Роль: '',
     };
 
     expect(() => confessionalListRowSchema.parse(invalidRow)).toThrow();
@@ -60,6 +62,7 @@ describe('confessionalListRowSchema', () => {
       'Дата події': '1820',
       'Пошт. Індекс': '23542',
       'Поселення храму': 'Політанки',
+      Роль: '',
     };
 
     expect(() => confessionalListRowSchema.parse(invalidRow)).toThrow();
@@ -81,6 +84,7 @@ describe('confessionalListRowSchema', () => {
       'Дата події': '1820',
       'Пошт. Індекс': '23542',
       'Поселення храму': 'Політанки',
+      Роль: '',
     };
 
     expect(() => confessionalListRowSchema.parse(invalidRow)).toThrow();
