@@ -1,0 +1,151 @@
+---
+import _ from 'lodash';
+import { getCollection } from 'astro:content';
+
+import convertParishRegistersToActs from '../../utils/convert-parish-registers-to-acts';
+import Layout from '../../components/layout.astro';
+import Context from '../../components/context.astro';
+
+const parishRegisters = await getCollection('parish-register-tables');
+// const rows = parishRegisters.map(({data}) => data) as ParishRegister[];
+const acts = convertParishRegistersToActs(
+  parishRegisters.map(({ data }) => data),
+);
+const byYear = _.groupBy(acts, 'year');
+const years = Object.entries(byYear).map(([year, acts]) => ({
+  births: acts.filter(
+    ({ act_type }) => act_type === 'народження' || act_type === 'хрещення',
+  ).length,
+  deaths: acts.filter(
+    ({ act_type }) => act_type === 'смерть' || act_type === 'відспівування',
+  ).length,
+  year,
+}));
+---
+
+<Layout title="Народження та смерті за роками">
+  <Context identity="stats-history" years={years} />
+  <canvas id="my_dataviz"></canvas>
+  <script>
+    import { z } from 'astro/zod';
+    import {
+      BarController,
+      BarElement,
+      CategoryScale,
+      Chart,
+      Legend,
+      LinearScale,
+      LineController,
+      LineElement,
+      PointElement,
+      Title,
+      Tooltip,
+    } from 'chart.js';
+    import _ from 'lodash';
+
+    import { historyDatumSchema } from '../../schemas/history-datum';
+    import getContext from '../../utils/get-context';
+
+    Chart.register(
+      BarController,
+      BarElement,
+      CategoryScale,
+      Legend,
+      LinearScale,
+      LineController,
+      LineElement,
+      PointElement,
+      Title,
+      Tooltip,
+    );
+    const data = getContext(
+      'stats-history',
+      z.object({ years: z.array(historyDatumSchema) }),
+    );
+
+    const ctx = document.getElementById('my_dataviz') as HTMLCanvasElement;
+
+    const minYear = _.minBy(data.years, 'year')!.year;
+    const maxYear = _.maxBy(data.years, 'year')!.year;
+    const allYears = _.times(maxYear - minYear + 1, (i) => i + minYear);
+    console.log(allYears);
+    const births = allYears.map(
+      (year) =>
+        data.years.find(({ year: itemYear }) => itemYear === year)?.births,
+    );
+    const deaths = allYears.map((year) => {
+      const value = data.years.find(
+        ({ year: itemYear }) => itemYear === year,
+      )?.deaths;
+      return value ? -value : undefined;
+    });
+    const changes = allYears.map((year) => {
+      const datum = data.years.find(({ year: itemYear }) => itemYear === year);
+      if (!datum) {
+        return undefined;
+      }
+      return datum.births - datum.deaths;
+    });
+    new Chart(ctx!, {
+      type: 'bar',
+      data: {
+        labels: allYears,
+        datasets: [
+          {
+            backgroundColor: 'red',
+            barPercentage: 0.5,
+            barThickness: 6,
+            label: 'Народження',
+            maxBarThickness: 8,
+            minBarLength: 2,
+            data: births,
+            order: 1,
+          },
+          {
+            backgroundColor: 'black',
+            barPercentage: 0.5,
+            barThickness: 6,
+            label: 'Смерті',
+            maxBarThickness: 8,
+            minBarLength: 2,
+            data: deaths,
+            order: 2,
+          },
+          {
+            label: 'Зміна населення',
+            data: changes,
+            borderColor: 'white',
+            type: 'line',
+            order: 0,
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          legend: {
+            position: 'top',
+            display: true,
+          },
+          title: {
+            display: true,
+            text: 'Народження та смерті',
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                return `${context.parsed.y}`;
+              },
+            },
+          },
+        },
+        scales: {
+          x: { stacked: true },
+          y: {
+            beginAtZero: false,
+            stacked: true,
+          },
+        },
+      },
+    });
+  </script>
+</Layout>
