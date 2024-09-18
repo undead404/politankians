@@ -108,6 +108,11 @@ search.addWidgets([
         start: 1840,
       },
       {
+        end: 1859,
+        label: '1850-ті',
+        start: 1850,
+      },
+      {
         end: 1869,
         label: '1860-ті',
         start: 1860,
