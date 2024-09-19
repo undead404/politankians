@@ -41,10 +41,8 @@ describe('getBirthTitle', () => {
     expect(result).toBe('народження, 14.09.2023: John Doe Smith');
   });
 
-  it('should throw an error if no baptized participant is found', () => {
+  it('should return ? if no baptized participant is found', () => {
     const invalidAct = { ...mockAct, primaryParticipants: [] };
-    expect(() => getBirthTitle(invalidAct)).toThrow(
-      'No baptized in this act: 12345',
-    );
+    expect(getBirthTitle(invalidAct)).toEqual('народження, 14.09.2023: ?');
   });
 });
