@@ -71,9 +71,7 @@ describe('getBirthMicrodata', () => {
         (p) => p.role !== 'дитина',
       ),
     };
-    expect(() => getBirthMicrodata(invalidAct, mockSettlement)).toThrow(
-      'No baby in birth',
-    );
+    expect(getBirthMicrodata(invalidAct, mockSettlement)).toEqual(null);
   });
 
   it('should return correct microdata for a valid birth act', () => {

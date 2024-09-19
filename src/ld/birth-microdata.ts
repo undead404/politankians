@@ -6,7 +6,7 @@ import type { Person } from './types.js';
 export default function getBirthMicrodata(
   act: Act,
   settlement: Settlement,
-): Person {
+): Person | null {
   if (act.act_type !== 'народження') {
     throw new Error('Wrong act_type: ' + act.act_type);
   }
@@ -14,7 +14,8 @@ export default function getBirthMicrodata(
     ({ role }) => role === 'дитина',
   );
   if (!newlyBorn) {
-    throw new Error('No baby in birth');
+    // throw new Error('No baby in birth');
+    return null;
   }
   const godfather = act.tertiaryParticipants.find(
     ({ role }) => role === 'хрещений',

@@ -97,7 +97,7 @@ switch (act.act_type) {
       border-radius: 4px;
     }
   </style>
-  <Ld microdata={microdata} slot="head" />
+  {microdata && <Ld microdata={microdata} slot="head" />}
   <section>
     <h2>Дата</h2>
     <time datetime={act.date}>{formatDate(act.date)}</time>
