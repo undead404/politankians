@@ -15,7 +15,7 @@ export const actSchema = z
     page: nonEmptyString,
     primaryParticipants: z
       .array(participantSchema)
-      .min(1, 'Every act must have some primary participant')
+      // .min(1, 'Every act must have some primary participant')
       .refine(
         (input) => {
           if (
