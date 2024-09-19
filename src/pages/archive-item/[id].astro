@@ -7,8 +7,9 @@ import ParishRegister from '../../components/parish-register.astro';
 import Revision from '../../components/revision.astro';
 import TitledLink from '../../components/titled-link.astro';
 import getArchiveItemMicrodata from '../../ld/archive-item-microdata';
-import { ArchiveItem } from '../../schemas/archive-item';
+import type { ArchiveItem } from '../../schemas/archive-item';
 import { getCollection, getEntry } from '../../services/astro-content';
+import formatDate from '../../utils/format-date';
 
 export const getStaticPaths = (async () => {
   const archiveItems = await getCollection('archive-items');
@@ -37,47 +38,79 @@ const [, fonds, series, archiveItemNumber] = (itemId as any).split('-');
 ---
 
 <Layout title={itemId}>
-  <slot name="head" slot="head" />
-  <p>
-    <a href={archive.data.url}>{archive.data.title}</a>, фонд {fonds}, опис {
-      series
-    }, справа {archiveItemNumber}
-  </p>
-  {
-    item.genre === 'Confessional list' && (
-      <ConfessionalList item={item} itemId={itemId} microdata={microdata}>
-        <p>
-          Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />{' '}
-          {item.archivedAt.map((scanUrl) => (
-            <TitledLink href={scanUrl} />
-          ))}
-        </p>
-      </ConfessionalList>
-    )
-  }
+  <style slot="head">
+    .archive-card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin: 16px 0;
+      padding: 16px;
+    }
 
-  {
-    item.genre === 'Parish register' && (
-      <ParishRegister item={item} itemId={itemId} microdata={microdata}>
-        <p>
-          Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />{' '}
-          {item.archivedAt.map((scanUrl) => (
-            <TitledLink href={scanUrl} />
-          ))}
-        </p>
-      </ParishRegister>
-    )
-  }
-  {
-    item.genre === 'Revision' && (
-      <Revision item={item} itemId={itemId} microdata={microdata}>
-        <p>
-          Ця справа на інших ресурсах: <TitledLink href={item.gssUrl} />{' '}
-          {item.archivedAt.map((scanUrl) => (
-            <TitledLink href={scanUrl} />
-          ))}
-        </p>
-      </Revision>
-    )
-  }
+    .archive-title {
+      color: #007acc;
+      font-size: 1.2em;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .archive-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 8px;
+    }
+
+    .archive-details div {
+      line-height: 1.5;
+      margin-bottom: 4px;
+    }
+  </style>
+  <slot name="head" slot="head" />
+  <article>
+    <header>
+      <h2 lang="ru">{item.title}</h2>
+      <div class="archive-card">
+        <a href={archive.data.url} class="archive-title" target="_blank"
+          >{archive.data.title}</a
+        >
+        <div class="archive-details">
+          <div><strong>Фонд:</strong> {fonds}</div>
+          <div><strong>Опис:</strong> {series}</div>
+          <div><strong>Справа:</strong> {archiveItemNumber}</div>
+          <div>
+            <strong>Дата створення:</strong>
+            {formatDate(item.dateCreated)}
+          </div>
+          {
+            item.dateModified && (
+              <div>
+                <strong>Оновлена:</strong> {formatDate(item.dateModified)}
+              </div>
+            )
+          }
+          <div>
+            <strong>Ця справа на інших ресурсах:</strong>
+            <TitledLink href={item.gssUrl} />{' '}
+            {item.archivedAt.map((scanUrl) => <TitledLink href={scanUrl} />)}
+          </div>
+        </div>
+      </div>
+    </header>
+    {
+      item.genre === 'Confessional list' && (
+        <ConfessionalList itemId={itemId} microdata={microdata} />
+      )
+    }
+    {
+      item.genre === 'Parish register' && (
+        <ParishRegister itemId={itemId} microdata={microdata} />
+      )
+    }
+    {
+      item.genre === 'Revision' && (
+        <Revision itemId={itemId} microdata={microdata} />
+      )
+    }
+  </article>
 </Layout>

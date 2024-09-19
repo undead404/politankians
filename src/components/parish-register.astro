@@ -9,11 +9,10 @@ import getParticipantFullName from '../utils/get-participant-full-name';
 import Ld from './ld.astro';
 
 export interface Props {
-  item: ArchiveItem;
   itemId: string;
   microdata: unknown;
 }
-const { item, itemId, microdata } = Astro.props;
+const { itemId, microdata } = Astro.props;
 const parishRegister = await getEntry('parish-register-tables', itemId);
 const acts = convertParishRegistersToActs([parishRegister!.data]);
 ---
@@ -82,8 +81,6 @@ const acts = convertParishRegistersToActs([parishRegister!.data]);
   }
 </style>
 <Ld microdata={microdata} slot="head" />
-<p lang="ru">{item.title}</p>
-<slot />
 <table>
   <thead>
     <tr>

@@ -8,11 +8,10 @@ import Ld from './ld.astro';
 import ParticipantName from './participant-name.astro';
 
 export interface Props {
-  item: ArchiveItem;
   itemId: string;
   microdata: unknown;
 }
-const { item, itemId, microdata } = Astro.props;
+const { itemId, microdata } = Astro.props;
 const confessionalList = await getEntry('confessional-lists', itemId);
 const acts = convertConfessionalListsToActs([confessionalList!.data]);
 ---
@@ -72,8 +71,6 @@ const acts = convertConfessionalListsToActs([confessionalList!.data]);
   }
 </style>
 <Ld microdata={microdata} slot="head" />
-<p lang="ru">{item.title}</p>
-<slot />
 <table>
   <thead>
     <tr>
