@@ -11,7 +11,7 @@ export interface Props {
   itemId: string;
   microdata: unknown;
 }
-const {  itemId, microdata } = Astro.props;
+const { itemId, microdata } = Astro.props;
 const revision = await getEntry('revision-tables', itemId);
 const acts = convertRevisionsToActs([revision!.data]);
 ---

@@ -137,6 +137,11 @@ search.addWidgets([
         label: '1900-ті',
         start: 1900,
       },
+      {
+        end: 1919,
+        label: '1910-ті',
+        start: 1910,
+      },
     ],
   }),
 ]);
