@@ -3,7 +3,7 @@ import type { Act } from '../schemas/act.js';
 
 import typesense from './typesense.js';
 
-const CHUNK_SIZE = 5000;
+const CHUNK_SIZE = 1000;
 
 export default async function populateIndex(data: Act[]) {
   const chunks = _.chunk(data, CHUNK_SIZE);
