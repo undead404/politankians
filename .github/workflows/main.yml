@@ -115,18 +115,11 @@ jobs:
           path: dist
 
       - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-        
-      - name: Add remote server to known_hosts
         run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ vars.SERVER_IP }} >> ~/.ssh/known_hosts
-        
-      - name: Install rsync
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y rsync
 
       - name: Copy files via rsync
         run: |
@@ -134,4 +127,4 @@ jobs:
 
       - name: Restart NGINX
         run: |
-          ssh ${{ secrets.SSH_USERNAME }}@${{ vars.SERVER_IP }} 'systemctl restart nginx'
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ vars.SERVER_IP }} 'sudo systemctl restart nginx'
