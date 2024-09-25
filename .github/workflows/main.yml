@@ -130,7 +130,7 @@ jobs:
 
       - name: Copy files via SCP
         run: |
-          rsync -avz -e "ssh" --omit-dir-times ./dist/ ${{ secrets.SSH_USERNAME }}@${{ vars.SERVER_IP }}:/home/${{ secrets.SSH_USERNAME }}/dist
+          rsync -avz -e "ssh" --no-times ./dist/ ${{ secrets.SSH_USERNAME }}@${{ vars.SERVER_IP }}:/home/${{ secrets.SSH_USERNAME }}/dist
 
       - name: Restart NGINX
         run: |
