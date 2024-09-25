@@ -12,7 +12,7 @@ const typesense = new Typesense.Client({
     {
       host: hostUrl.hostname, // For Typesense Cloud use xxx.a1.typesense.net
       path: hostUrl.pathname,
-      port: Number.parseInt(hostUrl.port || '8108'), // For Typesense Cloud use 443
+      port: Number.parseInt(hostUrl.port), // For Typesense Cloud use 443
       protocol: hostUrl.protocol.slice(0, -1), // For Typesense Cloud use https
     },
   ],
