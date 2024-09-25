@@ -21,7 +21,7 @@ export const getStaticPaths = (async () => {
   );
   return acts.map((act) => ({
     params: {
-      id: act.objectID,
+      id: act.id,
     },
     props: { act },
   }));
@@ -33,9 +33,11 @@ export interface Props {
 
 const { act } = Astro.props;
 
-const [archive, fonds, series, item] = act.objectID.split('-');
-const itemId = [archive, fonds, series, item].join('-');
+const [archiveId, fonds, series, item] = act.id.split('-');
+const itemId = [archiveId, fonds, series, item].join('-');
 
+const archive = await getEntry('archives', archiveId);
+const archiveItem = await getEntry('archive-items', itemId);
 const settlement = await getEntry('settlements', act.settlement);
 if (!settlement) {
   throw new Error('No settlement: ' + act.settlement);
@@ -100,7 +102,7 @@ switch (act.act_type) {
   {microdata && <Ld microdata={microdata} slot="head" />}
   <section>
     <h2>Дата</h2>
-    <time datetime={act.date}>{formatDate(act.date)}</time>
+    <time datetime={new Date(act.date).toISOString()}>{formatDate(act.date)}</time>
   </section>
   <section>
     <h2>Учасники</h2>
@@ -120,7 +122,7 @@ switch (act.act_type) {
   </section>
   <footer>
     <p>
-      Справа <a href={`/archive-item/${itemId}`}>{itemId}</a>, розворот {
+      Справа <a href={`/archive-item/${itemId}`}>{archive!.data.shortTitle}-{archiveItem!.data.identifier}</a>, розворот {
         act.page
       }, акт {act.number}
     </p>

@@ -3,9 +3,10 @@ import { actSchema, type Act } from '../schemas/act.js';
 import type { Revision } from '../schemas/revision.js';
 
 import getActTitle from './act-title/index.js';
+import addParticipant from './add-participant.ts';
 import getActId from './get-act-id.js';
 import getParticipantFullName from './get-participant-full-name.js';
-import addParticipant from './add-participant.ts';
+import parseDate from './parse-date.ts';
 
 export default function convertRevisionsToActs(revisions: Revision[]) {
   console.log(revisions);
@@ -21,10 +22,10 @@ export default function convertRevisionsToActs(revisions: Revision[]) {
     }
     const currentFamily: Act = actRegister[currentFamilyId] || {
       act_type: 'ревізія',
-      date: row.date,
+      date: parseDate(row.date),
       description: '',
+      id: currentFamilyId,
       number: row.act,
-      objectID: currentFamilyId,
       page: row.page,
       primaryParticipants: [],
       secondaryParticipants: [],

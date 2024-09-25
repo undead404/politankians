@@ -5,7 +5,7 @@ import { nonEmptyString } from './non-empty-string.js';
 const LOOSE_DATE_REGEXP = /^\d{4}(?:-\d{2}(?:-\d{2})?)?$/;
 
 export const archiveItemSchema = z.object({
-  archive: z.enum(['ДАВіО', 'ДАХмО']),
+  archive: z.enum(['DAViO', 'DAKhmO']),
   archivedAt: z.array(nonEmptyString),
   csvUrl: nonEmptyString,
   dateCreated: z.string().regex(LOOSE_DATE_REGEXP),

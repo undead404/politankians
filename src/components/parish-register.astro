@@ -125,7 +125,7 @@ const acts = convertParishRegistersToActs([parishRegister!.data]);
               <td rowspan={participants.length}>{act.page}</td>
               <td rowspan={participants.length}>{act.number}</td>
               <td rowspan={participants.length}>
-                <a href={`/act/${act.objectID}`}>Відкрити</a>
+                <a href={`/act/${act.id}`}>Відкрити</a>
               </td>
             </tr>
             {otherParticipants.map((participant) => (

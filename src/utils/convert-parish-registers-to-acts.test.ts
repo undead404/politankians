@@ -153,11 +153,11 @@ describe('convertParishRegistersToActs', () => {
     expect(result).toHaveLength(3);
     expect(result[0]).toMatchObject({
       act_type: 'шлюб',
-      date: '1798-01-02',
+      date: -5427648000000,
       description:
         'наречений: Петр Ткач;\nбатько нареченого: Иванн Ткач;\nнаречена: Агафия Чернопиская;\nбатько нареченої: Петр Чернопиский',
       number: 1,
-      objectID: 'ДАХмО-315-1-1-285-me-1',
+      id: 'DAKhmO-315-1-1-285-me-1',
       page: '285',
       primaryParticipants: [
         {
@@ -201,10 +201,10 @@ describe('convertParishRegistersToActs', () => {
     });
     expect(result[1]).toMatchObject({
       act_type: 'смерть',
-      date: '1798-01-03',
+      date: -5427561600000,
       description: 'померла особа: Тимофей Фурман',
       number: 1,
-      objectID: 'ДАХмО-315-1-1-286-dh-1',
+      id: 'DAKhmO-315-1-1-286-dh-1',
       page: '286',
       primaryParticipants: [
         {

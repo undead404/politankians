@@ -14,10 +14,10 @@ describe('getMarriageMicrodata', () => {
   it('should throw an error if act_type is not "шлюб"', () => {
     const act: Act = {
       act_type: 'народження',
-      date: '2023-01-01',
+      date: 1672531200000,
       description: 'Birth record',
       number: 1,
-      objectID: '1',
+      id: '1',
       page: '1',
       primaryParticipants: [],
       secondaryParticipants: [],
@@ -35,10 +35,10 @@ describe('getMarriageMicrodata', () => {
   it('should return correct microdata for a valid marriage act', () => {
     const act: Act = {
       act_type: 'шлюб',
-      date: '2023-01-01',
+      date: 1672531200000,
       description: 'Marriage record',
       number: 1,
-      objectID: '1',
+      id: '1',
       page: '1',
       primaryParticipants: [
         {
@@ -111,19 +111,21 @@ describe('getMarriageMicrodata', () => {
       '@type': 'MarryAction',
       agent: {
         '@type': 'Person',
+        description: undefined,
         givenName: 'John',
         familyName: 'Doe',
         additionalName: 'A.',
         parent: [
           {
             '@type': 'Person',
+            description: undefined,
             givenName: 'Michael',
             familyName: 'Doe',
             additionalName: 'C.',
           },
         ],
       },
-      endTime: '2023-01-01',
+      endTime: '2023-01-01T00:00:00.000Z',
       location: {
         '@type': 'City',
         address: '12345, Fictional City, Imaginary State, Dreamland',
@@ -131,6 +133,7 @@ describe('getMarriageMicrodata', () => {
       },
       object: {
         '@type': 'Person',
+        description: undefined,
         givenName: 'Jane',
         familyName: 'Smith',
         additionalName: 'B.',
@@ -146,6 +149,7 @@ describe('getMarriageMicrodata', () => {
       participants: [
         {
           '@type': 'Person',
+          description: undefined,
           givenName: 'Paul',
           familyName: 'Brown',
           additionalName: 'G.',

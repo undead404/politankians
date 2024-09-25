@@ -4,12 +4,13 @@ import _ from 'lodash';
 import { actTypeSchema } from './act_type.js';
 import { nonEmptyString } from './non-empty-string.js';
 import { numericString } from './numeric-string.js';
+import transliteratedString from './transliterated-string.ts';
 
 export const parishRegisterRowSchema = z
   .object({
     Акт: numericString,
     Аркуш: nonEmptyString,
-    Архів: nonEmptyString,
+    Архів: transliteratedString,
     Вік: z.optional(z.string()),
     'Дата події': nonEmptyString.transform((input) => {
       let day: string, month: string, year: string;

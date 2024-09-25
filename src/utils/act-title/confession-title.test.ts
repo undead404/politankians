@@ -7,10 +7,10 @@ jest.mock('../get-participant-full-name.js');
 describe('getConfessionTitle', () => {
   const mockAct: Act = {
     act_type: 'сповідь',
-    date: '2023-09-14',
+    date: 1694649600000,
     description: 'Test description',
     number: 1,
-    objectID: '12345',
+    id: '12345',
     page: '1',
     primaryParticipants: [
       {
@@ -35,7 +35,7 @@ describe('getConfessionTitle', () => {
 
   it('should return the correct confession title', () => {
     const result = getConfessionTitle(mockAct);
-    expect(result).toBe('сповідь, 2023-09-14 (John Doe Smith)');
+    expect(result).toBe('сповідь, 14.09.2023 (John Doe Smith)');
   });
 
   it('should handle missing note gracefully', () => {
@@ -49,6 +49,6 @@ describe('getConfessionTitle', () => {
       ],
     };
     const result = getConfessionTitle(actWithoutNote);
-    expect(result).toBe('сповідь, 2023-09-14 (John Doe Smith)');
+    expect(result).toBe('сповідь, 14.09.2023 (John Doe Smith)');
   });
 });

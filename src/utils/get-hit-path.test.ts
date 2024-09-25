@@ -4,7 +4,7 @@ describe('getHitPath', () => {
   it('should return the correct path for act_type "сповідь"', () => {
     const hit = {
       act_type: 'сповідь',
-      objectID: 'archive1-fonds2-series3-item4',
+      id: 'archive1-fonds2-series3-item4',
       number: 123,
     };
     const result = getHitPath(hit);
@@ -14,7 +14,7 @@ describe('getHitPath', () => {
   it('should return the correct path for other act_types', () => {
     const hit = {
       act_type: 'other',
-      objectID: 'archive1-fonds2-series3-item4',
+      id: 'archive1-fonds2-series3-item4',
       number: 123,
     };
     const result = getHitPath(hit);
@@ -24,7 +24,7 @@ describe('getHitPath', () => {
   it('should handle unknown hit types gracefully', () => {
     const hit = {
       act_type: 'unknown',
-      objectID: 'archive1-fonds2-series3-item4',
+      id: 'archive1-fonds2-series3-item4',
       number: 123,
     };
     const result = getHitPath(hit);

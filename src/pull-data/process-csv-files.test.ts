@@ -8,7 +8,7 @@ jest.mock('./get-archive-items');
 describe('processCSVFiles', () => {
   const mockArchiveItems = [
     {
-      archive: 'ДАХмО',
+      archive: 'DAKhmO',
       csvUrl:
         'https://docs.google.com/spreadsheets/d/e/2PACX-1vQhr0RJjOJcotVPolQd2iSKGLW_JxGa7wMMAGqSF443EPoC1sJjIayOwYiBdo-NeWynzzD2N8SMi5qF/pub?gid=1532887418&single=true&output=csv',
       genre: 'Parish register',

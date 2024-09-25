@@ -31,7 +31,6 @@ export const confessionalListSchema = z
     years: getYears(rows),
   }))
   .refine(({ settlements, years }) => {
-    console.log(settlements, years);
     return !!settlements && !!years;
   });
 

@@ -77,12 +77,12 @@ describe('confessionalListSchema', () => {
   it('should transform rows correctly', () => {
     const result = confessionalListSchema.parse(validRows);
     expect(result).toEqual({
-      id: 'ДАХмО-315-1-7071',
+      id: 'DAKhmO-315-1-7071',
       rows: [
         {
           act: 124,
           age: '50',
-          archive: 'ДАХмО',
+          archive: 'DAKhmO',
           date: '1820',
           fonds: '315',
           given_name: 'Григорей',
@@ -99,7 +99,7 @@ describe('confessionalListSchema', () => {
         {
           act: 124,
           age: '43',
-          archive: 'ДАХмО',
+          archive: 'DAKhmO',
           date: '1820',
           fonds: '315',
           given_name: 'Мария',

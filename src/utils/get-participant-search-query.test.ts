@@ -19,10 +19,10 @@ describe('getParticipantSearchQuery', () => {
 
   const act: Act = {
     act_type: 'сповідь',
-    date: '2023-09-15',
+    date: 1694736000000,
     description: 'Test description',
     number: 1,
-    objectID: '12345',
+    id: '12345',
     page: '1',
     primaryParticipants: [participant],
     secondaryParticipants: [],

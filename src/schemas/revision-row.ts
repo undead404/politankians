@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import { nonEmptyString } from './non-empty-string.js';
 import { numericString } from './numeric-string.js';
+import transliteratedString from './transliterated-string.ts';
 
 export const revisionRowSchema = z.preprocess(
   (input) => {
@@ -31,7 +32,7 @@ export const revisionRowSchema = z.preprocess(
   z.object({
     act: numericString,
     age: z.optional(z.string()),
-    archive: nonEmptyString,
+    archive: transliteratedString,
     date: nonEmptyString.transform((input) => {
       let day: string, month: string, year: string;
       if (input.includes('/')) {

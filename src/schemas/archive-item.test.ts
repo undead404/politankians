@@ -3,7 +3,7 @@ import { archiveItemSchema } from './archive-item.js';
 describe('archiveItemSchema', () => {
   it('should validate a correct archive item', () => {
     const validArchiveItem = {
-      archive: 'ДАХмО',
+      archive: 'DAKhmO',
       archivedAt: [
         'https://www.familysearch.org/records/images/search-results?imageGroupNumbers=114929643',
       ],
@@ -47,7 +47,7 @@ describe('archiveItemSchema', () => {
 
   it('should invalidate an archive item with incorrect identifier format', () => {
     const invalidArchiveItem = {
-      archive: 'ДАХмО',
+      archive: 'DAKhmO',
       archivedAt: [
         'https://www.familysearch.org/records/images/search-results?imageGroupNumbers=114929643',
       ],

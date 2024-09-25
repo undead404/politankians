@@ -4,7 +4,7 @@ import getArchiveItemMicrodata from './archive-item-microdata.js';
 
 describe('getArchiveItemMicrodata', () => {
   const archiveItem: ArchiveItem = {
-    archive: 'ДАХмО',
+    archive: 'DAKhmO',
     archivedAt: [
       'https://example.com/records/images/search-results?imageGroupNumbers=123456789',
     ],
@@ -25,7 +25,8 @@ describe('getArchiveItemMicrodata', () => {
     email: 'test@example.com',
     foundingDate: '1900',
     openingHours: 'Mo,Tu,We,Th 9:00-17:00',
-    title: 'ДАХмО',
+    shortTitle: 'ДАХмО',
+    title: 'Державний архів Хмельницької області',
     url: 'https://example.com',
   };
 

@@ -51,7 +51,7 @@ export default function getMarriageMicrodata(
   return {
     '@type': 'MarryAction',
     agent: groom,
-    endTime: act.date,
+    endTime: new Date(act.date).toISOString(),
     location: {
       '@type': 'City',
       ...settlement,

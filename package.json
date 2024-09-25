@@ -8,7 +8,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "populate-algolia": "tsx ./src/populate-algolia/index.ts",
+    "populate-typesense": "tsx ./src/populate-typesense/index.ts",
     "deploy": "surge ./dist --domain politanky.surge.sh",
     "pull-data": "tsx ./src/pull-data/index.ts",
     "test": "jest"
@@ -18,7 +18,6 @@
     "@astrojs/sitemap": "^3.1.6",
     "@iconify-json/arcticons": "^1.2.0",
     "@iconify-json/ooui": "^1.2.0",
-    "algoliasearch": "^5.2.5",
     "astro": "^4.15.3",
     "astro-icon": "^1.1.1",
     "chart.js": "^4.4.4",
@@ -27,7 +26,10 @@
     "fs-extra": "^11.2.0",
     "instantsearch.js": "^4.74.0",
     "lodash": "^4.17.21",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "typesense": "^1.8.2",
+    "typesense-instantsearch-adapter": "^2.8.0",
+    "ua2latin": "^1.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",

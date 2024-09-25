@@ -45,13 +45,13 @@ describe('parishRegisterSchema', () => {
     expect(result.success).toBe(true);
     if (result.success) {
       expect(result.data).toEqual({
-        id: 'ДАХмО-315-1-6773',
+        id: 'DAKhmO-315-1-6773',
         rows: [
           {
             act: 1,
             act_type: 'відспівування',
             age: '89',
-            archive: 'ДАХмО',
+            archive: 'DAKhmO',
             date: '1800-01-03',
             fonds: '315',
             given_name: 'Михаил',
@@ -68,7 +68,7 @@ describe('parishRegisterSchema', () => {
             act: 1,
             act_type: 'шлюб',
             age: undefined,
-            archive: 'ДАХмО',
+            archive: 'DAKhmO',
             date: '1800-01-19',
             fonds: '315',
             given_name: 'Алексей',

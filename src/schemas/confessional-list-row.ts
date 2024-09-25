@@ -2,13 +2,14 @@ import { z } from 'astro/zod';
 
 import { nonEmptyString } from './non-empty-string.js';
 import { numericString } from './numeric-string.js';
+import transliteratedString from './transliterated-string.ts';
 
 const LOOSE_DATE_REGEXP = /^\d{4}(?:-\d{2}(?:-\d{2})?)?$/;
 export const confessionalListRowSchema = z
   .object({
     Акт: numericString,
     Аркуш: nonEmptyString,
-    Архів: nonEmptyString,
+    Архів: transliteratedString,
     Вік: z.optional(z.string()),
     'Дата події': nonEmptyString.regex(LOOSE_DATE_REGEXP),
     "Ім'я": z.string(),

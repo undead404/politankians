@@ -1,17 +1,25 @@
 import { z } from 'astro/zod';
 
+import participantsHaveRole from '../utils/participants-have-role.js';
+import parseDate from '../utils/parse-date.js';
+
 import { actTypeSchema } from './act_type.js';
 import { nonEmptyString } from './non-empty-string.js';
 import { participantSchema } from './participant.js';
-import participantsHaveRole from '../utils/participants-have-role.js';
 
 export const actSchema = z
   .object({
     act_type: actTypeSchema,
-    date: z.string().regex(/\d{4}(?:-\d{2}(?:-\d{2})?)?/),
+    date: z.union([
+      z.number(),
+      z
+        .string()
+        .regex(/\d{4}(?:-\d{2}(?:-\d{2})?)?/)
+        .transform(parseDate),
+    ]),
     description: nonEmptyString,
+    id: nonEmptyString,
     number: z.number(),
-    objectID: nonEmptyString,
     page: nonEmptyString,
     primaryParticipants: z
       .array(participantSchema)

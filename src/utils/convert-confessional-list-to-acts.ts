@@ -3,9 +3,10 @@ import { actSchema, type Act } from '../schemas/act.js';
 import type { ConfessionalList } from '../schemas/confessional-list.js';
 
 import getActTitle from './act-title/index.js';
+import addParticipant from './add-participant.ts';
 import getActId from './get-act-id.js';
 import getParticipantFullName from './get-participant-full-name.js';
-import addParticipant from './add-participant.ts';
+import parseDate from './parse-date.ts';
 
 export default function convertConfessionalListsToActs(
   confessionalLists: ConfessionalList[],
@@ -23,10 +24,10 @@ export default function convertConfessionalListsToActs(
     }
     const currentFamily: Act = actRegister[currentFamilyId] || {
       act_type: 'сповідь',
-      date: row.date,
+      date: parseDate(row.date),
       description: '',
       number: row.act,
-      objectID: currentFamilyId,
+      id: currentFamilyId,
       page: row.page,
       primaryParticipants: [],
       secondaryParticipants: [],

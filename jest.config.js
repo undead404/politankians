@@ -4,6 +4,7 @@ const ES_MODULES = [
   'fetch-blob',
   'formdata-polyfill',
   'node-fetch',
+  'ua2latin',
 ].join('|');
 
 /** @type {import('ts-jest').JestConfigWithTsJest} */

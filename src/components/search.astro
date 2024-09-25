@@ -6,9 +6,8 @@ import Context from './context.astro';
 <div>
   <Context
     identity="search"
-    ALGOLIA_APP_ID={environment.ALGOLIA_APP_ID}
-    ALGOLIA_INDEX_NAME={environment.ALGOLIA_INDEX_NAME}
-    ALGOLIA_SEARCH_API_KEY={environment.ALGOLIA_SEARCH_API_KEY}
+    TYPESENSE_HOST={environment.TYPESENSE_HOST}
+    TYPESENSE_SEARCH_KEY={environment.TYPESENSE_SEARCH_KEY}
   />
   <form id="search-box"></form>
   <div id="powered-by"></div>

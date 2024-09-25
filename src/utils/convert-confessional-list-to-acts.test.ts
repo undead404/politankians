@@ -72,10 +72,10 @@ describe('convertConfessionalListsToActs', () => {
     expect(result).toHaveLength(1);
     expect(result[0]).toMatchObject({
       act_type: 'сповідь',
-      date: '2023-01-01',
+      date: 1672531200000,
       description: 'John Smith;\nжена его Jane Smith',
       number: 1,
-      objectID: 'act-1',
+      id: 'act-1',
       page: '1',
       primaryParticipants: [
         {

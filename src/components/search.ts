@@ -1,5 +1,3 @@
-import { liteClient } from 'algoliasearch/lite';
-import instantsearch from 'instantsearch.js';
 import {
   searchBox,
   hits,
@@ -10,6 +8,7 @@ import {
 import { z } from 'astro/zod';
 
 import { nonEmptyString } from '../schemas/non-empty-string.js';
+import getTypesenseSearch from '../services/typesense.ts';
 import getContext from '../utils/get-context.js';
 import getHitPath from '../utils/get-hit-path.ts';
 
@@ -23,21 +22,17 @@ const ACT_TYPE_CLASSES = {
   шлюб: 'marriage',
 };
 const contextSchema = z.object({
-  ALGOLIA_APP_ID: nonEmptyString,
-  ALGOLIA_INDEX_NAME: nonEmptyString,
-  ALGOLIA_SEARCH_API_KEY: nonEmptyString,
+  TYPESENSE_HOST: nonEmptyString,
+  TYPESENSE_SEARCH_KEY: nonEmptyString,
 });
 
 const context = getContext('search', contextSchema);
 
-const search = instantsearch({
-  indexName: context.ALGOLIA_INDEX_NAME,
-  routing: true,
-  searchClient: liteClient(
-    context.ALGOLIA_APP_ID,
-    context.ALGOLIA_SEARCH_API_KEY,
-  ),
-});
+const search = getTypesenseSearch(
+  context.TYPESENSE_SEARCH_KEY,
+  context.TYPESENSE_HOST,
+);
+
 search.addWidgets([
   searchBox({
     container: '#search-box',
@@ -51,7 +46,7 @@ search.addWidgets([
     container: '#output-box',
     templates: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      item(hit: { act_type: any; objectID: any }, { html, components }: any) {
+      item(hit: { act_type: any; id: any }, { html, components }: any) {
         return html`
           <a
             class=${(ACT_TYPE_CLASSES as Record<string, string>)[

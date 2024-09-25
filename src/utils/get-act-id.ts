@@ -1,3 +1,5 @@
+import { transliterateUaToLatin } from 'ua2latin';
+
 import type { ActType } from '../schemas/act_type.js';
 import type { ParishRegisterRow } from '../schemas/parish-register-row.js';
 
@@ -24,7 +26,9 @@ export interface ArchiveItemRow {
 }
 
 export default function getActId(row: ArchiveItemRow) {
-  return `${row.archive}-${row.fonds}-${row.series}-${row.item}-${row.page}-${
-    typeKeyMapping[row.act_type]
-  }-${row.act}`;
+  return transliterateUaToLatin(
+    `${row.archive}-${row.fonds}-${row.series}-${row.item}-${row.page}-${
+      typeKeyMapping[row.act_type]
+    }-${row.act}`,
+  );
 }

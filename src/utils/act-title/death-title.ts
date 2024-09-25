@@ -7,7 +7,7 @@ export default function getDeathTitle(act: Act) {
     ({ role }) => role === 'померла особа',
   );
   if (!deceased) {
-    throw new Error(`No deceased in this act: ${act.objectID}`);
+    throw new Error(`No deceased in this act: ${act.id}`);
   }
   return `${act.act_type}, ${formatDate(act.date)}: ${getParticipantFullName(deceased)}`;
 }

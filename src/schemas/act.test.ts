@@ -7,7 +7,7 @@ describe('actSchema', () => {
       date: '2023-09-14',
       description: 'Опис події',
       number: 1,
-      objectID: '12345',
+      id: '12345',
       page: '10',
       primaryParticipants: [
         {
@@ -33,7 +33,7 @@ describe('actSchema', () => {
       date: '2023-09-14',
       description: 'Опис події',
       number: 1,
-      objectID: '12345',
+      id: '12345',
       page: '10',
       primaryParticipants: [
         {
@@ -57,7 +57,7 @@ describe('actSchema', () => {
       date: '2023-09-14',
       description: 'Опис події',
       number: 1,
-      objectID: '12345',
+      id: '12345',
       page: '10',
       primaryParticipants: [],
       settlement: 'Київ',
@@ -74,7 +74,7 @@ describe('actSchema', () => {
       date: '2023-09-14',
       description: 'Опис події',
       number: 1,
-      objectID: '12345',
+      id: '12345',
       page: '10',
       primaryParticipants: [
         {

@@ -4,9 +4,10 @@ import type { ParishRegister } from '../schemas/parish-register.js';
 import type { Participant } from '../schemas/participant.js';
 
 import getActTitle from './act-title/index.js';
+import addParticipant from './add-participant.ts';
 import getActId from './get-act-id.js';
 import getParticipantFullName from './get-participant-full-name.js';
-import addParticipant from './add-participant.ts';
+import parseDate from './parse-date.ts';
 
 export default function convertParishRegistersToActs(
   parishRegisters: ParishRegister[],
@@ -31,10 +32,10 @@ export default function convertParishRegistersToActs(
     const year = Number.parseInt(row.date.slice(0, 4));
     const currentAct: Act = actRegister[currentActId] || {
       act_type: currentActType,
-      date: currentActDate,
+      date: parseDate(currentActDate),
       description: '',
+      id: currentActId,
       number: currentActNumber,
-      objectID: currentActId,
       page: row.page,
       primaryParticipants: [],
       secondaryParticipants: [],

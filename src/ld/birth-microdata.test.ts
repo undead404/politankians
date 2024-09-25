@@ -6,10 +6,10 @@ import getBirthMicrodata from './birth-microdata.js';
 describe('getBirthMicrodata', () => {
   const mockAct: Act = {
     act_type: 'народження',
-    date: '2023-01-01',
+    date: 1672531200000,
     description: 'Birth record',
     number: 1,
-    objectID: '12345',
+    id: '12345',
     page: '1',
     primaryParticipants: [
       {
@@ -81,21 +81,24 @@ describe('getBirthMicrodata', () => {
       givenName: 'Ivan',
       additionalName: 'Ivanovich',
       familyName: 'Ivanov',
-      birthDate: '2023-01-01',
+      birthDate: '2023-01-01T00:00:00.000Z',
       birthPlace: {
         '@type': 'City',
         address: '123 Test St, Test City, Test Country',
         name: 'Test City',
       },
+      description: undefined,
       knows: [
         {
           '@type': 'Person',
+          description: undefined,
           givenName: 'Sergey',
           additionalName: 'Sergeevich',
           familyName: 'Sergeev',
         },
         {
           '@type': 'Person',
+          description: undefined,
           givenName: 'Anna',
           additionalName: 'Anatolievna',
           familyName: 'Anatolieva',
@@ -104,12 +107,14 @@ describe('getBirthMicrodata', () => {
       parent: [
         {
           '@type': 'Person',
+          description: undefined,
           givenName: 'Petr',
           additionalName: 'Petrovich',
           familyName: 'Petrov',
         },
         {
           '@type': 'Person',
+          description: undefined,
           givenName: 'Maria',
           additionalName: 'Ivanovna',
           familyName: 'Ivanova',

@@ -13,10 +13,10 @@ jest.mock('./marriage-title.js');
 describe('getActTitle', () => {
   const mockAct: Act = {
     act_type: 'шлюб',
-    date: '2023-09-14',
+    date: 1694649600000,
     description: 'Test description',
     number: 1,
-    objectID: '12345',
+    id: '12345',
     page: '1',
     primaryParticipants: [
       {

@@ -9,12 +9,12 @@ const archiveItems = await getCollection('archive-items');
 const parishRegisterTables = await getCollection('parish-register-tables');
 const confessionalLists = await getCollection('confessional-lists');
 const revisions = await getCollection('revision-tables');
+const archives = await getCollection('archives');
 const COLLECTIONS = {
   'Confessional list': confessionalLists,
   'Parish register': parishRegisterTables,
   Revision: revisions,
 };
-console.log(revisions[0][0])
 const archiveItemTuples: [
   (typeof archiveItems)[0],
   (typeof parishRegisterTables)[0] | (typeof confessionalLists)[0] | undefined,
@@ -103,7 +103,11 @@ const ARCHIVE_ITEM_TYPES = {
                 href={`/archive-item/${archiveItem.id}`}
                 title={archiveItem.data.title}
               >
-                {archiveItem.id}
+                {
+                  archives.find(({ id }) => archiveItem.data.archive === id)!
+                    .data.shortTitle
+                }
+                -{archiveItem.data.identifier}
               </a>
             </th>
             <td>{table!.data.settlements}</td>

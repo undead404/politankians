@@ -13,10 +13,10 @@ describe('getDeathMicrodata', () => {
   it('should throw an error if act_type is not "смерть"', () => {
     const act: Act = {
       act_type: 'народження',
-      date: '2023-01-01',
+      date: 1672531200000,
       description: 'Birth record',
       number: 1,
-      objectID: '1',
+      id: '1',
       page: '1',
       primaryParticipants: [],
       secondaryParticipants: [],
@@ -34,10 +34,10 @@ describe('getDeathMicrodata', () => {
   it('should throw an error if there is no deceased participant', () => {
     const act: Act = {
       act_type: 'смерть',
-      date: '2023-01-01',
+      date: 1672531200000,
       description: 'Death record',
       number: 1,
-      objectID: '1',
+      id: '1',
       page: '1',
       primaryParticipants: [],
       secondaryParticipants: [],
@@ -55,10 +55,10 @@ describe('getDeathMicrodata', () => {
   it('should return correct microdata for a valid death act', () => {
     const act: Act = {
       act_type: 'смерть',
-      date: '2023-01-01',
+      date: 1672531200000,
       description: 'Death record',
       number: 1,
-      objectID: '1',
+      id: '1',
       page: '1',
       primaryParticipants: [
         {
@@ -118,7 +118,7 @@ describe('getDeathMicrodata', () => {
       familyName: 'Smith',
       givenName: 'John',
       description: undefined,
-      deathDate: '2023-01-01',
+      deathDate: 1672531200000,
       deathPlace: {
         '@type': 'City',
         address: '12345, Fictional City, Imaginary State, Dreamland',

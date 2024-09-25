@@ -9,10 +9,10 @@ jest.mock('../get-participant-full-name.js');
 describe('getMarriageTitle', () => {
   const mockAct: Act = {
     act_type: 'шлюб',
-    date: '2023-09-14',
+    date: 1694649600000,
     description: 'Test description',
     number: 1,
-    objectID: '12345',
+    id: '12345',
     page: '1',
     primaryParticipants: [
       {
@@ -59,7 +59,7 @@ describe('getMarriageTitle', () => {
       ),
     };
     expect(() => getMarriageTitle(actWithoutGroom)).toThrow(
-      `No groom in this act: ${mockAct.objectID}`,
+      `No groom in this act: ${mockAct.id}`,
     );
   });
 
@@ -71,7 +71,7 @@ describe('getMarriageTitle', () => {
       ),
     };
     expect(() => getMarriageTitle(actWithoutBride)).toThrow(
-      `No bride in this act: ${mockAct.objectID}`,
+      `No bride in this act: ${mockAct.id}`,
     );
   });
 });

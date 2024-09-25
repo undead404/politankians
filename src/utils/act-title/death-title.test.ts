@@ -9,10 +9,10 @@ jest.mock('../get-participant-full-name.js');
 describe('getDeathTitle', () => {
   const mockAct: Act = {
     act_type: 'смерть',
-    date: '2023-09-14',
+    date: 1694649600000,
     description: 'Test description',
     number: 1,
-    objectID: '12345',
+    id: '12345',
     page: '1',
     primaryParticipants: [
       {
@@ -47,7 +47,7 @@ describe('getDeathTitle', () => {
       primaryParticipants: [],
     };
     expect(() => getDeathTitle(actWithoutDeceased)).toThrow(
-      `No deceased in this act: ${mockAct.objectID}`,
+      `No deceased in this act: ${mockAct.id}`,
     );
   });
 });

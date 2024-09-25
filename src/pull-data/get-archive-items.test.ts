@@ -10,7 +10,7 @@ jest.mock('fs/promises');
 describe('getArchiveItems', () => {
   const mockFiles = ['item1.json', 'item2.json', 'not-json.txt'];
   const mockJSONContent = JSON.stringify({
-    archive: 'ДАХмО',
+    archive: 'DAKhmO',
     archivedAt: [
       'https://www.familysearch.org/records/images/search-results?imageGroupNumbers=114926675',
     ],

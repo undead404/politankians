@@ -53,7 +53,7 @@ export default function getBirthMicrodata(
   }
   return {
     ...getBaseMicrodata(newlyBorn),
-    birthDate: act.date,
+    birthDate: new Date(act.date).toISOString(),
     birthPlace: {
       '@type': 'City',
       ...settlement,

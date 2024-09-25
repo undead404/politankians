@@ -10,6 +10,7 @@ describe('archiveSchema', () => {
       email: 'archive_km@arch.gov.ua',
       foundingDate: '1922',
       openingHours: 'Mo,Tu,We,Th 9:00-17:00',
+      shortTitle: 'ДАХмО',
       title: 'Державний архів Хмельницької області',
       url: 'https://dahmo.gov.ua/',
     };
@@ -24,6 +25,7 @@ describe('archiveSchema', () => {
       email: 'invalid-email',
       foundingDate: '1922',
       openingHours: 'Mo,Tu,We,Th 9:00-17:00',
+      shortTitle: 'ДАХмО',
       title: 'Державний архів Хмельницької області',
       url: 'https://dahmo.gov.ua/',
     };
@@ -38,6 +40,7 @@ describe('archiveSchema', () => {
       email: 'archive_km@arch.gov.ua',
       foundingDate: '22',
       openingHours: 'Mo,Tu,We,Th 9:00-17:00',
+      shortTitle: 'ДАХмО',
       title: 'Державний архів Хмельницької області',
       url: 'https://dahmo.gov.ua/',
     };
@@ -52,6 +55,7 @@ describe('archiveSchema', () => {
       email: 'archive_km@arch.gov.ua',
       foundingDate: '1922',
       openingHours: 'Mo,Tu,We,Th 9:00-17:00',
+      shortTitle: 'ДАХмО',
       title: 'Державний архів Хмельницької області',
       url: 'invalid-url',
     };
