@@ -98,7 +98,7 @@ jobs:
           TYPESENSE_HOST: ${{ vars.TYPESENSE_HOST }}
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist
@@ -109,13 +109,13 @@ jobs:
 
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
 
       - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
+        uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
         
@@ -125,8 +125,8 @@ jobs:
         
       - name: Install rsync
         run: |
-          apt update
-          apt install rsync
+          sudo apt-get update
+          sudo apt-get install -y rsync
 
       - name: Copy files via SCP
         run: |
