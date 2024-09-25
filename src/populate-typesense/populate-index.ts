@@ -9,6 +9,9 @@ export default async function populateIndex(data: Act[]) {
   const chunks = _.chunk(data, CHUNK_SIZE);
   for (let i = 0; i < chunks.length; i += 1) {
     console.log(`Chunk # ${i + 1}`);
-    await typesense.collections('acts').documents().import(chunks[i]!);
+    await typesense
+      .collections('acts')
+      .documents()
+      .import(chunks[i]!, { action: 'upsert' });
   }
 }
