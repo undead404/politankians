@@ -15,21 +15,21 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title !== 'Політанчани' && 'Політанчани | '}{title}</title>
+    <title>{title !== 'Корені' && 'Корені | '}{title}</title>
     <style>
       body {
-        font-family: 'Georgia', serif;
+        font-family: 'Times New Roman', serif;
         margin: 0;
         padding: 0;
-        background-color: #e6f2e6; /* Light green background */
+        background-color: #f8f9fa; /* Light grey background */
         color: #333;
       }
       h1 {
-        background-color: #4caf50; /* Green background */
-        color: white;
+        background-color: #343a40; /* Dark grey background */
+        color: #ffffff; /* White text */
         padding: 1rem;
         text-align: center;
-        font-family: 'Georgia', serif;
+        font-family: 'Times New Roman', serif;
       }
       h1::first-letter {
         text-transform: capitalize;
@@ -38,10 +38,16 @@ const { title } = Astro.props;
         padding: 2rem;
         max-width: min(800px, 100vw);
         margin: 0 auto;
-        background-color: white;
+        background-color: #ffffff; /* White background */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         overflow: auto;
+      }
+      header, footer {
+        background-color: #343a40; /* Dark grey background */
+        color: #ffffff; /* White text */
+        padding: 1rem;
+        text-align: center;
       }
     </style>
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />

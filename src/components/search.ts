@@ -3,7 +3,6 @@ import {
   hits,
   refinementList,
   numericMenu,
-  poweredBy,
 } from 'instantsearch.js/es/widgets';
 import { z } from 'astro/zod';
 
@@ -38,9 +37,6 @@ search.addWidgets([
     container: '#search-box',
     showLoading: true,
     showSubmit: true,
-  }),
-  poweredBy({
-    container: '#powered-by',
   }),
   hits({
     container: '#output-box',

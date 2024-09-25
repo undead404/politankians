@@ -1,5 +1,4 @@
 ---
-import type { ArchiveItem } from '../schemas/archive-item';
 import { getEntry } from '../services/astro-content';
 import convertConfessionalListsToActs from '../utils/convert-confessional-list-to-acts';
 import getActParticipants from '../utils/get-act-participants';
@@ -21,6 +20,7 @@ const acts = convertConfessionalListsToActs([confessionalList!.data]);
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 2rem;
+    font-family: 'Times New Roman', serif;
   }
   th,
   td {
@@ -29,40 +29,33 @@ const acts = convertConfessionalListsToActs([confessionalList!.data]);
     border-bottom: 1px solid #ddd;
   }
   th {
-    background-color: #4caf50;
+    background-color: #343a40; /* Dark grey background */
     color: white;
-    font-family: 'Georgia', serif;
     text-align: center;
   }
   tr {
     background-color: white;
   }
   tr.act-even {
-    filter: brightness(0.95);
+    background-color: #f8f9fa; /* Light grey background */
   }
   tr.act-even:hover {
-    filter: brightness(1.2);
-  }
-  tr.confession.act-even {
-    background-color: #d3d3d345;
+    background-color: #e9ecef; /* Slightly darker grey on hover */
   }
   tr.act-odd:hover {
-    filter: brightness(0.9);
+    background-color: #f1f3f5; /* Light grey on hover */
   }
   a {
     text-decoration: none;
-    color: #4caf50;
+    color: #343a40; /* Dark grey text */
     font-weight: bold;
   }
   a:hover {
     text-decoration: underline;
   }
-  .memorial-service {
-    background-color: #ffe6e6; /* Light red */
-  }
   .participant-note {
     background-color: #f9f9f9;
-    border-left: 4px solid #4caf50;
+    border-left: 4px solid #343a40; /* Dark grey border */
     border-radius: 4px;
     color: #555;
     font-size: 0.9rem;

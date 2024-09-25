@@ -3,6 +3,26 @@ import Layout from '../components/layout.astro';
 ---
 
 <Layout title="Про проєкт">
-  Проіндексовані дані базових генеалогічних документів щодо села Політанок
-  Жмеринського району Вінницької області.
+  <style>
+    .about-content {
+      font-family: 'Times New Roman', serif;
+      color: #333;
+      background-color: #f9f9f9;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .about-content p {
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+  </style>
+  <div class="about-content">
+    <p>
+      Проіндексовані дані базових генеалогічних документів щодо села Політанок
+      Жмеринського району Вінницької області.
+    </p>
+  </div>
 </Layout>

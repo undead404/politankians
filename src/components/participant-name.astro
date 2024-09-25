@@ -2,7 +2,7 @@
 import type { Act } from '../schemas/act';
 import type { Participant } from '../schemas/participant';
 import getParticipantFullName from '../utils/get-participant-full-name';
-import getParticipantSearchQuery from '../utils/get-participant-search-query'
+import getParticipantSearchQuery from '../utils/get-participant-search-query';
 
 export interface Props {
   act: Act;
@@ -10,7 +10,7 @@ export interface Props {
 }
 const { act, participant } = Astro.props;
 const fullName = getParticipantFullName(participant, false);
-const searchQuery = getParticipantSearchQuery(participant, act)
+const searchQuery = getParticipantSearchQuery(participant, act);
 ---
 <>
 <a
@@ -25,14 +25,15 @@ const searchQuery = getParticipantSearchQuery(participant, act)
 
 <style>
   .participant-link {
-    color: #4caf50;
+    color: #343a40; /* Dark grey text */
     text-decoration: underline;
     font-weight: normal;
     padding: 0;
     border: none;
     transition: color 0.3s;
+    font-family: 'Times New Roman', serif;
   }
   .participant-link:hover {
-    color: #388e3c;
+    color: #555; /* Slightly lighter grey on hover */
   }
 </style>

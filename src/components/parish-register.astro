@@ -22,6 +22,7 @@ const acts = convertParishRegistersToActs([parishRegister!.data]);
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 2rem;
+    font-family: 'Times New Roman', serif;
   }
   th,
   td {
@@ -30,29 +31,25 @@ const acts = convertParishRegistersToActs([parishRegister!.data]);
     border-bottom: 1px solid #ddd;
   }
   th {
-    background-color: #4caf50;
+    background-color: #343a40; /* Dark grey background */
     color: white;
-    font-family: 'Georgia', serif;
     text-align: center;
   }
   tr {
     background-color: white;
   }
   tr.act-even {
-    filter: brightness(0.95);
+    background-color: #f8f9fa; /* Light grey background */
   }
   tr.act-even:hover {
-    filter: brightness(1.2);
+    background-color: #e9ecef; /* Slightly darker grey on hover */
   }
-  tr.confession.act-even {
-    background-color: #d3d3d345;
-  }
-  tr:hover {
-    filter: brightness(0.9);
+  tr.act-odd:hover {
+    background-color: #f1f3f5; /* Light grey on hover */
   }
   a {
     text-decoration: none;
-    color: #4caf50;
+    color: #343a40; /* Dark grey text */
     font-weight: bold;
   }
   a:hover {
@@ -68,7 +65,7 @@ const acts = convertParishRegistersToActs([parishRegister!.data]);
     background-color: #ccffcc; /* Light green */
   }
   .death {
-    background-color: #f2f2f2; /* Light gray */
+    background-color: #f2f2f2; /* Light grey */
   }
   .baptism {
     background-color: #fff2cc; /* Light yellow */
