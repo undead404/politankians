@@ -134,4 +134,4 @@ jobs:
 
       - name: Restart NGINX
         run: |
-          ssh ${{ secrets.SSH_USERNAME }}@${{ vars.SERVER_IP }} 'sudo systemctl restart nginx'
+          ssh ${{ secrets.SSH_USERNAME }}@${{ vars.SERVER_IP }} 'systemctl restart nginx'
