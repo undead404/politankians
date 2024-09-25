@@ -42,7 +42,7 @@ jobs:
       - name: Run tests
         run: yarn test
   
-  populate-algolia:
+  populate-typesense:
     runs-on: ubuntu-latest
     needs:
       - check
@@ -128,9 +128,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y rsync
 
-      - name: Copy files via SCP
+      - name: Copy files via rsync
         run: |
-          rsync -avz -e "ssh" --no-times ./dist/ ${{ secrets.SSH_USERNAME }}@${{ vars.SERVER_IP }}:/home/${{ secrets.SSH_USERNAME }}/dist
+          rsync -avz -e "ssh" --no-perms --no-times ./dist/ ${{ secrets.SSH_USERNAME }}@${{ vars.SERVER_IP }}:/home/${{ secrets.SSH_USERNAME }}/dist
 
       - name: Restart NGINX
         run: |
