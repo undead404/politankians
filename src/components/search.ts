@@ -10,6 +10,7 @@ import { nonEmptyString } from '../schemas/non-empty-string.js';
 import getTypesenseSearch from '../services/typesense.ts';
 import getContext from '../utils/get-context.js';
 import getHitPath from '../utils/get-hit-path.ts';
+import { settlementSchema } from '../schemas/settlement.ts';
 
 const ACT_TYPE_CLASSES = {
   відспівування: 'memorial-service',
@@ -24,8 +25,15 @@ const contextSchema = z.object({
   TYPESENSE_HOST: nonEmptyString,
   TYPESENSE_SEARCH_KEY: nonEmptyString,
 });
+const settlementsRegistrySchema = z.object({
+  settlements: z.record(settlementSchema),
+});
 
 const context = getContext('search', contextSchema);
+const settlementsRegistry = getContext(
+  'settlements',
+  settlementsRegistrySchema,
+).settlements;
 
 const search = getTypesenseSearch(
   context.TYPESENSE_SEARCH_KEY,
@@ -140,6 +148,12 @@ search.addWidgets([
     attribute: 'settlement',
     container: '#refinement-list-settlement',
     sortBy: ['name'],
+    transformItems: (items: { label: string; value: string }[]) => {
+      return items.map((item) => ({
+        ...item,
+        highlighted: settlementsRegistry[item.value]!.name,
+      }));
+    },
   }),
 ]);
 search.start();

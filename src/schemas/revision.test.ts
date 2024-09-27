@@ -59,7 +59,7 @@ describe('revisionSchema', () => {
           postal_code: '12345',
           role: 'Role',
           series: 'Description',
-          settlement: 'Church Settlement',
+          settlement: '12345-Church Settlement',
           surname: 'Doe',
         },
         {
@@ -76,11 +76,11 @@ describe('revisionSchema', () => {
           postal_code: '54321',
           role: 'Another Role',
           series: 'Description',
-          settlement: 'Another Church Settlement',
+          settlement: '54321-Another Church Settlement',
           surname: 'Smith',
         },
       ],
-      settlements: 'Church Settlement, Another Church Settlement',
+      settlements: '12345-Church Settlement, 54321-Another Church Settlement',
       years: '2023',
     });
   });
@@ -169,11 +169,11 @@ describe('revisionSchema', () => {
           postal_code: '12345',
           role: 'Role',
           series: 'Description',
-          settlement: 'Church Settlement',
+          settlement: '12345-Church Settlement',
           surname: 'Doe',
         },
       ],
-      settlements: 'Church Settlement',
+      settlements: '12345-Church Settlement',
       years: '2023',
     });
   });

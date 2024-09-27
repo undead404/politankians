@@ -7,7 +7,7 @@ export const archiveSchema = z.object({
   currenciesAccepted: z.array(nonEmptyString),
   email: z.string().email(),
   foundingDate: z.string().regex(/\d{4}/),
-  openingHours: nonEmptyString,
+  openingHours: z.union([nonEmptyString, z.array(nonEmptyString)]),
   shortTitle: nonEmptyString,
   title: nonEmptyString,
   url: z.string().url(),

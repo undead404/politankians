@@ -2,6 +2,7 @@
 import _ from 'lodash';
 
 import Layout from '../../components/layout.astro';
+import SettlementName from '../../components/settlement-name.astro';
 import TitledLink from '../../components/titled-link.astro';
 import { getCollection } from '../../services/astro-content';
 
@@ -106,11 +107,14 @@ const ARCHIVE_ITEM_TYPES = {
                 {
                   archives.find(({ id }) => archiveItem.data.archive === id)!
                     .data.shortTitle
-                }
-                -{archiveItem.data.identifier}
+                } {archiveItem.data.identifier}
               </a>
             </th>
-            <td>{table!.data.settlements}</td>
+            <td>
+              {table!.data.settlements.split(', ').map((settlement) => (
+                <SettlementName settlement={settlement} />
+              ))}
+            </td>
             <td>{table!.data.years}</td>
             <td class="genre">{ARCHIVE_ITEM_TYPES[archiveItem.data.genre]}</td>
             <td>

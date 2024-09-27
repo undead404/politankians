@@ -93,7 +93,7 @@ describe('confessionalListSchema', () => {
           postal_code: '23542',
           role: '',
           series: '1',
-          settlement: 'Політанки',
+          settlement: '23542-Politanky',
           surname: 'Гуцол',
         },
         {
@@ -110,11 +110,11 @@ describe('confessionalListSchema', () => {
           postal_code: '23542',
           role: 'жена его',
           series: '1',
-          settlement: 'Політанки',
+          settlement: '23542-Politanky',
           surname: '',
         },
       ],
-      settlements: 'Політанки',
+      settlements: '23542-Politanky',
       years: '1820',
     });
   });

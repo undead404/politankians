@@ -1,5 +1,7 @@
 import { z } from 'astro/zod';
 
+import getRowSettlementId from '../utils/get-row-settlement-id.ts';
+
 import { nonEmptyString } from './non-empty-string.js';
 import { numericString } from './numeric-string.js';
 import transliteratedString from './transliterated-string.ts';
@@ -37,7 +39,10 @@ export const confessionalListRowSchema = z
     postal_code: input['Пошт. Індекс'],
     role: input['Роль'],
     series: input['Опис'],
-    settlement: input['Поселення храму'],
+    settlement: getRowSettlementId(
+      `${input['Пошт. Індекс']}`,
+      `${input['Поселення храму']}`,
+    ),
     surname: input['Прізвище'],
   }));
 

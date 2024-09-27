@@ -1,6 +1,13 @@
 ---
 import environment from '../environment';
+import { getCollection } from '../services/astro-content';
+
 import Context from './context.astro';
+
+const settlements = await getCollection('settlements');
+const settlementsRegistry = Object.fromEntries(
+  settlements.map(({ data, id }) => [id, data]),
+);
 ---
 
 <div>
@@ -8,6 +15,10 @@ import Context from './context.astro';
     identity="search"
     TYPESENSE_HOST={environment.TYPESENSE_HOST}
     TYPESENSE_SEARCH_KEY={environment.TYPESENSE_SEARCH_KEY}
+  />
+  <Context
+    identity="settlements"
+    settlements={settlementsRegistry}
   />
   <form id="search-box"></form>
   <div class="refinement-list" id="refinement-list"></div>

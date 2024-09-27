@@ -1,0 +1,11 @@
+---
+import { getEntry } from '../services/astro-content';
+
+export interface Props {
+  settlement: string;
+}
+const { settlement: settlementId } = Astro.props;
+const settlement = await getEntry('settlements', settlementId);
+---
+
+<span title={settlement!.data.address}>{settlement!.data.name}</span>

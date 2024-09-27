@@ -2,7 +2,7 @@ import { z } from 'astro/zod';
 
 import dotenv from 'dotenv';
 
-dotenv.config({ override: true, path: '.env.production' });
+dotenv.config({ override: true, path: '.env' });
 
 const nonEmptyString = z.string().min(1);
 
@@ -12,5 +12,4 @@ const environmentSchema = z.object({
 });
 
 const environment = environmentSchema.parse(process.env);
-console.log(environment);
 export default environment;

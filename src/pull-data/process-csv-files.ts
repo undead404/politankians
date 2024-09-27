@@ -11,7 +11,7 @@ export default async function processCSVFiles() {
     await downloadAndConvertToJSON(
       csvUrl,
       genre,
-      `${transliterateUaToLatin(archive)}-${identifier}.json`,
+      `${transliterateUaToLatin(archive)}-${transliterateUaToLatin(identifier)}.json`,
     );
   }
 }

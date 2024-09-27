@@ -61,7 +61,7 @@ describe('parishRegisterSchema', () => {
             page: '561',
             role: 'померла особа',
             series: '1',
-            settlement: 'Політанки',
+            settlement: '23542-Politanky',
             surname: 'Гуминюк',
           },
           {
@@ -78,11 +78,11 @@ describe('parishRegisterSchema', () => {
             page: '561',
             role: 'наречений',
             series: '1',
-            settlement: 'Політанки',
+            settlement: '23542-Politanky',
             surname: 'Бойцун',
           },
         ],
-        settlements: 'Політанки',
+        settlements: '23542-Politanky',
         years: '1800',
       });
     }

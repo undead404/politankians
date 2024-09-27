@@ -1,6 +1,8 @@
 import { z } from 'astro/zod';
 import _ from 'lodash';
 
+import getRowSettlementId from '../utils/get-row-settlement-id.ts';
+
 import { nonEmptyString } from './non-empty-string.js';
 import { numericString } from './numeric-string.js';
 import transliteratedString from './transliterated-string.ts';
@@ -25,7 +27,10 @@ export const revisionRowSchema = z.preprocess(
       postal_code: inputObject['Пошт. Індекс'],
       role: inputObject['Роль'],
       series: inputObject['Опис'],
-      settlement: inputObject['Поселення храму'],
+      settlement: getRowSettlementId(
+        `${inputObject['Пошт. Індекс']}`,
+        `${inputObject['Поселення храму']}`,
+      ),
       surname: inputObject['Прізвище'],
     };
   },

@@ -5,6 +5,7 @@ import getActParticipants from '../utils/get-act-participants';
 
 import Ld from './ld.astro';
 import ParticipantName from './participant-name.astro';
+import SettlementName from './settlement-name.astro';
 
 export interface Props {
   itemId: string;
@@ -36,14 +37,15 @@ const acts = convertConfessionalListsToActs([confessionalList!.data]);
   tr {
     background-color: white;
   }
+  
   tr.act-even {
-    background-color: #f8f9fa; /* Light grey background */
+    filter: brightness(1.1);
   }
   tr.act-even:hover {
-    background-color: #e9ecef; /* Slightly darker grey on hover */
+    filter: brightness(0.9);
   }
   tr.act-odd:hover {
-    background-color: #f1f3f5; /* Light grey on hover */
+    filter: brightness(1.1);
   }
   a {
     text-decoration: none;
@@ -71,6 +73,7 @@ const acts = convertConfessionalListsToActs([confessionalList!.data]);
       <th>Учасник</th>
       <th>Розворот</th>
       <th>Акт</th>
+      <th><abbr title="Населений пункт">НП</abbr></th>
     </tr>
   </thead>
   <tbody>
@@ -99,6 +102,9 @@ const acts = convertConfessionalListsToActs([confessionalList!.data]);
               </td>
               <td rowspan={participants.length}>{act.page}</td>
               <td rowspan={participants.length}>{act.number}</td>
+              <td rowspan={participants.length}>
+                <SettlementName settlement={act.settlement} />
+              </td>
             </tr>
             {otherParticipants.map((participant) => (
               <tr

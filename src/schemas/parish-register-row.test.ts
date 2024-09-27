@@ -37,7 +37,7 @@ describe('parishRegisterRowSchema', () => {
         page: '561',
         role: 'померла особа',
         series: '1',
-        settlement: 'Політанки',
+        settlement: '23542-Politanky',
         surname: 'Гуминюк',
       });
     }
@@ -63,7 +63,7 @@ describe('parishRegisterRowSchema', () => {
         page: '561',
         role: 'померла особа',
         series: '1',
-        settlement: 'Політанки',
+        settlement: '23542-Politanky',
         surname: 'Гуминюк',
       });
     }

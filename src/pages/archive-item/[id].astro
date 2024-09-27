@@ -34,7 +34,7 @@ const { item } = Astro.props;
 const { id: itemId } = Astro.params;
 const archive = await getEntry('archives', item.archive);
 const microdata = getArchiveItemMicrodata(item, archive.data);
-const [, fonds, series, archiveItemNumber] = (itemId as any).split('-');
+const [fonds, series, archiveItemNumber] = item.identifier.split('-');
 ---
 
 <Layout title={itemId}>

@@ -7,6 +7,7 @@ import getActParticipants from '../utils/get-act-participants';
 import getParticipantFullName from '../utils/get-participant-full-name';
 
 import Ld from './ld.astro';
+import SettlementName from './settlement-name.astro';
 
 export interface Props {
   itemId: string;
@@ -39,13 +40,13 @@ const acts = convertParishRegistersToActs([parishRegister!.data]);
     background-color: white;
   }
   tr.act-even {
-    background-color: #f8f9fa; /* Light grey background */
+    filter: brightness(1.1);
   }
   tr.act-even:hover {
-    background-color: #e9ecef; /* Slightly darker grey on hover */
+    filter: brightness(0.9);
   }
   tr.act-odd:hover {
-    background-color: #f1f3f5; /* Light grey on hover */
+    filter: brightness(1.1);
   }
   a {
     text-decoration: none;
@@ -87,6 +88,7 @@ const acts = convertParishRegistersToActs([parishRegister!.data]);
       <th>Учасник</th>
       <th>Розворот</th>
       <th>Акт</th>
+      <th><abbr title="Населений пункт">НП</abbr></th>
       <th></th>
     </tr>
   </thead>
@@ -121,6 +123,9 @@ const acts = convertParishRegistersToActs([parishRegister!.data]);
               <td>{getParticipantFullName(firstParticipant)}</td>
               <td rowspan={participants.length}>{act.page}</td>
               <td rowspan={participants.length}>{act.number}</td>
+              <td rowspan={participants.length}>
+                <SettlementName settlement={act.settlement} />
+              </td>
               <td rowspan={participants.length}>
                 <a href={`/act/${act.id}`}>Відкрити</a>
               </td>

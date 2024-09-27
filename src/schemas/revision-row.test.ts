@@ -36,7 +36,7 @@ describe('revisionRowSchema', () => {
       postal_code: '12345',
       role: 'Role',
       series: 'Description',
-      settlement: 'Church Settlement',
+      settlement: '12345-Church Settlement',
       surname: 'Doe',
     });
   });
@@ -98,7 +98,7 @@ describe('revisionRowSchema', () => {
       postal_code: '12345',
       role: 'Role',
       series: 'Description',
-      settlement: 'Church Settlement',
+      settlement: '12345-Church Settlement',
       surname: 'Doe',
     });
   });

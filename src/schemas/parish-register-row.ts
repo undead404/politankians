@@ -1,6 +1,8 @@
 import { z } from 'astro/zod';
 import _ from 'lodash';
 
+import getRowSettlementId from '../utils/get-row-settlement-id.ts';
+
 import { actTypeSchema } from './act_type.js';
 import { nonEmptyString } from './non-empty-string.js';
 import { numericString } from './numeric-string.js';
@@ -51,7 +53,10 @@ export const parishRegisterRowSchema = z
     page: input['Аркуш'],
     role: input['роль'],
     series: input['Опис'],
-    settlement: input['Поселення храму'],
+    settlement: getRowSettlementId(
+      input['Пошт. Індекс'],
+      input['Поселення храму'],
+    ),
     surname: input['Прізвище'],
   }));
 
