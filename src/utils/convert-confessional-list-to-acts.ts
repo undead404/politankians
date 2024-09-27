@@ -7,6 +7,7 @@ import addParticipant from './add-participant.ts';
 import getActId from './get-act-id.js';
 import getParticipantFullName from './get-participant-full-name.js';
 import parseDate from './parse-date.ts';
+import getParticipantImportance from './get-participant-importance.ts';
 
 export default function convertConfessionalListsToActs(
   confessionalLists: ConfessionalList[],
@@ -45,15 +46,24 @@ export default function convertConfessionalListsToActs(
       surname: row.surname,
       note: row.note,
     };
-    addParticipant(currentFamily, participant);
+    const importance = getParticipantImportance(
+      participant,
+      currentFamily.act_type,
+    );
+    addParticipant(currentFamily, participant, importance);
     // Update the description field
-    const descriptionAddition = [row.role, getParticipantFullName(participant)]
-      .filter(Boolean)
-      .join(' ');
-    if (currentFamily.description) {
-      currentFamily.description += `;\n${descriptionAddition}`;
-    } else {
-      currentFamily.description = descriptionAddition;
+    if (importance === 'PRIMARY' || importance === 'SECONDARY') {
+      const descriptionAddition = [
+        row.role,
+        getParticipantFullName(participant),
+      ]
+        .filter(Boolean)
+        .join(' ');
+      if (currentFamily.description) {
+        currentFamily.description += `;\n${descriptionAddition}`;
+      } else {
+        currentFamily.description = descriptionAddition;
+      }
     }
 
     actRegister[currentFamilyId] = currentFamily;

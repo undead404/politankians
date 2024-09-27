@@ -10,8 +10,9 @@ import Context from './context.astro';
     TYPESENSE_SEARCH_KEY={environment.TYPESENSE_SEARCH_KEY}
   />
   <form id="search-box"></form>
-  <div id="refinement-list"></div>
-  <div id="refinement-list-year"></div>
+  <div class="refinement-list" id="refinement-list"></div>
+  <div class="refinement-list" id="refinement-list-year"></div>
+  <div class="refinement-list" id="refinement-list-settlement"></div>
   <output id="output-box"></output>
   <script src="./search.ts"></script>
   <link
@@ -54,8 +55,7 @@ import Context from './context.astro';
     .ais-PoweredBy {
       justify-content: center;
     }
-    #refinement-list,
-    #refinement-list-year {
+    .refinement-list {
       margin-bottom: 1rem;
     }
     .ais-RefinementList-item {

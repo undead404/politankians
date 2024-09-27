@@ -8,6 +8,7 @@ import addParticipant from './add-participant.ts';
 import getActId from './get-act-id.js';
 import getParticipantFullName from './get-participant-full-name.js';
 import parseDate from './parse-date.ts';
+import getParticipantImportance from './get-participant-importance.ts';
 
 export default function convertParishRegistersToActs(
   parishRegisters: ParishRegister[],
@@ -53,7 +54,11 @@ export default function convertParishRegistersToActs(
       surname: row.surname,
       note: row.note,
     };
-    addParticipant(currentAct, participant);
+    const importance = getParticipantImportance(
+      participant,
+      currentAct.act_type,
+    );
+    addParticipant(currentAct, participant, importance);
     // Update the description field
     const descriptionAddition = `${row.role}: ${getParticipantFullName(participant)}`;
     if (currentAct.description) {

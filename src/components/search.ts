@@ -135,5 +135,11 @@ search.addWidgets([
       },
     ],
   }),
+
+  refinementList({
+    attribute: 'settlement',
+    container: '#refinement-list-settlement',
+    sortBy: ['name'],
+  }),
 ]);
 search.start();
