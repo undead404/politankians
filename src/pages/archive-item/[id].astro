@@ -37,7 +37,7 @@ const microdata = getArchiveItemMicrodata(item, archive.data);
 const [fonds, series, archiveItemNumber] = item.identifier.split('-');
 ---
 
-<Layout title={itemId}>
+<Layout title={`${archive.data.shortTitle} ${item.identifier}`}>
   <style slot="head">
     .archive-card {
       border: 1px solid #ddd;
