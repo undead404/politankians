@@ -52,18 +52,13 @@ export default function convertConfessionalListsToActs(
     );
     addParticipant(currentFamily, participant, importance);
     // Update the description field
-    if (importance === 'PRIMARY' || importance === 'SECONDARY') {
-      const descriptionAddition = [
-        row.role,
-        getParticipantFullName(participant),
-      ]
-        .filter(Boolean)
-        .join(' ');
-      if (currentFamily.description) {
-        currentFamily.description += `;\n${descriptionAddition}`;
-      } else {
-        currentFamily.description = descriptionAddition;
-      }
+    const descriptionAddition = [row.role, getParticipantFullName(participant)]
+      .filter(Boolean)
+      .join(' ');
+    if (currentFamily.description) {
+      currentFamily.description += `;\n${descriptionAddition}`;
+    } else {
+      currentFamily.description = descriptionAddition;
     }
 
     actRegister[currentFamilyId] = currentFamily;
