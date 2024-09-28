@@ -4,6 +4,7 @@ import type { GetStaticPaths } from 'astro';
 import Layout from '../../components/layout.astro';
 import Ld from '../../components/ld.astro';
 import ParticipantName from '../../components/participant-name.astro';
+import SettlementName from '../../components/settlement-name.astro';
 import getBirthMicrodata from '../../ld/birth-microdata';
 import getDeathMicrodata from '../../ld/death-microdata';
 import getMarriageMicrodata from '../../ld/marriage-microdata';
@@ -103,6 +104,10 @@ switch (act.act_type) {
   <section>
     <h2>Дата</h2>
     <time datetime={new Date(act.date).toISOString()}>{formatDate(act.date)}</time>
+  </section>
+  <section>
+    <h2>Місце</h2>
+    <p><SettlementName settlement={act.settlement} /></p>
   </section>
   <section>
     <h2>Учасники</h2>

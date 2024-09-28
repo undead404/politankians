@@ -14,6 +14,7 @@ export const archiveItemSchema = z.object({
   gssUrl: nonEmptyString,
   identifier: z.string().regex(/^\d+-\d+[а-я]?-\d+$/),
   inLanguage: z.enum(['Russian']),
+  isPartial: z.optional(z.boolean()),
   title: nonEmptyString,
 });
 

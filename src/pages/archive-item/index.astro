@@ -107,8 +107,15 @@ const ARCHIVE_ITEM_TYPES = {
                 {
                   archives.find(({ id }) => archiveItem.data.archive === id)!
                     .data.shortTitle
-                } {archiveItem.data.identifier}
+                }{' '}
+                {archiveItem.data.identifier}
               </a>
+              {archiveItem.data.isPartial && (
+                <>
+                  {' ('}
+                  <em>частково</em>{')'}
+                </>
+              )}
             </th>
             <td>
               {table!.data.settlements.split(', ').map((settlement) => (

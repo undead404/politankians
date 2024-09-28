@@ -96,6 +96,7 @@ const [fonds, series, archiveItemNumber] = item.identifier.split('-');
             {item.archivedAt.map((scanUrl) => <TitledLink href={scanUrl} />)}
           </div>
         </div>
+        {item.isPartial && <p><em>Ця справа проіндексована частково</em></p>}
       </div>
     </header>
     {
