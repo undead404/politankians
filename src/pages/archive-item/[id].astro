@@ -6,6 +6,7 @@ import Layout from '../../components/layout.astro';
 import ParishRegister from '../../components/parish-register.astro';
 import Revision from '../../components/revision.astro';
 import TitledLink from '../../components/titled-link.astro';
+import Unstructured from '../../components/unstructured.astro';
 import getArchiveItemMicrodata from '../../ld/archive-item-microdata';
 import type { ArchiveItem } from '../../schemas/archive-item';
 import { getCollection, getEntry } from '../../services/astro-content';
@@ -112,6 +113,11 @@ const [fonds, series, archiveItemNumber] = item.identifier.split('-');
     {
       item.genre === 'Revision' && (
         <Revision itemId={itemId} microdata={microdata} />
+      )
+    }
+    {
+      item.genre === 'Unstructured' && (
+        <Unstructured itemId={itemId} microdata={microdata} />
       )
     }
   </article>

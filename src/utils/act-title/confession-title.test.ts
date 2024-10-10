@@ -1,8 +1,8 @@
 import { Act } from '../../schemas/act.js';
 import getConfessionTitle from './confession-title.js';
-import getParticipantFullName from '../get-participant-full-name.js';
+import getPersonFullName from '../get-person-full-name.js';
 
-jest.mock('../get-participant-full-name.js');
+jest.mock('../get-person-full-name.js');
 
 describe('getConfessionTitle', () => {
   const mockAct: Act = {
@@ -30,7 +30,7 @@ describe('getConfessionTitle', () => {
   };
 
   beforeEach(() => {
-    (getParticipantFullName as jest.Mock).mockReturnValue('John Doe Smith');
+    (getPersonFullName as jest.Mock).mockReturnValue('John Doe Smith');
   });
 
   it('should return the correct confession title', () => {

@@ -5,15 +5,15 @@ import getRowSettlementId from '../utils/get-row-settlement-id.ts';
 import { nonEmptyString } from './non-empty-string.js';
 import { numericString } from './numeric-string.js';
 import transliteratedString from './transliterated-string.ts';
+import { dateStringSchema } from './date_string.ts';
 
-const LOOSE_DATE_REGEXP = /^\d{4}(?:-\d{2}(?:-\d{2})?)?$/;
 export const confessionalListRowSchema = z
   .object({
     Акт: numericString,
     Аркуш: nonEmptyString,
     Архів: transliteratedString,
     Вік: z.optional(z.string()),
-    'Дата події': nonEmptyString.regex(LOOSE_DATE_REGEXP),
+    'Дата події': dateStringSchema,
     "Ім'я": z.string(),
     Опис: nonEmptyString,
     'По-батькові': z.string(),

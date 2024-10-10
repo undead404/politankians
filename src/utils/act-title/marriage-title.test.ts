@@ -1,10 +1,10 @@
 import { Act } from '../../schemas/act.js';
 import getMarriageTitle from './marriage-title.js';
 import formatDate from '../format-date.js';
-import getParticipantFullName from '../get-participant-full-name.js';
+import getPersonFullName from '../get-person-full-name.js';
 
 jest.mock('../format-date.js');
-jest.mock('../get-participant-full-name.js');
+jest.mock('../get-person-full-name.js');
 
 describe('getMarriageTitle', () => {
   const mockAct: Act = {
@@ -41,7 +41,7 @@ describe('getMarriageTitle', () => {
 
   beforeEach(() => {
     (formatDate as jest.Mock).mockReturnValue('14-09-2023');
-    (getParticipantFullName as jest.Mock)
+    (getPersonFullName as jest.Mock)
       .mockReturnValueOnce('John Doe Smith')
       .mockReturnValueOnce('Jane Doe');
   });

@@ -1,7 +1,10 @@
 import type { Participant } from '../schemas/participant.js';
 
-export default function getParticipantFullName(
-  participant: Participant,
+export default function getPersonFullName(
+  participant: Pick<
+    Participant,
+    'age' | 'given_name' | 'middle_name' | 'surname'
+  >,
   withAge = true,
 ) {
   const name = [

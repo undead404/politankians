@@ -1,16 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   searchBox,
   hits,
   refinementList,
-  numericMenu,
+  rangeSlider,
+  //index,
+  stats,
 } from 'instantsearch.js/es/widgets';
 import { z } from 'astro/zod';
 
 import { nonEmptyString } from '../schemas/non-empty-string.js';
+import { settlementSchema } from '../schemas/settlement.ts';
 import getTypesenseSearch from '../services/typesense.ts';
 import getContext from '../utils/get-context.js';
 import getHitPath from '../utils/get-hit-path.ts';
-import { settlementSchema } from '../schemas/settlement.ts';
+//import getPersonFullName from '../utils/get-person-full-name.ts';
 
 const ACT_TYPE_CLASSES = {
   відспівування: 'memorial-service',
@@ -49,7 +53,6 @@ search.addWidgets([
   hits({
     container: '#output-box',
     templates: {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       item(hit: { act_type: any; id: any }, { html, components }: any) {
         return html`
           <a
@@ -64,84 +67,24 @@ search.addWidgets([
       },
     },
   }),
+  stats({
+    container: '#acts_ru_count',
+    templates: {
+      text: (data: any) => `(${data.nbHits})`,
+    },
+  }),
   refinementList({
     attribute: 'act_type',
     container: '#refinement-list',
     sortBy: ['name'],
   }),
-  numericMenu({
+  rangeSlider({
     attribute: 'year',
     container: '#refinement-list-year',
-    items: [
-      {
-        label: 'Усі роки',
-      },
-      {
-        end: 1799,
-        label: '1790-ті',
-        start: 1790,
-      },
-      {
-        end: 1809,
-        label: '1800-ті',
-        start: 1800,
-      },
-      {
-        end: 1819,
-        label: '1810-ті',
-        start: 1810,
-      },
-      {
-        end: 1829,
-        label: '1820-ті',
-        start: 1820,
-      },
-      {
-        end: 1839,
-        label: '1830-ті',
-        start: 1830,
-      },
-      {
-        end: 1849,
-        label: '1840-ті',
-        start: 1840,
-      },
-      {
-        end: 1859,
-        label: '1850-ті',
-        start: 1850,
-      },
-      {
-        end: 1869,
-        label: '1860-ті',
-        start: 1860,
-      },
-      {
-        end: 1879,
-        label: '1870-ті',
-        start: 1870,
-      },
-      {
-        end: 1889,
-        label: '1880-ті',
-        start: 1880,
-      },
-      {
-        end: 1899,
-        label: '1890-ті',
-        start: 1890,
-      },
-      {
-        end: 1909,
-        label: '1900-ті',
-        start: 1900,
-      },
-      {
-        end: 1919,
-        label: '1910-ті',
-        start: 1910,
-      },
-    ],
+    max: 1919,
+    min: 1795,
+    pips: true,
+    tooltips: true,
   }),
 
   refinementList({
@@ -155,5 +98,24 @@ search.addWidgets([
       }));
     },
   }),
+  /*index({ indexName: 'unstructured_uk' }).addWidgets([
+    hits({
+      container: '#output-box-unstructured_uk',
+      templates: {
+        item: (hit: any, { html, components }: any) =>
+          html`<a
+            href="/archive-item/${hit.archive}-${hit.fonds}-${hit.series}-${hit.item}"
+            ><h2>${getPersonFullName(hit)}</h2>
+            <p>${components.Snippet({ hit, attribute: 'description' })}</p>
+          </a>`,
+      },
+    }),
+    stats({
+      container: '#unstructured_uk_count',
+      templates: {
+        text: (data: any) => `(${data.nbHits})`,
+      },
+    }),
+  ]),*/
 ]);
 search.start();

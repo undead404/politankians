@@ -1,7 +1,7 @@
 ---
 import type { Act } from '../schemas/act';
 import type { Participant } from '../schemas/participant';
-import getParticipantFullName from '../utils/get-participant-full-name';
+import getPersonFullName from '../utils/get-person-full-name';
 import getParticipantSearchQuery from '../utils/get-participant-search-query';
 
 export interface Props {
@@ -9,7 +9,7 @@ export interface Props {
   participant: Participant;
 }
 const { act, participant } = Astro.props;
-const fullName = getParticipantFullName(participant, false);
+const fullName = getPersonFullName(participant, false);
 const searchQuery = getParticipantSearchQuery(participant, act);
 ---
 <>

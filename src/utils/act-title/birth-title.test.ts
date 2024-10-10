@@ -1,10 +1,10 @@
 import { Act } from '../../schemas/act.js';
 import getBirthTitle from './birth-title.js';
 import formatDate from '../format-date.js';
-import getParticipantFullName from '../get-participant-full-name.js';
+import getPersonFullName from '../get-person-full-name.js';
 
 jest.mock('../format-date.js');
-jest.mock('../get-participant-full-name.js');
+jest.mock('../get-person-full-name.js');
 
 describe('getBirthTitle', () => {
   const mockAct: Act = {
@@ -33,7 +33,7 @@ describe('getBirthTitle', () => {
 
   beforeEach(() => {
     (formatDate as jest.Mock).mockReturnValue('14.09.2023');
-    (getParticipantFullName as jest.Mock).mockReturnValue('John Doe Smith');
+    (getPersonFullName as jest.Mock).mockReturnValue('John Doe Smith');
   });
 
   it('should return the correct birth title', () => {

@@ -8,6 +8,6 @@
     "genre": "Parish register",
     "gssUrl": "https://docs.google.com/spreadsheets/d/1ghEzhKsNAAEOirNfITqVwqxEEm5joIWRQruYTL3dFzw/edit?usp=sharing",
     "identifier": "904-26-196",
-    "inLanguage": "Russian",
+    "documentLocale": "ru", "tableLocale": "ru",
     "title": "Политанки 1905-1912"
 }

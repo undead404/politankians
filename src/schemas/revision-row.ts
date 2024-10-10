@@ -1,11 +1,11 @@
 import { z } from 'astro/zod';
-import _ from 'lodash';
 
 import getRowSettlementId from '../utils/get-row-settlement-id.ts';
 
 import { nonEmptyString } from './non-empty-string.js';
 import { numericString } from './numeric-string.js';
 import transliteratedString from './transliterated-string.ts';
+import { dateStringSchema } from './date_string.ts';
 
 export const revisionRowSchema = z.preprocess(
   (input) => {
@@ -38,19 +38,7 @@ export const revisionRowSchema = z.preprocess(
     act: numericString,
     age: z.optional(z.string()),
     archive: transliteratedString,
-    date: nonEmptyString.transform((input) => {
-      let day: string, month: string, year: string;
-      if (input.includes('/')) {
-        [month = '', day = '', year = ''] = input.split('/');
-      } else if (input.includes('.')) {
-        [day = '', month = '', year = ''] = input.split('.');
-      } else {
-        return input;
-      }
-      return [year, month, day]
-        .map((part) => _.padStart(part, 2, '0'))
-        .join('-');
-    }),
+    date: dateStringSchema,
     fonds: nonEmptyString,
     given_name: z.string(),
     item: nonEmptyString,

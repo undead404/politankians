@@ -1,6 +1,11 @@
 import type { ArchiveItem } from '../schemas/archive-item.js';
 import type { Archive } from '../schemas/archive.js';
 
+const LOCALE_TO_LANGUAGE = {
+  ru: 'Russian',
+  uk: 'Ukrainian',
+} as const;
+
 export default function getArchiveItemMicrodata(
   archiveItem: ArchiveItem,
   archive: Archive,
@@ -16,7 +21,7 @@ export default function getArchiveItemMicrodata(
       ...archive,
     },
     identifier: archiveItem.identifier,
-    inLanguage: archiveItem.inLanguage,
+    inLanguage: LOCALE_TO_LANGUAGE[archiveItem.documentLocale],
     name: archiveItem.title,
   };
 }

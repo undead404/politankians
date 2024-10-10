@@ -1,0 +1,105 @@
+---
+import { getEntry } from '../services/astro-content';
+import getPersonFullName from '../utils/get-person-full-name';
+
+import Ld from './ld.astro';
+import SettlementName from './settlement-name.astro';
+
+export interface Props {
+  itemId: string;
+  microdata: unknown;
+}
+const { itemId, microdata } = Astro.props;
+const item = (await getEntry('unstructured', itemId))!;
+const {
+  data: { rows },
+} = item!;
+---
+
+<style slot="head">
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    font-family: 'Times New Roman', serif;
+  }
+  th,
+  td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  th {
+    background-color: #343a40; /* Dark grey background */
+    color: white;
+    text-align: center;
+  }
+  tr {
+    background-color: white;
+  }
+
+  tr.row-even {
+    filter: brightness(1.1);
+  }
+  tr.row-even:hover {
+    filter: brightness(0.9);
+  }
+  tr.row-odd:hover {
+    filter: brightness(1.1);
+  }
+  a {
+    text-decoration: none;
+    color: #343a40; /* Dark grey text */
+    font-weight: bold;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .participant-note {
+    background-color: #f9f9f9;
+    border-left: 4px solid #343a40; /* Dark grey border */
+    border-radius: 4px;
+    color: #555;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+  }
+</style>
+<Ld microdata={microdata} slot="head" />
+<table>
+  <thead>
+    <tr>
+        <th>Номер</th>
+      <th>Роль</th>
+      <th>Учасник</th>
+      <th>Розворот</th>
+      <th><abbr title="Населений пункт">НП</abbr></th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      rows.map((row, index) => {
+        const isEven = index % 2 === 0;
+        return (
+          <>
+            <tr
+              class:list={[{ 'row-even': isEven, 'row-odd': !isEven }]}
+              id={`row-${index + 1}`}
+            >
+              <td>{index + 1}</td>
+              <td>{row.role}</td>
+              <td>{getPersonFullName(row)}</td>
+              <td>{row.page}</td>
+              <td>
+                <SettlementName settlement={row.settlement} />
+              </td>
+            </tr>
+            <!--<tr class:list={[{ 'row-even': isEven, 'row-odd': !isEven }]}>
+              <td colspan="5">{JSON.stringify(row.misc, null, 2)}</td>
+            </tr> -->
+          </>
+        );
+      })
+    }
+  </tbody>
+</table>

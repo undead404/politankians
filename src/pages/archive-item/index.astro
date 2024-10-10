@@ -11,19 +11,28 @@ const parishRegisterTables = await getCollection('parish-register-tables');
 const confessionalLists = await getCollection('confessional-lists');
 const revisions = await getCollection('revision-tables');
 const archives = await getCollection('archives');
+const unstructured = await getCollection('unstructured');
 const COLLECTIONS = {
   'Confessional list': confessionalLists,
   'Parish register': parishRegisterTables,
   Revision: revisions,
+  Unstructured: unstructured,
 };
+console.log(unstructured);
 const archiveItemTuples: [
   (typeof archiveItems)[0],
   (typeof parishRegisterTables)[0] | (typeof confessionalLists)[0] | undefined,
 ][] = _.sortBy(
-  archiveItems.map((archiveItem) => [
-    archiveItem,
-    COLLECTIONS[archiveItem.data.genre].find(({ id }) => id === archiveItem.id),
-  ]),
+  archiveItems.map((archiveItem) => {
+    const table = COLLECTIONS[archiveItem.data.genre].find(
+      ({ id }) => id === archiveItem.id,
+    );
+    console.log(table.data.settlements);
+    if (!table) {
+      throw new Error(`table for ${archiveItem.id} not found`);
+    }
+    return [archiveItem, table];
+  }),
   ['1.data.years'],
 );
 
@@ -113,7 +122,8 @@ const ARCHIVE_ITEM_TYPES = {
               {archiveItem.data.isPartial && (
                 <>
                   {' ('}
-                  <em>частково</em>{')'}
+                  <em>частково</em>
+                  {')'}
                 </>
               )}
             </th>

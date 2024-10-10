@@ -15,7 +15,8 @@ describe('getArchiveItemMicrodata', () => {
     genre: 'Parish register',
     gssUrl: 'https://example.com/spreadsheets/d/123456789/edit?usp=sharing',
     identifier: '123-1-1234',
-    inLanguage: 'Russian',
+    documentLocale: 'ru',
+    tableLocale: 'ru',
     title: 'Test Title',
   };
 
@@ -43,7 +44,7 @@ describe('getArchiveItemMicrodata', () => {
         ...archive,
       },
       identifier: archiveItem.identifier,
-      inLanguage: archiveItem.inLanguage,
+      inLanguage: 'Russian',
       name: archiveItem.title,
     });
   });
@@ -62,7 +63,7 @@ describe('getArchiveItemMicrodata', () => {
         ...archive,
       },
       identifier: modifiedArchiveItem.identifier,
-      inLanguage: modifiedArchiveItem.inLanguage,
+      inLanguage: 'Russian',
       name: modifiedArchiveItem.title,
     });
   });

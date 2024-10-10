@@ -3,11 +3,11 @@ import type { Participant } from '../schemas/participant.js';
 
 import convertParishRegistersToActs from './convert-parish-registers-to-acts.js';
 import getActTitle from './act-title/index.js';
-import getParticipantFullName from './get-participant-full-name.js';
+import getPersonFullName from './get-person-full-name.js';
 import { ParishRegister } from '../schemas/parish-register.js';
 
 jest.mock('./act-title/index.js');
-jest.mock('./get-participant-full-name.js');
+jest.mock('./get-person-full-name.js');
 
 describe('convertParishRegistersToActs', () => {
   const mockParishRegisters: ParishRegister[] = [
@@ -142,7 +142,7 @@ describe('convertParishRegistersToActs', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (getActTitle as jest.Mock).mockReturnValue('Act Title');
-    (getParticipantFullName as jest.Mock).mockImplementation(
+    (getPersonFullName as jest.Mock).mockImplementation(
       (participant: Participant) =>
         `${participant.given_name} ${participant.surname}`,
     );

@@ -6,11 +6,11 @@ import type { Participant } from '../schemas/participant.js';
 import getActTitle from './act-title/index.js';
 import convertConfessionalListsToActs from './convert-confessional-list-to-acts.js';
 import getActId from './get-act-id.js';
-import getParticipantFullName from './get-participant-full-name.js';
+import getPersonFullName from './get-person-full-name.js';
 
 jest.mock('./get-act-id.js');
 jest.mock('./act-title/index.js');
-jest.mock('./get-participant-full-name.js');
+jest.mock('./get-person-full-name.js');
 
 describe('convertConfessionalListsToActs', () => {
   const mockConfessionalLists: ConfessionalList[] = [
@@ -61,7 +61,7 @@ describe('convertConfessionalListsToActs', () => {
     jest.clearAllMocks();
     (getActId as jest.Mock).mockReturnValue('act-1');
     (getActTitle as jest.Mock).mockReturnValue('Act Title');
-    (getParticipantFullName as jest.Mock).mockImplementation(
+    (getPersonFullName as jest.Mock).mockImplementation(
       (participant: Participant) =>
         `${participant.given_name} ${participant.surname}`,
     );

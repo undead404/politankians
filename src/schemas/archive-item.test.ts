@@ -15,7 +15,8 @@ describe('archiveItemSchema', () => {
       gssUrl:
         'https://docs.google.com/spreadsheets/d/1MU7O2rF-zETJQV8Vvyl92njTkrxP9mW8hYuDIpc5dPU/edit?usp=sharing',
       identifier: '315-1-6859',
-      inLanguage: 'Russian',
+      documentLocale: 'ru',
+      tableLocale: 'ru',
       title:
         'Метрическая книга регистрации актов о рождении, браке и смерти по церквям Ямпольского уезда за 1806 год.',
     };
@@ -37,7 +38,8 @@ describe('archiveItemSchema', () => {
       gssUrl:
         'https://docs.google.com/spreadsheets/d/1MU7O2rF-zETJQV8Vvyl92njTkrxP9mW8hYuDIpc5dPU/edit?usp=sharing',
       identifier: '315-1-6859',
-      inLanguage: 'Russian',
+      documentLocale: 'ru',
+      tableLocale: 'ru',
       title:
         'Метрическая книга регистрации актов о рождении, браке и смерти по церквям Ямпольского уезда за 1806 год.',
     };
@@ -59,7 +61,8 @@ describe('archiveItemSchema', () => {
       gssUrl:
         'https://docs.google.com/spreadsheets/d/1MU7O2rF-zETJQV8Vvyl92njTkrxP9mW8hYuDIpc5dPU/edit?usp=sharing',
       identifier: 'invalid-identifier',
-      inLanguage: 'Russian',
+      documentLocale: 'ru',
+      tableLocale: 'ru',
       title:
         'Метрическая книга регистрации актов о рождении, браке и смерти по церквям Ямпольского уезда за 1806 год.',
     };

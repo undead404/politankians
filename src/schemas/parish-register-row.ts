@@ -1,9 +1,9 @@
 import { z } from 'astro/zod';
-import _ from 'lodash';
 
 import getRowSettlementId from '../utils/get-row-settlement-id.ts';
 
 import { actTypeSchema } from './act_type.js';
+import { dateStringSchema } from './date_string.ts';
 import { nonEmptyString } from './non-empty-string.js';
 import { numericString } from './numeric-string.js';
 import transliteratedString from './transliterated-string.ts';
@@ -14,19 +14,7 @@ export const parishRegisterRowSchema = z
     Аркуш: nonEmptyString,
     Архів: transliteratedString,
     Вік: z.optional(z.string()),
-    'Дата події': nonEmptyString.transform((input) => {
-      let day: string, month: string, year: string;
-      if (input.includes('/')) {
-        [month = '', day = '', year = ''] = input.split('/');
-      } else if (input.includes('.')) {
-        [day = '', month = '', year = ''] = input.split('.');
-      } else {
-        return input;
-      }
-      return [year, month, day]
-        .map((part) => _.padStart(part, 2, '0'))
-        .join('-');
-    }),
+    'Дата події': dateStringSchema,
     "Ім'я": z.string(),
     Опис: nonEmptyString,
     'По-батькові': z.string(),
@@ -58,6 +46,7 @@ export const parishRegisterRowSchema = z
       input['Поселення храму'],
     ),
     surname: input['Прізвище'],
-  }));
+  }))
+  .refine((input) => !!input.act);
 
 export type ParishRegisterRow = z.infer<typeof parishRegisterRowSchema>;

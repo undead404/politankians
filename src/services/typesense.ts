@@ -19,29 +19,36 @@ export default function getTypesenseSearch(apiKey: string, host: string) {
     // The following parameters are directly passed to Typesense's search API endpoint.
     //  So you can pass any parameters supported by the search endpoint below.
     //  query_by is required.
-    additionalSearchParameters: {
-      query_by: [
-        'primaryParticipants.surname',
-        'primaryParticipants.given_name',
-        'primaryParticipants.middle_name',
-        'secondaryParticipants.surname',
-        'secondaryParticipants.given_name',
-        'secondaryParticipants.middle_name',
-        'tertiaryParticipants.surname',
-        'tertiaryParticipants.given_name',
-        'tertiaryParticipants.middle_name',
-        'act_type',
-        'settlement',
-        'primaryParticipants.note',
-        'secondaryParticipants.note',
-        'tertiaryParticipants.note',
-      ].join(','),
+    collectionSpecificSearchParameters: {
+      acts_ru: {
+        query_by: [
+          'primaryParticipants.surname',
+          'primaryParticipants.given_name',
+          'primaryParticipants.middle_name',
+          'secondaryParticipants.surname',
+          'secondaryParticipants.given_name',
+          'secondaryParticipants.middle_name',
+          'tertiaryParticipants.surname',
+          'tertiaryParticipants.given_name',
+          'tertiaryParticipants.middle_name',
+          'act_type',
+          'settlement',
+          'primaryParticipants.note',
+          'secondaryParticipants.note',
+          'tertiaryParticipants.note',
+        ].join(','),
+      },
+      /*unstructured_uk: {
+        query_by: ['surname', 'given_name', 'middle_name', 'note', 'misc'].join(
+          ',',
+        ),
+      },*/
     },
   });
   const searchClient = typesenseInstantsearchAdapter.searchClient;
 
   return instantsearch({
-    indexName: 'acts',
+    indexName: 'acts_ru',
     routing: true,
     searchClient,
   });

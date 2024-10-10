@@ -5,7 +5,7 @@ import type { ConfessionalList } from '../schemas/confessional-list.js';
 import getActTitle from './act-title/index.js';
 import addParticipant from './add-participant.ts';
 import getActId from './get-act-id.js';
-import getParticipantFullName from './get-participant-full-name.js';
+import getPersonFullName from './get-person-full-name.js';
 import parseDate from './parse-date.ts';
 import getParticipantImportance from './get-participant-importance.ts';
 
@@ -52,7 +52,7 @@ export default function convertConfessionalListsToActs(
     );
     addParticipant(currentFamily, participant, importance);
     // Update the description field
-    const descriptionAddition = [row.role, getParticipantFullName(participant)]
+    const descriptionAddition = [row.role, getPersonFullName(participant)]
       .filter(Boolean)
       .join(' ');
     if (currentFamily.description) {

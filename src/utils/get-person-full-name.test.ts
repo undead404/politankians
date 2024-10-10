@@ -1,8 +1,8 @@
 import type { Participant } from '../schemas/participant.js';
 
-import getParticipantFullName from './get-participant-full-name.js';
+import getPersonFullName from './get-person-full-name.js';
 
-describe('getParticipantFullName', () => {
+describe('getPersonFullName', () => {
   it('should return full name with age if age is provided', () => {
     const participant: Participant = {
       surname: 'Doe',
@@ -11,7 +11,7 @@ describe('getParticipantFullName', () => {
       age: '30',
       role: 'Speaker',
     };
-    expect(getParticipantFullName(participant)).toBe('Doe John Michael (30)');
+    expect(getPersonFullName(participant)).toBe('Doe John Michael (30)');
   });
 
   it('should return full name without age if age is not provided', () => {
@@ -21,7 +21,7 @@ describe('getParticipantFullName', () => {
       middle_name: 'Michael',
       role: 'Speaker',
     };
-    expect(getParticipantFullName(participant)).toBe('Doe John Michael');
+    expect(getPersonFullName(participant)).toBe('Doe John Michael');
   });
 
   it('should handle missing middle name', () => {
@@ -32,7 +32,7 @@ describe('getParticipantFullName', () => {
       age: '30',
       role: 'Speaker',
     };
-    expect(getParticipantFullName(participant)).toBe('Doe John (30)');
+    expect(getPersonFullName(participant)).toBe('Doe John (30)');
   });
 
   it('should handle missing given name', () => {
@@ -43,7 +43,7 @@ describe('getParticipantFullName', () => {
       age: '30',
       role: 'Speaker',
     };
-    expect(getParticipantFullName(participant)).toBe('Doe Michael (30)');
+    expect(getPersonFullName(participant)).toBe('Doe Michael (30)');
   });
 
   it('should handle missing surname', () => {
@@ -54,7 +54,7 @@ describe('getParticipantFullName', () => {
       role: 'Speaker',
       surname: '',
     };
-    expect(getParticipantFullName(participant)).toBe('John Michael (30)');
+    expect(getPersonFullName(participant)).toBe('John Michael (30)');
   });
 
   it('should handle only one name part', () => {
@@ -64,7 +64,7 @@ describe('getParticipantFullName', () => {
       role: 'Speaker',
       surname: '',
     };
-    expect(getParticipantFullName(participant)).toBe('John');
+    expect(getPersonFullName(participant)).toBe('John');
   });
 
   it('should consider withAge argument', () => {
@@ -75,6 +75,6 @@ describe('getParticipantFullName', () => {
       role: 'Speaker',
       surname: '',
     };
-    expect(getParticipantFullName(participant, false)).toBe('John');
+    expect(getPersonFullName(participant, false)).toBe('John');
   });
 });

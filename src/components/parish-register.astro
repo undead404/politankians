@@ -4,7 +4,7 @@ import { getEntry } from '../services/astro-content';
 import convertParishRegistersToActs from '../utils/convert-parish-registers-to-acts';
 import formatDate from '../utils/format-date';
 import getActParticipants from '../utils/get-act-participants';
-import getParticipantFullName from '../utils/get-participant-full-name';
+import getPersonFullName from '../utils/get-person-full-name';
 
 import Ld from './ld.astro';
 import SettlementName from './settlement-name.astro';
@@ -120,7 +120,7 @@ const acts = convertParishRegistersToActs([parishRegister!.data]);
               <td rowspan={participants.length}>{act.act_type}</td>
               <td rowspan={participants.length}>{formatDate(act.date)}</td>
               <td>{firstParticipant.role}</td>
-              <td>{getParticipantFullName(firstParticipant)}</td>
+              <td>{getPersonFullName(firstParticipant)}</td>
               <td rowspan={participants.length}>{act.page}</td>
               <td rowspan={participants.length}>{act.number}</td>
               <td rowspan={participants.length}>
@@ -138,7 +138,7 @@ const acts = convertParishRegistersToActs([parishRegister!.data]);
                 ]}
               >
                 <td>{participant.role}</td>
-                <td>{getParticipantFullName(participant)}</td>
+                <td>{getPersonFullName(participant)}</td>
               </tr>
             ))}
           </>

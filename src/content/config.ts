@@ -6,6 +6,7 @@ import { confessionalListSchema } from '../schemas/confessional-list.js';
 import { parishRegisterSchema } from '../schemas/parish-register.js';
 import { revisionSchema } from '../schemas/revision.js';
 import { settlementSchema } from '../schemas/settlement.js';
+import { unstructuredSchema } from '../schemas/unstructured.ts';
 
 const archivesCollection = defineCollection({
   type: 'data',
@@ -36,6 +37,10 @@ const settlementsCollection = defineCollection({
   type: 'data',
   schema: settlementSchema,
 });
+const unstructuredCollection = defineCollection({
+  type: 'data',
+  schema: unstructuredSchema,
+});
 
 export const collections = {
   archives: archivesCollection,
@@ -44,4 +49,5 @@ export const collections = {
   'parish-register-tables': parishRegistersCollection,
   'revision-tables': revisionsCollection,
   settlements: settlementsCollection,
+  unstructured: unstructuredCollection,
 };

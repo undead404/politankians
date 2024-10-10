@@ -9,7 +9,7 @@
     "genre": "Parish register",
     "gssUrl": "https://docs.google.com/spreadsheets/d/1_-X4a5fMN7K_fvXd-46d28on4ulFRz8jAqjwbEFtIPQ/edit?usp=sharing",
     "identifier": "315-1-7296",
-    "inLanguage": "Russian",
+    "documentLocale": "ru", "tableLocale": "ru",
     "isPartial": true,
     "title": "Метрическая книга записей актов гражданского состояния о рождении, бракосочетании и смерти церквей Ямпольского уезда за 1826 год"
 }

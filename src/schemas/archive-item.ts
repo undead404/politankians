@@ -10,11 +10,17 @@ export const archiveItemSchema = z.object({
   csvUrl: nonEmptyString,
   dateCreated: z.string().regex(LOOSE_DATE_REGEXP),
   dateModified: z.string().regex(LOOSE_DATE_REGEXP).optional(),
-  genre: z.enum(['Confessional list', 'Parish register', 'Revision']),
+  documentLocale: z.enum(['ru', 'uk']),
+  genre: z.enum([
+    'Confessional list',
+    'Parish register',
+    'Revision',
+    'Unstructured',
+  ]),
   gssUrl: nonEmptyString,
   identifier: z.string().regex(/^\d+-\d+[а-я]?-\d+$/),
-  inLanguage: z.enum(['Russian']),
   isPartial: z.optional(z.boolean()),
+  tableLocale: z.enum(['ru', 'uk']),
   title: nonEmptyString,
 });
 
