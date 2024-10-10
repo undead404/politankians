@@ -2,7 +2,7 @@
   "eslint.format.enable": true,
   "eslint.run": "onSave",
   "editor.formatOnSave": false,
-  "eslint.validate": ["astro", "typescript"],
+  "eslint.validate": ["astro", "svelte", "typescript"],
   "editor.codeActionsOnSave": [
     "source.fixAll.eslint"
   ],

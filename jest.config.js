@@ -10,16 +10,14 @@ const ES_MODULES = [
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 export default {
   moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.js$': '$1',
+    '^(\\.{1,2}/.*)\\.m?[jt]s$': '$1',
+    // '^(\\.{1,2}/.*)\\.js$': '$1',
   },
   preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
   testPathIgnorePatterns: ['node_modules'],
   transform: {
-    '^.+\\.m?[tj]s$': [
-      'ts-jest',
-      { isolatedModules: true, useESM: true, tsconfig: './tsconfig.jest.json' },
-    ],
+    '^.+\\.m?[tj]s$': ['ts-jest', { isolatedModules: true, useESM: true }],
   },
   transformIgnorePatterns: [`/node_modules/(?!${ES_MODULES})`],
 };

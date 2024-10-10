@@ -9,13 +9,14 @@
     "preview": "astro preview",
     "astro": "astro",
     "populate-typesense": "tsx ./src/populate-typesense/index.ts",
-    "deploy": "surge ./dist --domain politanky.surge.sh",
     "pull-data": "tsx ./src/pull-data/index.ts",
     "test": "jest"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.3",
     "@astrojs/sitemap": "^3.1.6",
+    "@astrojs/svelte": "^5.7.2",
+    "@babel/runtime": "^7.25.7",
     "@iconify-json/arcticons": "^1.2.0",
     "@iconify-json/ooui": "^1.2.0",
     "astro": "^4.15.3",
@@ -25,11 +26,11 @@
     "csv-parse": "^5.5.6",
     "dotenv": "^16.4.5",
     "fs-extra": "^11.2.0",
-    "instantsearch.js": "^4.74.0",
     "lodash": "^4.17.21",
-    "typescript": "^5.5.4",
+    "nouislider": "^15.8.1",
+    "svelte": "^4.2.19",
+    "typescript": "^5.6.3",
     "typesense": "^1.8.2",
-    "typesense-instantsearch-adapter": "^2.8.0",
     "ua2latin": "^1.0.2"
   },
   "devDependencies": {
@@ -47,7 +48,6 @@
     "node-fetch": "^3.3.2",
     "prettier": "^3.3.3",
     "sass-embedded": "^1.79.4",
-    "surge": "^0.24.6",
     "ts-jest": "^29.2.5",
     "ts-jest-resolver": "^2.0.1",
     "ts-node": "^10.9.2",

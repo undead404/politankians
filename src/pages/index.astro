@@ -1,6 +1,16 @@
 ---
+import Context from '../components/context.astro';
 import Layout from '../components/layout.astro';
-import Search from '../components/search.astro';
+import Search from '../components/search/search.svelte';
+import environment from '../environment';
+import settlementsRegistry from '../services/settlements-registry';
 ---
 
-<Layout title="Пошук предків"> <Search /></Layout>
+<Layout title="Пошук предків">
+  <Context identity="settlements" settlements={settlementsRegistry} />
+  <Context
+    identity="search"
+    TYPESENSE_HOST={environment.TYPESENSE_HOST}
+    TYPESENSE_SEARCH_KEY={environment.TYPESENSE_SEARCH_KEY}
+  /><Search client:load /></Layout
+>
