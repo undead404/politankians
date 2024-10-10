@@ -1,11 +1,13 @@
-// Jest unit tests for get-archive-items.ts
-
 import { readdir, readFile } from 'fs/promises';
 import path from 'path';
-import getArchiveItems from './get-archive-items.js';
+
+import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
+
 import { archiveItemSchema } from '../schemas/archive-item.js';
 
-jest.mock('fs/promises');
+import getArchiveItems from './get-archive-items.js';
+
+vi.mock('fs/promises');
 
 describe('getArchiveItems', () => {
   const mockFiles = ['item1.json', 'item2.json', 'not-json.txt'];
@@ -29,8 +31,8 @@ describe('getArchiveItems', () => {
   });
 
   beforeEach(() => {
-    (readdir as jest.Mock).mockResolvedValue(mockFiles);
-    (readFile as jest.Mock).mockResolvedValue(mockJSONContent);
+    (readdir as Mock).mockResolvedValue(mockFiles);
+    (readFile as Mock).mockResolvedValue(mockJSONContent);
   });
 
   it('should read files from the archive items folder', async () => {
@@ -65,14 +67,14 @@ describe('getArchiveItems', () => {
 
   it('should handle errors thrown by readdir', async () => {
     const mockError = new Error('readdir error');
-    (readdir as jest.Mock).mockRejectedValue(mockError);
+    (readdir as Mock).mockRejectedValue(mockError);
 
     await expect(getArchiveItems()).rejects.toThrow('readdir error');
   });
 
   it('should handle errors thrown by readFile', async () => {
     const mockError = new Error('readFile error');
-    (readFile as jest.Mock).mockRejectedValue(mockError);
+    (readFile as Mock).mockRejectedValue(mockError);
 
     await expect(getArchiveItems()).rejects.toThrow('readFile error');
   });

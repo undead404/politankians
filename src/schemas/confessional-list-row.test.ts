@@ -1,4 +1,4 @@
-// Jest unit tests for confessional-list-row.ts
+import { describe, expect, it } from 'vitest';
 
 import { confessionalListRowSchema } from './confessional-list-row.js';
 

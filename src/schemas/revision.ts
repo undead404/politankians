@@ -12,6 +12,7 @@ export const revisionSchema = z
   .refine(
     (rows) => {
       const firstRow = rows.at(0);
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if ((firstRow as any)['Акт']) {
         throw new Error('Did not transform...');

@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "verbatimModuleSyntax": false
   },
   "extends": "astro/tsconfigs/strictest",
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "./src/**/*.astro", "./src/**/*.svelte"]
 }

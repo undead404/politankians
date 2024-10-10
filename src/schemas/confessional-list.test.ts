@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { confessionalListSchema } from './confessional-list.js';
 
 describe('confessionalListSchema', () => {

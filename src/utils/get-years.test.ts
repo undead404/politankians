@@ -1,4 +1,6 @@
-import getYears, { RowWithDate } from './get-years.js';
+import { describe, expect, it } from 'vitest';
+
+import getYears, { type RowWithDate } from './get-years.js';
 
 describe('getYears', () => {
   it('should return a single year when all dates are in the same year', () => {

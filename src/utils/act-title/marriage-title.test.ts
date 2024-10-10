@@ -1,10 +1,14 @@
-import { Act } from '../../schemas/act.js';
-import getMarriageTitle from './marriage-title.js';
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
+
+import type { Act } from '../../schemas/act.js';
+
 import formatDate from '../format-date.js';
 import getPersonFullName from '../get-person-full-name.js';
 
-jest.mock('../format-date.js');
-jest.mock('../get-person-full-name.js');
+import getMarriageTitle from './marriage-title.js';
+
+vi.mock('../format-date.js');
+vi.mock('../get-person-full-name.js');
 
 describe('getMarriageTitle', () => {
   const mockAct: Act = {
@@ -40,8 +44,8 @@ describe('getMarriageTitle', () => {
   };
 
   beforeEach(() => {
-    (formatDate as jest.Mock).mockReturnValue('14-09-2023');
-    (getPersonFullName as jest.Mock)
+    (formatDate as Mock).mockReturnValue('14-09-2023');
+    (getPersonFullName as Mock)
       .mockReturnValueOnce('John Doe Smith')
       .mockReturnValueOnce('Jane Doe');
   });

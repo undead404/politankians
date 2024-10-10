@@ -1,16 +1,16 @@
-// Jest unit tests for convertConfessionalListsToActs
-
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
 import { actSchema } from '../schemas/act.js';
 import { ConfessionalList } from '../schemas/confessional-list.js';
 import type { Participant } from '../schemas/participant.js';
+
 import getActTitle from './act-title/index.js';
 import convertConfessionalListsToActs from './convert-confessional-list-to-acts.js';
 import getActId from './get-act-id.js';
 import getPersonFullName from './get-person-full-name.js';
 
-jest.mock('./get-act-id.js');
-jest.mock('./act-title/index.js');
-jest.mock('./get-person-full-name.js');
+vi.mock('./get-act-id.js');
+vi.mock('./act-title/index.js');
+vi.mock('./get-person-full-name.js');
 
 describe('convertConfessionalListsToActs', () => {
   const mockConfessionalLists: ConfessionalList[] = [
@@ -58,10 +58,10 @@ describe('convertConfessionalListsToActs', () => {
   ];
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    (getActId as jest.Mock).mockReturnValue('act-1');
-    (getActTitle as jest.Mock).mockReturnValue('Act Title');
-    (getPersonFullName as jest.Mock).mockImplementation(
+    vi.clearAllMocks();
+    (getActId as Mock).mockReturnValue('act-1');
+    (getActTitle as Mock).mockReturnValue('Act Title');
+    (getPersonFullName as Mock).mockImplementation(
       (participant: Participant) =>
         `${participant.given_name} ${participant.surname}`,
     );

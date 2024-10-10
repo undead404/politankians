@@ -1,8 +1,9 @@
-import { describe, it, expect } from '@jest/globals';
+import { describe, it, expect } from 'vitest';
 
-import getDeathMicrodata from './death-microdata.js';
 import type { Act } from '../schemas/act.js';
 import type { Settlement } from '../schemas/settlement.js';
+
+import getDeathMicrodata from './death-microdata.js';
 
 describe('getDeathMicrodata', () => {
   const settlement: Settlement = {

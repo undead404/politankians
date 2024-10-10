@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import formatDate from './format-date.js';
 
 describe('formatDate', () => {

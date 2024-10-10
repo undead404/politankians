@@ -1,4 +1,4 @@
-// Jest unit tests for act_type.ts
+import { describe, expect, it } from 'vitest';
 
 import { actTypeSchema } from './act_type.js';
 

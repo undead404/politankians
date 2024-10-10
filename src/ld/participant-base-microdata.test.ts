@@ -1,7 +1,8 @@
-import { describe, it, expect } from '@jest/globals';
+import { describe, it, expect } from 'vitest';
+
+import type { Participant } from '../schemas/participant.js';
 
 import getBaseMicrodata from './participant-base-microdata.js';
-import type { Participant } from '../schemas/participant.js';
 import type { Person } from './types.js';
 
 describe('getBaseMicrodata', () => {

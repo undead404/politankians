@@ -1,11 +1,14 @@
-import getParticipantSearchQuery from './get-participant-search-query.js';
+import { beforeEach, describe, expect, type Mock, test, vi } from 'vitest';
+
 import type { Act } from '../schemas/act.js';
 import { Participant } from '../schemas/participant.ts';
+
 import cleanSurname from './clean-surname.ts';
+import getParticipantSearchQuery from './get-participant-search-query.js';
 
-const mockCleanSurname = cleanSurname as jest.Mock;
+const mockCleanSurname = cleanSurname as Mock;
 
-jest.mock('./clean-surname', () => jest.fn((surname) => surname));
+vi.mock('./clean-surname', () => ({ default: vi.fn((surname) => surname) }));
 
 describe('getParticipantSearchQuery', () => {
   const participant: Participant = {
@@ -33,7 +36,7 @@ describe('getParticipantSearchQuery', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('returns correct search query with all name parts', () => {

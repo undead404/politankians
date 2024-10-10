@@ -1,4 +1,4 @@
-// Jest unit tests for archive.ts
+import { describe, expect, it } from 'vitest';
 
 import { archiveSchema } from './archive.js';
 

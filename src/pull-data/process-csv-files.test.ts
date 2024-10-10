@@ -1,11 +1,11 @@
-import { jest } from '@jest/globals';
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
 
-import processCSVFiles from './process-csv-files.js';
 import downloadAndConvertToJSON from './download-and-convert-to-json.js';
 import getArchiveItems from './get-archive-items.js';
+import processCSVFiles from './process-csv-files.js';
 
-jest.mock('./download-and-convert-to-json');
-jest.mock('./get-archive-items');
+vi.mock('./download-and-convert-to-json');
+vi.mock('./get-archive-items');
 
 describe('processCSVFiles', () => {
   const mockArchiveItems = [
@@ -19,8 +19,8 @@ describe('processCSVFiles', () => {
   ];
 
   beforeEach(() => {
-    (getArchiveItems as jest.Mock).mockResolvedValue(mockArchiveItems);
-    (downloadAndConvertToJSON as jest.Mock).mockResolvedValue(null);
+    (getArchiveItems as Mock).mockResolvedValue(mockArchiveItems);
+    (downloadAndConvertToJSON as Mock).mockResolvedValue(null);
   });
 
   it('should call getArchiveItems to retrieve archive items', async () => {
@@ -39,14 +39,14 @@ describe('processCSVFiles', () => {
 
   it('should handle errors thrown by getArchiveItems', async () => {
     const mockError = new Error('getArchiveItems error');
-    (getArchiveItems as jest.Mock).mockRejectedValue(mockError);
+    (getArchiveItems as Mock).mockRejectedValue(mockError);
 
     await expect(processCSVFiles()).rejects.toThrow('getArchiveItems error');
   });
 
   it('should handle errors thrown by downloadAndConvertToJSON', async () => {
     const mockError = new Error('downloadAndConvertToJSON error');
-    (downloadAndConvertToJSON as jest.Mock).mockRejectedValue(mockError);
+    (downloadAndConvertToJSON as Mock).mockRejectedValue(mockError);
 
     await expect(processCSVFiles()).rejects.toThrow(
       'downloadAndConvertToJSON error',

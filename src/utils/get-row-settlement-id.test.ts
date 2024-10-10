@@ -1,18 +1,19 @@
 import { transliterateUaToLatin } from 'ua2latin';
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
 
 import getRowSettlementId from './get-row-settlement-id.js';
 
-jest.mock('ua2latin', () => ({
-  transliterateUaToLatin: jest.fn(),
+vi.mock('ua2latin', () => ({
+  transliterateUaToLatin: vi.fn(),
 }));
 
 describe('getRowSettlementId', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return the correct settlement ID', () => {
-    (transliterateUaToLatin as jest.Mock).mockReturnValue('Kyiv');
+    (transliterateUaToLatin as Mock).mockReturnValue('Kyiv');
     const result = getRowSettlementId('01001', 'Київ');
     expect(result).toBe('01001-Kyiv');
     expect(transliterateUaToLatin).toHaveBeenCalledWith('Київ');

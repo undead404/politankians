@@ -1,3 +1,5 @@
+import { describe, expect, test } from 'vitest';
+
 import { dateStringSchema } from './date_string.js';
 
 describe('dateStringSchema', () => {

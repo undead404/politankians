@@ -1,8 +1,9 @@
-import { describe, it, expect } from '@jest/globals';
+import { describe, it, expect } from 'vitest';
 
-import getMarriageMicrodata from './marriage-microdata.js';
 import type { Act } from '../schemas/act.js';
 import type { Settlement } from '../schemas/settlement.js';
+
+import getMarriageMicrodata from './marriage-microdata.js';
 import type { MarryAction } from './types.js';
 
 describe('getMarriageMicrodata', () => {

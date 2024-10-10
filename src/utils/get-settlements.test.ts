@@ -1,4 +1,4 @@
-// Jest unit tests for get-settlements.ts
+import { describe, expect, it } from 'vitest';
 
 import getSettlements, { type RowWithSettlement } from './get-settlements.js';
 

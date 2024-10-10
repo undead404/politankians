@@ -1,3 +1,5 @@
+import { describe, expect, test } from 'vitest';
+
 import cleanSurname from './clean-surname.js';
 
 describe('cleanSurname', () => {

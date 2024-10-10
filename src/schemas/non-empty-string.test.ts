@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { nonEmptyString } from './non-empty-string.js';
 
 describe('nonEmptyString', () => {

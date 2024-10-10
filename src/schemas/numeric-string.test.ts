@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { numericString } from './numeric-string.js';
 
 describe('numericString', () => {

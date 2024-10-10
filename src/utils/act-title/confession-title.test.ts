@@ -1,8 +1,12 @@
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
+
 import { Act } from '../../schemas/act.js';
-import getConfessionTitle from './confession-title.js';
+
 import getPersonFullName from '../get-person-full-name.js';
 
-jest.mock('../get-person-full-name.js');
+import getConfessionTitle from './confession-title.js';
+
+vi.mock('../get-person-full-name.js');
 
 describe('getConfessionTitle', () => {
   const mockAct: Act = {
@@ -30,7 +34,7 @@ describe('getConfessionTitle', () => {
   };
 
   beforeEach(() => {
-    (getPersonFullName as jest.Mock).mockReturnValue('John Doe Smith');
+    (getPersonFullName as Mock).mockReturnValue('John Doe Smith');
   });
 
   it('should return the correct confession title', () => {

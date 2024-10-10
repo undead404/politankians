@@ -1,6 +1,9 @@
+import { describe, expect, it } from 'vitest';
+
 import type { Act } from '../schemas/act.js';
 import type { ActType } from '../schemas/act_type.js';
 import type { Settlement } from '../schemas/settlement.js';
+
 import getBirthMicrodata from './birth-microdata.js';
 
 describe('getBirthMicrodata', () => {

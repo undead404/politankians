@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import getHitPath from './get-hit-path.js';
 
 describe('getHitPath', () => {

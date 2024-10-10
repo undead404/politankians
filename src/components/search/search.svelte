@@ -36,7 +36,7 @@
   const search = debounce(async () => {
     loading = true;
     const facetFilters = Object.entries(facets)
-      .filter(([attribute, values]) => values.length > 0)
+      .filter(([, values]) => values.length > 0)
       .map(([attribute, values]) =>
         values.map((value) => `${attribute}:${value}`).join(' || '),
       )

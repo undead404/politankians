@@ -1,5 +1,8 @@
+import { describe, expect, it } from 'vitest';
+
 import type { ArchiveItem } from '../schemas/archive-item.js';
 import type { Archive } from '../schemas/archive.js';
+
 import getArchiveItemMicrodata from './archive-item-microdata.js';
 
 describe('getArchiveItemMicrodata', () => {

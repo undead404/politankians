@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { parishRegisterSchema } from './parish-register.js';
 
 describe('parishRegisterSchema', () => {

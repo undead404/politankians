@@ -1,14 +1,17 @@
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
+
 import { Act } from '../../schemas/act.js';
-import getActTitle from './index.js';
+
 import getBirthTitle from './birth-title.js';
 import getConfessionTitle from './confession-title.js';
 import getDeathTitle from './death-title.js';
+import getActTitle from './index.js';
 import getMarriageTitle from './marriage-title.js';
 
-jest.mock('./birth-title.js');
-jest.mock('./confession-title.js');
-jest.mock('./death-title.js');
-jest.mock('./marriage-title.js');
+vi.mock('./birth-title.js');
+vi.mock('./confession-title.js');
+vi.mock('./death-title.js');
+vi.mock('./marriage-title.js');
 
 describe('getActTitle', () => {
   const mockAct: Act = {
@@ -44,10 +47,10 @@ describe('getActTitle', () => {
   };
 
   beforeEach(() => {
-    (getBirthTitle as jest.Mock).mockReturnValue('Birth Title');
-    (getConfessionTitle as jest.Mock).mockReturnValue('Confession Title');
-    (getDeathTitle as jest.Mock).mockReturnValue('Death Title');
-    (getMarriageTitle as jest.Mock).mockReturnValue('Marriage Title');
+    (getBirthTitle as Mock).mockReturnValue('Birth Title');
+    (getConfessionTitle as Mock).mockReturnValue('Confession Title');
+    (getDeathTitle as Mock).mockReturnValue('Death Title');
+    (getMarriageTitle as Mock).mockReturnValue('Marriage Title');
   });
 
   it('should return the correct title for marriage act type', () => {

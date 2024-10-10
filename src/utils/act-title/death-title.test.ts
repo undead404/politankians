@@ -1,10 +1,14 @@
-import { Act } from '../../schemas/act.js';
-import getDeathTitle from './death-title.js';
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
+
+import type { Act } from '../../schemas/act.js';
+
 import formatDate from '../format-date.js';
 import getPersonFullName from '../get-person-full-name.js';
 
-jest.mock('../format-date.js');
-jest.mock('../get-person-full-name.js');
+import getDeathTitle from './death-title.js';
+
+vi.mock('../format-date.js');
+vi.mock('../get-person-full-name.js');
 
 describe('getDeathTitle', () => {
   const mockAct: Act = {
@@ -32,8 +36,8 @@ describe('getDeathTitle', () => {
   };
 
   beforeEach(() => {
-    (formatDate as jest.Mock).mockReturnValue('14-09-2023');
-    (getPersonFullName as jest.Mock).mockReturnValue('Jane Doe Smith');
+    (formatDate as Mock).mockReturnValue('14-09-2023');
+    (getPersonFullName as Mock).mockReturnValue('Jane Doe Smith');
   });
 
   it('should return the correct death title', () => {

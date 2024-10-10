@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import type { Participant } from '../schemas/participant.js';
 
 import getPersonFullName from './get-person-full-name.js';

@@ -5,7 +5,7 @@
   export let attribute = '';
   export let apiKey = '';
   export let host = '';
-  export let sortBy = 'name';
+  //   export let sortBy = 'name';
   export let title = attribute;
   export let transformItems = (items) => items;
 

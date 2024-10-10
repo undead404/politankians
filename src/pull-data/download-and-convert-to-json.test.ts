@@ -1,12 +1,23 @@
 import path from 'path';
 import fs from 'fs-extra';
 import fetch from 'node-fetch';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+  type Mock,
+} from 'vitest';
+
 import parseCsv from '../utils/parse-csv.js';
+
 import downloadAndConvertToJSON from './download-and-convert-to-json.js';
 
-jest.mock('fs-extra');
-jest.mock('node-fetch');
-jest.mock('../utils/parse-csv.js');
+vi.mock('fs-extra');
+vi.mock('node-fetch');
+vi.mock('../utils/parse-csv.js');
 
 describe('downloadAndConvertToJSON', () => {
   const mockUrl = 'http://example.com/test.csv';
@@ -19,15 +30,15 @@ describe('downloadAndConvertToJSON', () => {
   ];
 
   beforeEach(() => {
-    (fetch as jest.Mock).mockResolvedValue({
-      text: jest.fn().mockResolvedValue(mockCsvData),
+    (fetch as Mock).mockResolvedValue({
+      text: vi.fn().mockResolvedValue(mockCsvData),
     });
-    (parseCsv as jest.Mock).mockReturnValue(mockJsonData);
-    (fs.outputJson as jest.Mock).mockResolvedValue(undefined);
+    (parseCsv as Mock).mockReturnValue(mockJsonData);
+    (fs.outputJson as Mock).mockResolvedValue(undefined);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should download CSV, convert to JSON, and save to file', async () => {
@@ -44,9 +55,9 @@ describe('downloadAndConvertToJSON', () => {
 
   it('should handle errors and exit process', async () => {
     const mockError = new Error('Test error');
-    (fetch as jest.Mock).mockRejectedValue(mockError);
+    (fetch as Mock).mockRejectedValue(mockError);
 
-    const exitSpy = jest.spyOn(process, 'exit').mockImplementation(() => {
+    const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
       throw new Error('process.exit called');
     });
 
