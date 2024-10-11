@@ -42,6 +42,7 @@
   let host = environment.TYPESENSE_HOST;
   let facets: Record<string, string[]> = {};
   let ranges: Record<string, [number, number]> = {};
+  let areRefinementsExpanded = false;
 
   const client = new Typesense.Client({
     nodes: [
@@ -167,41 +168,55 @@
       ...item,
       highlighted: settlementsRegistry[item.value]?.name || item.highlighted,
     }));
+  function toggleRefinementsExpanded() {
+    areRefinementsExpanded = !areRefinementsExpanded;
+  }
 </script>
 
-<input
-  type="text"
-  bind:value={query}
-  on:input={search}
-  placeholder="Пошук..."
-  aria-label="Поле пошуку"
-/>
-<RefinementList
-  attribute="act_type"
-  {apiKey}
-  collections={['acts_ru', 'unstructured_uk']}
-  {host}
-  title="Тип події"
-  on:facetChange={handleFacetChange}
-/>
-<RangeSlider
-  attribute="year"
-  min={1795}
-  max={1919}
-  pips={true}
-  title="Рік"
-  tooltips={true}
-  on:rangeChange={handleRangeChange}
-/>
-<RefinementList
-  attribute="settlement"
-  {apiKey}
-  collections={['acts_ru', 'unstructured_uk']}
-  {host}
-  title="Поселення"
-  transformItems={transformSettlementRefinementItems}
-  on:facetChange={handleFacetChange}
-/>
+<div class="control-block">
+  <input
+    type="text"
+    bind:value={query}
+    on:input={search}
+    placeholder="Пошук..."
+    aria-label="Поле пошуку"
+  />
+  <button on:click={toggleRefinementsExpanded}
+    >{#if areRefinementsExpanded}
+      Згорнути фільтри
+    {:else}
+      Розгорнути фільтри
+    {/if}</button
+  >
+  <div class="refinements-container" class:expanded={areRefinementsExpanded}>
+    <RefinementList
+      attribute="act_type"
+      {apiKey}
+      collections={['acts_ru', 'unstructured_uk']}
+      {host}
+      title="Тип події"
+      on:facetChange={handleFacetChange}
+    />
+    <RangeSlider
+      attribute="year"
+      min={1795}
+      max={1919}
+      pips={true}
+      title="Рік"
+      tooltips={true}
+      on:rangeChange={handleRangeChange}
+    />
+    <RefinementList
+      attribute="settlement"
+      {apiKey}
+      collections={['acts_ru', 'unstructured_uk']}
+      {host}
+      title="Поселення"
+      transformItems={transformSettlementRefinementItems}
+      on:facetChange={handleFacetChange}
+    />
+  </div>
+</div>
 
 <div class="results-container">
   {#if loading}
@@ -273,6 +288,21 @@
     border-color: #007bff;
     box-shadow: 0 2px 8px rgba(0, 123, 255, 0.25);
     outline: none;
+  }
+
+  .control-block {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  .refinements-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+  }
+  .refinements-container.expanded {
+    max-height: 100vh;
   }
 
   .results-container {

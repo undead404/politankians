@@ -23,6 +23,8 @@ const { title } = Astro.props;
         padding: 0;
         background-color: #f8f9fa; /* Light grey background */
         color: #333;
+        max-height: 100vh;
+        overflow: auto;
       }
       h1 {
         background-color: #343a40; /* Dark grey background */
@@ -41,7 +43,6 @@ const { title } = Astro.props;
         background-color: #ffffff; /* White background */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
-        overflow: auto;
       }
       header, footer {
         background-color: #343a40; /* Dark grey background */
