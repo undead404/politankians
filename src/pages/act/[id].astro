@@ -37,7 +37,7 @@ const { act } = Astro.props;
 const [archiveId, fonds, series, item] = act.id.split('-');
 const itemId = [archiveId, fonds, series, item].join('-');
 
-const archive = await getEntry('archives', archiveId);
+const archive = await getEntry('archives', archiveId!);
 const archiveItem = await getEntry('archive-items', itemId);
 const settlement = await getEntry('settlements', act.settlement);
 if (!settlement) {

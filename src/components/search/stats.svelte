@@ -2,9 +2,9 @@
   export let nbHits = 0;
 </script>
 
-<div class="stats">
+<p class="stats">
   Знайдено записів: {nbHits}
-</div>
+</p>
 
 <style>
   .stats {

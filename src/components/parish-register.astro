@@ -1,5 +1,4 @@
 ---
-import type { ArchiveItem } from '../schemas/archive-item';
 import { getEntry } from '../services/astro-content';
 import convertParishRegistersToActs from '../utils/convert-parish-registers-to-acts';
 import formatDate from '../utils/format-date';
@@ -102,6 +101,7 @@ const acts = convertParishRegistersToActs([parishRegister!.data]);
           долучення: 'conversion',
           миропомазання: 'confirmation',
           народження: 'birth',
+          ревізія: 'revision',
           смерть: 'death',
           сповідь: 'confession',
           хрещення: 'baptism',
@@ -119,8 +119,8 @@ const acts = convertParishRegistersToActs([parishRegister!.data]);
             >
               <td rowspan={participants.length}>{act.act_type}</td>
               <td rowspan={participants.length}>{formatDate(act.date)}</td>
-              <td>{firstParticipant.role}</td>
-              <td>{getPersonFullName(firstParticipant)}</td>
+              <td>{firstParticipant!.role}</td>
+              <td>{getPersonFullName(firstParticipant!)}</td>
               <td rowspan={participants.length}>{act.page}</td>
               <td rowspan={participants.length}>{act.number}</td>
               <td rowspan={participants.length}>

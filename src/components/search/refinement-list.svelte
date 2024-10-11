@@ -1,16 +1,34 @@
 <script lang="ts">
+  import { z } from 'astro/zod';
   import { onMount, createEventDispatcher } from 'svelte';
+  import type { ChangeEventHandler } from 'svelte/elements';
   import Typesense from 'typesense';
 
   export let attribute = '';
   export let apiKey = '';
+  export let collections: string[] = [];
   export let host = '';
   //   export let sortBy = 'name';
   export let title = attribute;
-  export let transformItems = (items) => items;
+  export let transformItems = (
+    items: {
+      count: number;
+      highlighted: string;
+      value: string;
+    }[],
+  ) => items;
 
-  let items = [];
+  let items: {
+    count: number;
+    highlighted: string;
+    value: string;
+  }[] = [];
   let selectedFacets = new Set<string>();
+
+  const targetElementSchema = z.object({
+    checked: z.boolean(),
+    id: z.string(),
+  });
 
   const dispatch = createEventDispatcher();
 
@@ -27,28 +45,56 @@
   });
 
   async function fetchItems() {
-    const searchResults = await client
-      .collections('acts_ru')
-      .documents()
-      .search({
-        q: '*',
-        query_by: attribute,
-        facet_by: attribute,
-      });
+    const searchResults = await Promise.all(
+      collections.map((collection) =>
+        client.collections(collection).documents().search({
+          q: '*',
+          query_by: attribute,
+          facet_by: attribute,
+        }),
+      ),
+    );
     items = transformItems(
-      searchResults.facet_counts.flatMap(({ counts }) => counts),
+      searchResults
+        .flatMap(({ facet_counts }) => facet_counts)
+        .flatMap((item) =>
+          item ? item.counts : { count: 0, highlighted: '', value: '' },
+        )
+        .reduce(
+          (accumulator, item) => {
+            const previousSame = accumulator.find(
+              ({ value }) => value === item.value,
+            );
+            if (previousSame) {
+              previousSame.count += item.count;
+            } else {
+              accumulator.push(item);
+            }
+            return accumulator;
+          },
+          [] as {
+            count: number;
+            highlighted: string;
+            value: string;
+          }[],
+        ),
     );
   }
 
-  function handleFacetChange(event) {
-    const value = event.target.id;
-    if (event.target.checked) {
-      selectedFacets.add(value);
-    } else {
-      selectedFacets.delete(value);
-    }
-    dispatch('facetChange', { attribute, values: Array.from(selectedFacets) });
-  }
+  const handleFacetChange: ChangeEventHandler<HTMLInputElement> =
+    function handleFacetChange(event) {
+      const eventTarget = targetElementSchema.parse(event.target);
+      const value = eventTarget.id;
+      if (eventTarget.checked) {
+        selectedFacets.add(value);
+      } else {
+        selectedFacets.delete(value);
+      }
+      dispatch('facetChange', {
+        attribute,
+        values: Array.from(selectedFacets),
+      });
+    };
 
   onMount(() => {
     fetchItems();

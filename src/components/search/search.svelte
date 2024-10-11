@@ -1,20 +1,42 @@
 <script lang="ts">
+  import { z } from 'astro/zod';
+  import _ from 'lodash';
   import { onMount } from 'svelte';
   import Typesense from 'typesense';
-  import _ from 'lodash';
 
-  import environment from '../../environment';
-  import settlementsRegistry from '../../services/settlements-registry';
-  import getHitPath from '../../utils/get-hit-path';
-  import Stats from './stats.svelte';
-  import RefinementList from './refinement-list.svelte';
+  import environment from '../../environment.js';
+  import { actSchema, type Act } from '../../schemas/act.js';
+  import { nonEmptyString } from '../../schemas/non-empty-string.ts';
+  import {
+    unstructuredRecordSchema,
+    type UnstructuredRecord,
+  } from '../../schemas/unstructured-record.ts';
+  import settlementsRegistry from '../../services/settlements-registry.js';
+  import formatDate from '../../utils/format-date.js';
+  import getHitPath from '../../utils/get-hit-path.js';
+
   import RangeSlider from './range-slider.svelte';
+  import RefinementList from './refinement-list.svelte';
+  import Stats from './stats.svelte';
+
+  const actsSchema = z.array(actSchema);
+  const unstructuredsSchema = z.array(unstructuredRecordSchema);
+  const facetEventDetailSchema = z.object({
+    attribute: nonEmptyString,
+    values: z.array(nonEmptyString),
+  });
+  const rangeEventDetailSchema = z.object({
+    attribute: nonEmptyString,
+    values: z.tuple([z.number(), z.number()]),
+  });
 
   const { debounce } = _;
 
   let query = '';
-  let results = [];
-  let nbHits = 0;
+  let resultsActs: Act[] = [];
+  let resultsUnstructured: UnstructuredRecord[] = [];
+  let nbHitsActs = 0;
+  let nbHitsUnstructured = 0;
   let loading = false;
   let apiKey = environment.TYPESENSE_SEARCH_KEY;
   let host = environment.TYPESENSE_HOST;
@@ -51,46 +73,71 @@
 
     const filter_by = [facetFilters, rangeFilters].filter(Boolean).join(' && ');
 
-    const searchResults = await client
-      .collections('acts_ru')
-      .documents()
-      .search({
-        q: query,
-        query_by: [
-          'primaryParticipants.surname',
-          'primaryParticipants.given_name',
-          'primaryParticipants.middle_name',
-          'secondaryParticipants.surname',
-          'secondaryParticipants.given_name',
-          'secondaryParticipants.middle_name',
-          'tertiaryParticipants.surname',
-          'tertiaryParticipants.given_name',
-          'tertiaryParticipants.middle_name',
-          'act_type',
-          'settlement',
-          'primaryParticipants.note',
-          'secondaryParticipants.note',
-          'tertiaryParticipants.note',
-        ].join(','),
-        facet_by: Object.keys(facets).join(','),
-        filter_by: filter_by,
-      });
-    results = searchResults.hits.map((hit) => hit.document);
-    nbHits = searchResults.found;
+    const [searchResultsActs, searchResultsUnstructured] = await Promise.all([
+      client
+        .collections('acts_ru')
+        .documents()
+        .search({
+          q: query,
+          query_by: [
+            'primaryParticipants.surname',
+            'primaryParticipants.given_name',
+            'primaryParticipants.middle_name',
+            'secondaryParticipants.surname',
+            'secondaryParticipants.given_name',
+            'secondaryParticipants.middle_name',
+            'tertiaryParticipants.surname',
+            'tertiaryParticipants.given_name',
+            'tertiaryParticipants.middle_name',
+            'act_type',
+            'settlement',
+            'primaryParticipants.note',
+            'secondaryParticipants.note',
+            'tertiaryParticipants.note',
+          ].join(','),
+          facet_by: Object.keys(facets).join(','),
+          filter_by: filter_by,
+        }),
+      client
+        .collections('unstructured_uk')
+        .documents()
+        .search({
+          q: query,
+          query_by: [
+            'surname',
+            'given_name',
+            'middle_name',
+            'act_type',
+            'note',
+            // 'misc',
+          ].join(','),
+          facet_by: Object.keys(facets).join(','),
+          filter_by: filter_by,
+        }),
+    ]);
+
+    resultsActs = actsSchema.parse(
+      (searchResultsActs.hits || []).map((hit) => hit.document),
+    );
+    nbHitsActs = searchResultsActs.found;
+
+    resultsUnstructured = unstructuredsSchema.parse(
+      (searchResultsUnstructured.hits || []).map((hit) => hit.document),
+    );
+    nbHitsUnstructured = searchResultsUnstructured.found;
+
     loading = false;
   }, 300);
 
-  function handleFacetChange(
-    event: CustomEvent<{ attribute: string; values: string[] }>,
-  ) {
-    facets[event.detail.attribute] = event.detail.values;
+  function handleFacetChange(event: CustomEvent<unknown>) {
+    const detail = facetEventDetailSchema.parse(event.detail);
+    facets[detail.attribute] = detail.values;
     search();
   }
 
-  function handleRangeChange(
-    event: CustomEvent<{ attribute: string; values: [number, number] }>,
-  ) {
-    ranges[event.detail.attribute] = event.detail.values;
+  function handleRangeChange(event: CustomEvent<unknown>) {
+    const detail = rangeEventDetailSchema.parse(event.detail);
+    ranges[detail.attribute] = detail.values;
     search();
   }
 
@@ -98,15 +145,28 @@
     search();
   });
 
-  const ACT_TYPE_CLASSES = {
+  const ACT_TYPE_CLASSES: Record<string, null | string> = {
     відспівування: 'memorial-service',
     долучення: 'conversion',
     миропомазання: 'confirmation',
     народження: 'birth',
+    ревізія: null,
     смерть: 'death',
+    сповідь: null,
     хрещення: 'baptism',
     шлюб: 'marriage',
   };
+  const transformSettlementRefinementItems = (
+    items: {
+      count: number;
+      highlighted: string;
+      value: string;
+    }[],
+  ) =>
+    items.map((item) => ({
+      ...item,
+      highlighted: settlementsRegistry[item.value]?.name || item.highlighted,
+    }));
 </script>
 
 <input
@@ -116,12 +176,11 @@
   placeholder="Пошук..."
   aria-label="Поле пошуку"
 />
-<Stats {nbHits} />
 <RefinementList
   attribute="act_type"
   {apiKey}
+  collections={['acts_ru', 'unstructured_uk']}
   {host}
-  sortBy="name"
   title="Тип події"
   on:facetChange={handleFacetChange}
 />
@@ -137,35 +196,62 @@
 <RefinementList
   attribute="settlement"
   {apiKey}
+  collections={['acts_ru', 'unstructured_uk']}
   {host}
-  sortBy="name"
   title="Поселення"
-  transformItems={(items) =>
-    items.map((item) => ({
-      ...item,
-      highlighted: settlementsRegistry[item.value]?.name,
-    }))}
+  transformItems={transformSettlementRefinementItems}
   on:facetChange={handleFacetChange}
 />
 
 <div class="results-container">
   {#if loading}
-    <p class="loading-indicator">Loading...</p>
+    <p class="loading-indicator">Завантаження...</p>
   {/if}
-  <ul class="results" aria-live="polite">
-    {#each results as result}
-      <li>
-        <a
-          class={ACT_TYPE_CLASSES[result.act_type]}
-          href="${getHitPath(result)}"
-          aria-label={result.title}
-        >
-          <h2>{result.title}</h2>
-          <p>{result.description}</p>
-        </a>
-      </li>
-    {/each}
-  </ul>
+  <div class="results-column">
+    <h2>Акти</h2>
+    <Stats nbHits={nbHitsActs} />
+    <ul class="results" aria-live="polite">
+      {#each resultsActs as result}
+        <li>
+          <a
+            class={ACT_TYPE_CLASSES[result.act_type]}
+            href="${getHitPath(result)}"
+            aria-label={result.title}
+          >
+            <h2>{result.title}</h2>
+            <p>{result.description}</p>
+          </a>
+        </li>
+      {/each}
+    </ul>
+  </div>
+  <div class="results-column">
+    <h2>Неструктуровані записи</h2>
+    <Stats nbHits={nbHitsUnstructured} />
+    <ul class="results" aria-live="polite">
+      {#each resultsUnstructured as result}
+        <li>
+          <a
+            class={ACT_TYPE_CLASSES[result.act_type]}
+            href={`/archive-item/${result.archive}-${result.fonds}-${result.series}-${result.item}`}
+          >
+            <h2>
+              {result.surname}
+              {result.given_name}
+              {result.middle_name}
+            </h2>
+            <p><strong>Тип акту:</strong> {result.act_type}</p>
+            <p><strong>Дата події:</strong> {formatDate(result.date)}</p>
+            <p>
+              <strong>Поселення храму:</strong>
+              {settlementsRegistry[result.settlement]?.name ||
+                result.settlement}
+            </p>
+          </a>
+        </li>
+      {/each}
+    </ul>
+  </div>
 </div>
 
 <style>

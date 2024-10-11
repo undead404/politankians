@@ -1,4 +1,5 @@
 ---
+import type { UnstructuredRow } from '../schemas/unstructured-row';
 import { getEntry } from '../services/astro-content';
 import getPersonFullName from '../utils/get-person-full-name';
 
@@ -78,7 +79,7 @@ const {
   </thead>
   <tbody>
     {
-      rows.map((row, index) => {
+      rows.map((row: UnstructuredRow, index: number) => {
         const isEven = index % 2 === 0;
         return (
           <>

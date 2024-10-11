@@ -91,12 +91,12 @@ const acts = convertConfessionalListsToActs([confessionalList!.data]);
               ]}
               id={`act-${index + 1}`}
             >
-              <td>{firstParticipant.role}</td>
+              <td>{firstParticipant!.role}</td>
               <td>
-                <ParticipantName act={act} participant={firstParticipant} />
-                {firstParticipant.note && (
+                <ParticipantName act={act} participant={firstParticipant!} />
+                {firstParticipant!.note && (
                   <p class="participant-note">
-                    <i>{firstParticipant.note}</i>
+                    <i>{firstParticipant!.note}</i>
                   </p>
                 )}
               </td>

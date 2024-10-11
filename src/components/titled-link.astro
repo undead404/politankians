@@ -5,7 +5,7 @@ export interface Props {
   href: string;
 }
 
-const titlesMap = {
+const titlesMap: Record<string,string> = {
   'dahmo.myasustor.com': 'ДАХмО',
   'docs.google.com': 'Google Docs',
   'drive.google.com': 'Google Drive',
@@ -13,7 +13,7 @@ const titlesMap = {
   'uk.wikisource.org': 'WikiSource',
   'www.familysearch.org': 'FamilySearch',
 };
-const iconNamesMap = {
+const iconNamesMap: Record<string,string> = {
   'dahmo.myasustor.com': 'arcticons:folder-cloud',
   'docs.google.com': 'arcticons:google-docs',
   'drive.google.com': 'arcticons:google-drive',

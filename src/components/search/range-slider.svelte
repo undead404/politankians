@@ -1,5 +1,5 @@
 <script lang="ts">
-  import noUiSlider, { PipsMode } from 'nouislider';
+  import noUiSlider, { type Options, PipsMode } from 'nouislider';
   import 'nouislider/dist/nouislider.css';
   import { onMount, createEventDispatcher } from 'svelte';
 
@@ -14,18 +14,23 @@
   const dispatch = createEventDispatcher();
 
   onMount(() => {
-    const sliderInstance = noUiSlider.create(slider, {
+    const sliderOptions: Options = {
       start: [min, max],
       connect: true,
       range: {
         min: min,
         max: max,
       },
-      pips: pips
-        ? { mode: PipsMode.Positions, values: [0, 25, 50, 75, 100], density: 4 }
-        : undefined,
       tooltips: tooltips,
-    });
+    };
+    if (pips) {
+      sliderOptions.pips = {
+        mode: PipsMode.Positions,
+        values: [0, 25, 50, 75, 100],
+        density: 4,
+      };
+    }
+    const sliderInstance = noUiSlider.create(slider, sliderOptions);
 
     sliderInstance.on('change', (values) => {
       dispatch('rangeChange', {
