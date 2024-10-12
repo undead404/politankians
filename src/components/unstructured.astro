@@ -72,9 +72,11 @@ const {
     <tr>
         <th>Номер</th>
       <th>Роль</th>
+      <th>Подія</th>
       <th>Учасник</th>
       <th>Розворот</th>
       <th><abbr title="Населений пункт">НП</abbr></th>
+      <th>Примітки</th>
     </tr>
   </thead>
   <tbody>
@@ -89,11 +91,13 @@ const {
             >
               <td>{index + 1}</td>
               <td>{row.role}</td>
+              <td>{row.act_type}</td>
               <td>{getPersonFullName(row)}</td>
               <td>{row.page}</td>
               <td>
                 <SettlementName settlement={row.settlement} />
               </td>
+              <td>{row.note}</td>
             </tr>
             <!--<tr class:list={[{ 'row-even': isEven, 'row-odd': !isEven }]}>
               <td colspan="5">{JSON.stringify(row.misc, null, 2)}</td>

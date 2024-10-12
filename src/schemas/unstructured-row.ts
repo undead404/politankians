@@ -22,7 +22,7 @@ export const unstructuredRowSchema = z
     Примітка: z.string(),
     Прізвище: z.string(),
     Справа: nonEmptyString,
-    'Тип акту': nonEmptyString,
+    Подія: nonEmptyString,
     Фонд: nonEmptyString,
   })
   .transform((input) => {
@@ -34,7 +34,7 @@ export const unstructuredRowSchema = z
       "Ім'я": given_name,
       Опис: series,
       'По-батькові': middle_name,
-      'Тип акту': act_type,
+      Подія: act_type,
       'Поселення храму': settlement,
       'Пошт. Індекс': postal_code,
       Примітка: note,

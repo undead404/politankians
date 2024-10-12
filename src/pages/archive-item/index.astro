@@ -26,10 +26,10 @@ const archiveItemTuples: [
     const table = COLLECTIONS[archiveItem.data.genre].find(
       ({ id }) => id === archiveItem.id,
     );
-    console.log(table.data.settlements);
     if (!table) {
       throw new Error(`table for ${archiveItem.id} not found`);
     }
+    console.log(table.data.settlements);
     return [archiveItem, table];
   }),
   ['1.data.years'],
@@ -39,6 +39,7 @@ const ARCHIVE_ITEM_TYPES = {
   'Confessional list': 'Сповідний розпис',
   'Parish register': 'Метрична книга',
   Revision: 'Ревізія',
+  Unstructured: "Неструктуровані дані"
 };
 ---
 

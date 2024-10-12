@@ -43,8 +43,8 @@ const years = Object.entries(byYear).map(([year, acts]) => ({
     } from 'chart.js';
     import _ from 'lodash';
 
-    import { historyDatumSchema } from '../../schemas/history-datum';
-    import getContext from '../../utils/get-context';
+    import { historyDatumSchema } from '../../schemas/history-datum.js';
+    import getContext from '../../utils/get-context.js';
 
     Chart.register(
       BarController,

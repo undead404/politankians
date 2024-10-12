@@ -230,7 +230,7 @@
         <li>
           <a
             class={ACT_TYPE_CLASSES[result.act_type]}
-            href="${getHitPath(result)}"
+            href={getHitPath(result)}
             aria-label={result.title}
           >
             <h2>{result.title}</h2>
