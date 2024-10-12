@@ -12,6 +12,7 @@
     type UnstructuredRecord,
   } from '../../schemas/unstructured-record.ts';
   import settlementsRegistry from '../../services/settlements-registry.js';
+  import getTypesenseClient from '../../services/typesense.js';
   import formatDate from '../../utils/format-date.js';
   import getHitPath from '../../utils/get-hit-path.js';
 
@@ -44,17 +45,7 @@
   let ranges: Record<string, [number, number]> = {};
   let areRefinementsExpanded = false;
 
-  const client = new Typesense.Client({
-    nodes: [
-      {
-        host: new URL(host).hostname,
-        port: Number.parseInt(new URL(host).port) || 443,
-        protocol: new URL(host).protocol.slice(0, -1),
-      },
-    ],
-    apiKey: apiKey,
-    connectionTimeoutSeconds: 2,
-  });
+  const client = getTypesenseClient(apiKey, host);
 
   const search = debounce(async () => {
     loading = true;
