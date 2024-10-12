@@ -1,4 +1,5 @@
-// get-row-archive-item-id.test.ts
+import { describe, expect, it } from 'vitest';
+
 import getRowArchiveItemId, {
   type ArchiveTableRow,
 } from './get-row-archive-item-id.js';

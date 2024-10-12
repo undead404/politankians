@@ -23,8 +23,12 @@ const archiveItemTuples: [
   (typeof parishRegisterTables)[0] | (typeof confessionalLists)[0] | undefined,
 ][] = _.sortBy(
   archiveItems.map((archiveItem) => {
-    const table = COLLECTIONS[archiveItem.data.genre].find(
-      ({ id }) => id === archiveItem.id,
+    const tables = (COLLECTIONS as any)[archiveItem.data.genre];
+    if (!tables) {
+      throw new Error('No table for ' + archiveItem.id)
+    }
+    const table = tables.find(
+      ({ id }: {id: string}) => id === archiveItem.id,
     );
     if (!table) {
       throw new Error(`table for ${archiveItem.id} not found`);
@@ -35,7 +39,7 @@ const archiveItemTuples: [
   ['1.data.years'],
 );
 
-const ARCHIVE_ITEM_TYPES = {
+const ARCHIVE_ITEM_TYPES: Record<string, string> = {
   'Confessional list': 'Сповідний розпис',
   'Parish register': 'Метрична книга',
   Revision: 'Ревізія',
@@ -128,18 +132,18 @@ const ARCHIVE_ITEM_TYPES = {
               )}
             </th>
             <td>
-              {table!.data.settlements.split(', ').map((settlement) => (
+              {table!.data.settlements.split(', ').map((settlement: string) => (
                 <SettlementName settlement={settlement} />
               ))}
             </td>
             <td>{table!.data.years}</td>
-            <td class="genre">{ARCHIVE_ITEM_TYPES[archiveItem.data.genre]}</td>
+            <td class="genre">{ARCHIVE_ITEM_TYPES[archiveItem.data.genre as string]}</td>
             <td>
               <TitledLink href={archiveItem.data.gssUrl} />
             </td>
             <td>
               <div class="flex-wrapper">
-                {archiveItem.data.archivedAt.map((scanUrl) => (
+                {archiveItem.data.archivedAt.map((scanUrl: string) => (
                   <TitledLink href={scanUrl} />
                 ))}
               </div>

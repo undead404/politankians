@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { archiveItemSchema } from './archive-item.js';
 
 describe('archiveItemSchema', () => {

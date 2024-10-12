@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import type { Participant } from '../schemas/participant.js';
 import participantsHaveRole from './participants-have-role.js';
 
