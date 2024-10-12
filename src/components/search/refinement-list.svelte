@@ -2,12 +2,11 @@
   import { z } from 'astro/zod';
   import { onMount, createEventDispatcher } from 'svelte';
   import type { ChangeEventHandler } from 'svelte/elements';
-  import Typesense from 'typesense';
+  import type { Client } from 'typesense';
 
   export let attribute = '';
-  export let apiKey = '';
+  export let client: Client;
   export let collections: string[] = [];
-  export let host = '';
   //   export let sortBy = 'name';
   export let title = attribute;
   export let transformItems = (
@@ -31,18 +30,6 @@
   });
 
   const dispatch = createEventDispatcher();
-
-  const client = new Typesense.Client({
-    nodes: [
-      {
-        host: new URL(host).hostname,
-        port: Number.parseInt(new URL(host).port) || 443,
-        protocol: new URL(host).protocol.slice(0, -1),
-      },
-    ],
-    apiKey: apiKey,
-    connectionTimeoutSeconds: 2,
-  });
 
   async function fetchItems() {
     const searchResults = await Promise.all(

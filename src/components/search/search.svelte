@@ -2,7 +2,6 @@
   import { z } from 'astro/zod';
   import _ from 'lodash';
   import { onMount } from 'svelte';
-  import Typesense from 'typesense';
 
   import environment from '../../environment.js';
   import { actSchema, type Act } from '../../schemas/act.js';
@@ -182,9 +181,8 @@
   <div class="refinements-container" class:expanded={areRefinementsExpanded}>
     <RefinementList
       attribute="act_type"
-      {apiKey}
+      {client}
       collections={['acts_ru', 'unstructured_uk']}
-      {host}
       title="Тип події"
       on:facetChange={handleFacetChange}
     />
@@ -199,9 +197,8 @@
     />
     <RefinementList
       attribute="settlement"
-      {apiKey}
+      {client}
       collections={['acts_ru', 'unstructured_uk']}
-      {host}
       title="Поселення"
       transformItems={transformSettlementRefinementItems}
       on:facetChange={handleFacetChange}
