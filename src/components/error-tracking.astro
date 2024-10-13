@@ -1,0 +1,14 @@
+---
+import environment from '../environment';
+---
+
+<script src="//d2wy8f7a9ursnm.cloudfront.net/v7/bugsnag.min.js"></script>
+<script
+  is:inline
+  type="module"
+  define:vars={{ BUGSNAG_API_KEY: environment.BUGSNAG_API_KEY }}
+>
+  import BugsnagPerformance from '//d2wy8f7a9ursnm.cloudfront.net/v1/bugsnag-performance.min.js';
+  Bugsnag.start({ apiKey: BUGSNAG_API_KEY });
+  BugsnagPerformance.start({ apiKey: BUGSNAG_API_KEY });
+</script>

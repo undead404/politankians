@@ -1,5 +1,6 @@
 ---
 import Analytics from './analytics.html';
+import ErrorTracking from './error-tracking.astro';
 import Footer from './footer.astro';
 import Header from './header.astro';
 
@@ -94,6 +95,7 @@ const { title } = Astro.props;
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
     <meta name="theme-color" content="#ffffff" />
+    <ErrorTracking />
     <slot name="head" />
   </head>
   <body>

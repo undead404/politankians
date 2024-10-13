@@ -93,6 +93,7 @@ jobs:
       - name: Build project
         run: npx astro build
         env:
+          BUGSNAG_API_KEY: ${{ vars. BUGSNAG_API_KEY }}
           SITE: ${{ vars.SITE }}
           TYPESENSE_SEARCH_KEY: ${{ vars.TYPESENSE_SEARCH_KEY }}
           TYPESENSE_HOST: ${{ vars.TYPESENSE_HOST }}

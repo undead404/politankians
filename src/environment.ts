@@ -9,6 +9,7 @@ if (typeof process !== 'undefined') {
 }
 
 const environmentSchema = z.object({
+  BUGSNAG_API_KEY: nonEmptyString,
   TYPESENSE_HOST: nonEmptyString,
   TYPESENSE_SEARCH_KEY: nonEmptyString,
 });
