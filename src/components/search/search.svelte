@@ -2,6 +2,7 @@
   import { z } from 'astro/zod';
   import _ from 'lodash';
   import { onMount } from 'svelte';
+  import { transliterateUaToLatin } from 'ua2latin';
 
   import environment from '../../environment.js';
   import { actSchema, type Act } from '../../schemas/act.js';
@@ -236,7 +237,7 @@
         <li>
           <a
             class={ACT_TYPE_CLASSES[result.act_type]}
-            href={`/archive-item/${result.archive}-${result.fonds}-${result.series}-${result.item}`}
+            href={`/archive-item/${[result.archive, result.fonds, result.series, result.item].map(transliterateUaToLatin).join('-')}`}
           >
             <h2>
               {result.surname}
