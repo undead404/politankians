@@ -237,7 +237,7 @@
         <li>
           <a
             class={ACT_TYPE_CLASSES[result.act_type]}
-            href={`/archive-item/${[result.archive, result.fonds, result.series, result.item].map(transliterateUaToLatin).join('-')}`}
+            href={`/archive-item/${[result.archive, result.fonds, result.series, result.item].map(transliterateUaToLatin).join('-')}#row-${result.number}`}
           >
             <h2>
               {result.surname}

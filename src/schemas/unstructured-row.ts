@@ -55,6 +55,7 @@ export const unstructuredRowSchema = z
       middle_name,
       misc: otherFields,
       note,
+      number: 0,
       page,
       postal_code,
       role,

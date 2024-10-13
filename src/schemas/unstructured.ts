@@ -10,7 +10,10 @@ export const unstructuredSchema = z
   .array(unstructuredRowSchema)
   .transform((rows) => ({
     id: getRowArchiveItemId(rows[0]!),
-    rows,
+    rows: rows.map((row, index) => ({
+      ...row,
+      number: index + 1,
+    })),
     settlements: getSettlements(rows),
     years: getYears(rows),
   }));

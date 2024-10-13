@@ -1,5 +1,5 @@
 ---
-import type { UnstructuredRow } from '../schemas/unstructured-row';
+import type { UnstructuredRecord } from '../schemas/unstructured-record';
 import { getEntry } from '../services/astro-content';
 import getPersonFullName from '../utils/get-person-full-name';
 
@@ -81,13 +81,13 @@ const {
   </thead>
   <tbody>
     {
-      rows.map((row: UnstructuredRow, index: number) => {
+      rows.map((row: UnstructuredRecord, index: number) => {
         const isEven = index % 2 === 0;
         return (
           <>
             <tr
               class:list={[{ 'row-even': isEven, 'row-odd': !isEven }]}
-              id={`row-${index + 1}`}
+              id={`row-${row.number}`}
             >
               <td>{index + 1}</td>
               <td>{row.role}</td>

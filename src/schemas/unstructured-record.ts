@@ -10,6 +10,7 @@ export const unstructuredRecordSchema = z.object({
   given_name: z.string(),
   series: nonEmptyString,
   middle_name: z.string(),
+  number: z.number().min(1),
   postal_code: nonEmptyString,
   settlement: nonEmptyString,
   role: z.string(),
