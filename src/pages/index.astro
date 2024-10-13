@@ -10,6 +10,7 @@ import settlementsRegistry from '../services/settlements-registry';
   <Context identity="settlements" settlements={settlementsRegistry} />
   <Context
     identity="search"
+    BUGSNAG_API_KEY={environment.BUGSNAG_API_KEY}
     TYPESENSE_HOST={environment.TYPESENSE_HOST}
     TYPESENSE_SEARCH_KEY={environment.TYPESENSE_SEARCH_KEY}
   /><Search client:load /></Layout
