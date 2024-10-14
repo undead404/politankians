@@ -2,16 +2,13 @@
   import { z } from 'astro/zod';
   import _ from 'lodash';
   import { onMount } from 'svelte';
-
   import environment from '../../environment.js';
-  import { type Act } from '../../schemas/act.js';
-  import { type UnstructuredRecord } from '../../schemas/unstructured-record.ts';
   import { nonEmptyString } from '../../schemas/non-empty-string.ts';
+  import search, { type SearchResult } from '../../services/search.ts';
   import getTypesenseClient from '../../services/typesense.js';
 
   import Controls from './controls.svelte';
   import Results from './results.svelte';
-  import search from '../../services/search.ts';
 
   const facetEventDetailSchema = z.object({
     attribute: nonEmptyString,
@@ -25,10 +22,8 @@
   const { debounce } = _;
 
   let query = '';
-  let resultsActs: Act[] = [];
-  let resultsUnstructured: UnstructuredRecord[] = [];
-  let nbHitsActs = 0;
-  let nbHitsUnstructured = 0;
+  let searchHits: SearchResult[] = [];
+  let searchHitsNumber: number = 0;
   let loading = false;
   let error: string | null = null;
   const apiKey = environment.TYPESENSE_SEARCH_KEY;
@@ -55,13 +50,12 @@
     loading = true;
     error = null;
     try {
-      const searchResults = await search({ client, facets, query, ranges });
-
-      resultsActs = searchResults.acts_ru.hits;
-      nbHitsActs = searchResults.acts_ru.number;
-
-      resultsUnstructured = searchResults.unstructured_uk.hits;
-      nbHitsUnstructured = searchResults.unstructured_uk.number;
+      [searchHits, searchHitsNumber] = await search({
+        client,
+        facets,
+        query,
+        ranges,
+      });
 
       updateURL();
     } catch (err) {
@@ -134,13 +128,7 @@
   <p class="error-message" aria-live="assertive">{error}</p>
 {/if}
 
-<Results
-  {loading}
-  {resultsActs}
-  {resultsUnstructured}
-  {nbHitsActs}
-  {nbHitsUnstructured}
-/>
+<Results {loading} results={searchHits} resultsNumber={searchHitsNumber} />
 
 <style>
   .error-message {

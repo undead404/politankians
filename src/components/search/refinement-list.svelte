@@ -92,7 +92,7 @@
     <p class="error-message" aria-live="assertive">{error}</p>
   {/if}
   <ul>
-    {#each items as item}
+    {#each items as item (item.value)}
       <li>
         <input
           type="checkbox"

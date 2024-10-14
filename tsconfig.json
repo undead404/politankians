@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
+    "exactOptionalPropertyTypes": false,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "verbatimModuleSyntax": false

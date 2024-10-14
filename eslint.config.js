@@ -35,6 +35,8 @@ export default [
       },
     },
     rules: {
+      'svelte/no-at-html-tags': 'warn',
+
       // Add your Svelte-specific rules here
     },
   },

@@ -1,14 +1,12 @@
-import { z } from 'astro/zod';
+import _ from 'lodash';
 import type { Client } from 'typesense';
+import type { SearchResponseHit } from 'typesense/lib/Typesense/Documents.js';
 
 import { type Act, actSchema } from '../schemas/act.ts';
 import {
   type UnstructuredRecord,
   unstructuredRecordSchema,
 } from '../schemas/unstructured-record.ts';
-
-const actsSchema = z.array(actSchema);
-const unstructuredsSchema = z.array(unstructuredRecordSchema);
 
 export interface SearchParameters {
   client: Client;
@@ -17,16 +15,10 @@ export interface SearchParameters {
   ranges: Record<string, [number, number]>;
 }
 
-export interface SearchResults {
-  acts_ru: {
-    hits: Act[];
-    number: number;
-  };
-  unstructured_uk: {
-    hits: UnstructuredRecord[];
-    number: number;
-  };
-}
+export type SearchResult =
+  | (SearchResponseHit<Act> & { kind: 'act' })
+  | (SearchResponseHit<UnstructuredRecord> & { kind: 'unstructured' });
+export type SearchResults = [SearchResult[], number];
 
 export default async function search({
   client,
@@ -92,18 +84,27 @@ export default async function search({
       }),
   ]);
 
-  return {
-    acts_ru: {
-      hits: actsSchema.parse(
-        (searchResultsActs.hits || []).map((hit) => hit.document),
-      ),
-      number: searchResultsActs.found,
-    },
-    unstructured_uk: {
-      hits: unstructuredsSchema.parse(
-        (searchResultsUnstructured.hits || []).map((hit) => hit.document),
-      ),
-      number: searchResultsUnstructured.found,
-    },
-  };
+  return [
+    _.orderBy(
+      [
+        ...(searchResultsActs.hits || []).map(
+          (hit: SearchResponseHit<object>) => ({
+            ...hit,
+            document: actSchema.parse(hit.document),
+            kind: 'act',
+          }),
+        ),
+        ...(searchResultsUnstructured.hits || []).map(
+          (hit: SearchResponseHit<object>) => ({
+            ...hit,
+            document: unstructuredRecordSchema.parse(hit.document),
+            kind: 'unstructured',
+          }),
+        ),
+      ],
+      ['text_match_info.best_field_score'],
+      ['desc'],
+    ),
+    searchResultsActs.found + searchResultsUnstructured.found,
+  ] as SearchResults;
 }
