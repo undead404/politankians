@@ -83,7 +83,12 @@
   <ul>
     {#each items as item}
       <li>
-        <input type="checkbox" id={item.value} on:change={handleFacetChange} />
+        <input
+          type="checkbox"
+          id={item.value}
+          on:change={handleFacetChange}
+          aria-label={item.value}
+        />
         <label for={item.value}
           >{item.highlighted || item.value} ({item.count})</label
         >
@@ -93,12 +98,20 @@
 </div>
 
 <style>
+  :root {
+    --refinement-list-margin-bottom: 1rem;
+    --refinement-list-title-margin-bottom: 0.5rem;
+    --refinement-list-item-gap: 0.5rem;
+  }
+
   .refinement-list {
-    margin-bottom: 1rem;
+    margin-bottom: var(--refinement-list-margin-bottom);
   }
+
   .refinement-list h3 {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--refinement-list-title-margin-bottom);
   }
+
   .refinement-list ul {
     display: flex;
     flex-wrap: wrap;
@@ -106,13 +119,15 @@
     list-style: none;
     padding: 0;
   }
+
   .refinement-list li {
     display: flex;
     flex-basis: 0;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    gap: var(--refinement-list-item-gap);
+    margin-bottom: var(--refinement-list-item-gap);
   }
+
   .refinement-list input {
-    margin-right: 0.5rem;
+    margin-right: var(--refinement-list-item-gap);
   }
 </style>

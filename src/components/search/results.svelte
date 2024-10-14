@@ -30,7 +30,7 @@
 
 <div class="results-container">
   {#if loading}
-    <p class="loading-indicator">Завантаження...</p>
+    <p class="loading-indicator" aria-live="assertive">Завантаження...</p>
   {/if}
   <div class="results-column">
     <h2>Акти</h2>
@@ -80,6 +80,18 @@
 </div>
 
 <style>
+  :root {
+    --loading-indicator-color: #007bff;
+    --result-item-margin-bottom: 1rem;
+    --result-item-padding: 1rem;
+    --result-item-border-radius: 4px;
+    --result-item-box-shadow: rgba(0, 0, 0, 0.1);
+    --result-item-hover-box-shadow: rgba(0, 0, 0, 0.15);
+    --result-item-hover-filter: brightness(1.1);
+    --result-item-title-color: #343a40;
+    --result-item-text-color: #555;
+  }
+
   .results-container {
     position: relative;
   }
@@ -90,7 +102,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.5rem;
-    color: #007bff;
+    color: var(--loading-indicator-color);
   }
 
   .results {
@@ -103,35 +115,35 @@
   }
 
   .results li {
-    margin-bottom: 1rem;
+    margin-bottom: var(--result-item-margin-bottom);
   }
 
   .results li a {
     display: block;
-    padding: 1rem;
-    border-radius: 4px;
+    padding: var(--result-item-padding);
+    border-radius: var(--result-item-border-radius);
     color: inherit;
     text-decoration: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--result-item-box-shadow);
     transition:
       background-color 0.3s,
       box-shadow 0.3s;
   }
 
   .results li a:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    filter: brightness(1.1);
+    box-shadow: 0 4px 8px var(--result-item-hover-box-shadow);
+    filter: var(--result-item-hover-filter);
   }
 
   .results li a h2 {
     margin: 0 0 0.5rem 0;
     font-size: 1.25rem;
-    color: #343a40;
+    color: var(--result-item-title-color);
   }
 
   .results li a p {
     margin: 0;
-    color: #555;
+    color: var(--result-item-text-color);
   }
 
   .memorial-service {
