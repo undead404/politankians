@@ -39,6 +39,18 @@
 
   const client = getTypesenseClient(apiKey, host);
 
+  const updateURL = () => {
+    const params = new URLSearchParams();
+    if (query) params.set('query', query);
+    Object.entries(facets).forEach(([key, values]) => {
+      if (values.length) params.set(`facet_${key}`, values.join(','));
+    });
+    Object.entries(ranges).forEach(([key, [min, max]]) => {
+      params.set(`range_${key}`, `${min},${max}`);
+    });
+    history.replaceState(null, '', `?${params.toString()}`);
+  };
+
   const handleSearch = debounce(async () => {
     loading = true;
     error = null;
@@ -50,6 +62,8 @@
 
       resultsUnstructured = searchResults.unstructured_uk.hits;
       nbHitsUnstructured = searchResults.unstructured_uk.number;
+
+      updateURL();
     } catch (err) {
       error = 'Під час пошуку сталася помилка. Будь ласка, спробуйте ще.';
       console.error(err);
@@ -80,6 +94,28 @@
   }
 
   onMount(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    query = urlParams.get('query') || '';
+
+    urlParams.forEach((value, key) => {
+      if (key.startsWith('facet_')) {
+        const attribute = key.replace('facet_', '');
+        facets[attribute] = value.split(',');
+      } else if (key.startsWith('range_')) {
+        const attribute = key.replace('range_', '');
+        const [min, max] = value.split(',').map(Number);
+        if (typeof min !== 'number') {
+          console.error('min is not a number: ' + min);
+          return;
+        }
+        if (typeof max !== 'number') {
+          console.error('max is not a number: ' + max);
+          return;
+        }
+        ranges[attribute] = [min, max];
+      }
+    });
+
     handleSearch();
   });
 </script>
