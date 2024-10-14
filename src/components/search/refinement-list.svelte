@@ -4,24 +4,16 @@
   import type { ChangeEventHandler } from 'svelte/elements';
   import type { Client } from 'typesense';
 
-  export let attribute = '';
+  export let attribute: string = '';
   export let client: Client;
   export let collections: string[] = [];
-  //   export let sortBy = 'name';
-  export let title = attribute;
-  export let transformItems = (
-    items: {
-      count: number;
-      highlighted: string;
-      value: string;
-    }[],
-  ) => items;
+  export let title: string = attribute;
+  export let transformItems: (
+    items: { count: number; highlighted: string; value: string }[],
+  ) => { count: number; highlighted: string; value: string }[] = (items) =>
+    items;
 
-  let items: {
-    count: number;
-    highlighted: string;
-    value: string;
-  }[] = [];
+  let items: { count: number; highlighted: string; value: string }[] = [];
   let selectedFacets = new Set<string>();
 
   const targetElementSchema = z.object({
@@ -29,7 +21,9 @@
     id: z.string(),
   });
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{
+    facetChange: { attribute: string; values: string[] };
+  }>();
 
   async function fetchItems() {
     const searchResults = await Promise.all(
@@ -41,6 +35,7 @@
         }),
       ),
     );
+
     items = transformItems(
       searchResults
         .flatMap(({ facet_counts }) => facet_counts)
@@ -59,29 +54,24 @@
             }
             return accumulator;
           },
-          [] as {
-            count: number;
-            highlighted: string;
-            value: string;
-          }[],
+          [] as { count: number; highlighted: string; value: string }[],
         ),
     );
   }
 
-  const handleFacetChange: ChangeEventHandler<HTMLInputElement> =
-    function handleFacetChange(event) {
-      const eventTarget = targetElementSchema.parse(event.target);
-      const value = eventTarget.id;
-      if (eventTarget.checked) {
-        selectedFacets.add(value);
-      } else {
-        selectedFacets.delete(value);
-      }
-      dispatch('facetChange', {
-        attribute,
-        values: Array.from(selectedFacets),
-      });
-    };
+  const handleFacetChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const eventTarget = targetElementSchema.parse(event.target);
+    const value = eventTarget.id;
+    if (eventTarget.checked) {
+      selectedFacets.add(value);
+    } else {
+      selectedFacets.delete(value);
+    }
+    dispatch('facetChange', {
+      attribute,
+      values: Array.from(selectedFacets),
+    });
+  };
 
   onMount(() => {
     fetchItems();

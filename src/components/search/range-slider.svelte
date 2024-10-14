@@ -3,15 +3,17 @@
   import 'nouislider/dist/nouislider.css';
   import { onMount, createEventDispatcher } from 'svelte';
 
-  export let attribute = '';
-  export let min = 0;
-  export let max = 100;
-  export let pips = true;
-  export let title = attribute;
-  export let tooltips = true;
+  export let attribute: string = '';
+  export let min: number = 0;
+  export let max: number = 100;
+  export let pips: boolean = true;
+  export let title: string = attribute;
+  export let tooltips: boolean = true;
 
   let slider: HTMLDivElement;
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{
+    rangeChange: { attribute: string; values: number[] };
+  }>();
 
   onMount(() => {
     const sliderOptions: Options = {
@@ -23,6 +25,7 @@
       },
       tooltips: tooltips,
     };
+
     if (pips) {
       sliderOptions.pips = {
         mode: PipsMode.Positions,
@@ -30,6 +33,7 @@
         density: 4,
       };
     }
+
     const sliderInstance = noUiSlider.create(slider, sliderOptions);
 
     sliderInstance.on('change', (values) => {

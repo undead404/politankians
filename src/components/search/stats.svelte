@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let nbHits = 0;
+  export let nbHits: number = 0;
 </script>
 
 <p class="stats">
