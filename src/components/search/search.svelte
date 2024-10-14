@@ -30,6 +30,7 @@
   let nbHitsActs = 0;
   let nbHitsUnstructured = 0;
   let loading = false;
+  let error: string | null = null;
   const apiKey = environment.TYPESENSE_SEARCH_KEY;
   const host = environment.TYPESENSE_HOST;
   let facets: Record<string, string[]> = {};
@@ -40,15 +41,21 @@
 
   const handleSearch = debounce(async () => {
     loading = true;
-    const searchResults = await search({ client, facets, query, ranges });
+    error = null;
+    try {
+      const searchResults = await search({ client, facets, query, ranges });
 
-    resultsActs = searchResults.acts_ru.hits;
-    nbHitsActs = searchResults.acts_ru.number;
+      resultsActs = searchResults.acts_ru.hits;
+      nbHitsActs = searchResults.acts_ru.number;
 
-    resultsUnstructured = searchResults.unstructured_uk.hits;
-    nbHitsUnstructured = searchResults.unstructured_uk.number;
-
-    loading = false;
+      resultsUnstructured = searchResults.unstructured_uk.hits;
+      nbHitsUnstructured = searchResults.unstructured_uk.number;
+    } catch (err) {
+      error = 'Під час пошуку сталася помилка. Будь ласка, спробуйте ще.';
+      console.error(err);
+    } finally {
+      loading = false;
+    }
   }, 300);
 
   function handleFacetChange(event: CustomEvent) {
@@ -87,6 +94,10 @@
   on:input={(event) => handleInput(event.detail)}
 />
 
+{#if error}
+  <p class="error-message" aria-live="assertive">{error}</p>
+{/if}
+
 <Results
   {loading}
   {resultsActs}
@@ -96,5 +107,9 @@
 />
 
 <style>
-  /* Add your styles here */
+  .error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 1rem;
+  }
 </style>

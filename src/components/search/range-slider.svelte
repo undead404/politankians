@@ -24,14 +24,14 @@
         max: max,
       },
       tooltips: tooltips,
-      pips: pips
-        ? {
-            mode: PipsMode.Positions,
-            values: [0, 25, 50, 75, 100],
-            density: 4,
-          }
-        : undefined,
     };
+    if (pips) {
+      sliderOptions.pips = {
+        mode: PipsMode.Positions,
+        values: [0, 25, 50, 75, 100],
+        density: 4,
+      };
+    }
 
     const sliderInstance = noUiSlider.create(slider, sliderOptions);
 

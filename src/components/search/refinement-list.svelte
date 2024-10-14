@@ -13,8 +13,9 @@
   ) => { count: number; highlighted: string; value: string }[] = (items) =>
     items;
 
-  let items: { count: number; highlighted: string; value: string }[] = [];
+  let items: Array<{ count: number; highlighted: string; value: string }> = [];
   let selectedFacets = new Set<string>();
+  let error: string | null = null;
 
   const targetElementSchema = z.object({
     checked: z.boolean(),
@@ -26,37 +27,44 @@
   }>();
 
   async function fetchItems() {
-    const searchResults = await Promise.all(
-      collections.map((collection) =>
-        client.collections(collection).documents().search({
-          q: '*',
-          query_by: attribute,
-          facet_by: attribute,
-        }),
-      ),
-    );
-
-    items = transformItems(
-      searchResults
-        .flatMap(({ facet_counts }) => facet_counts)
-        .flatMap((item) =>
-          item ? item.counts : { count: 0, highlighted: '', value: '' },
-        )
-        .reduce(
-          (accumulator, item) => {
-            const previousSame = accumulator.find(
-              ({ value }) => value === item.value,
-            );
-            if (previousSame) {
-              previousSame.count += item.count;
-            } else {
-              accumulator.push(item);
-            }
-            return accumulator;
-          },
-          [] as { count: number; highlighted: string; value: string }[],
+    error = null;
+    try {
+      const searchResults = await Promise.all(
+        collections.map((collection) =>
+          client.collections(collection).documents().search({
+            q: '*',
+            query_by: attribute,
+            facet_by: attribute,
+          }),
         ),
-    );
+      );
+
+      items = transformItems(
+        searchResults
+          .flatMap(({ facet_counts }) => facet_counts)
+          .flatMap((item) =>
+            item ? item.counts : { count: 0, highlighted: '', value: '' },
+          )
+          .reduce(
+            (accumulator, item) => {
+              const previousSame = accumulator.find(
+                ({ value }) => value === item.value,
+              );
+              if (previousSame) {
+                previousSame.count += item.count;
+              } else {
+                accumulator.push(item);
+              }
+              return accumulator;
+            },
+            [] as Array<{ count: number; highlighted: string; value: string }>,
+          ),
+      );
+    } catch (err) {
+      error =
+        'Під час отримання фільтрів сталася помилка. Будь ласка, спробуйте ще.';
+      console.error(err);
+    }
   }
 
   const handleFacetChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -80,6 +88,9 @@
 
 <div class="refinement-list">
   <h3>{title}</h3>
+  {#if error}
+    <p class="error-message" aria-live="assertive">{error}</p>
+  {/if}
   <ul>
     {#each items as item}
       <li>
@@ -102,6 +113,7 @@
     --refinement-list-margin-bottom: 1rem;
     --refinement-list-title-margin-bottom: 0.5rem;
     --refinement-list-item-gap: 0.5rem;
+    --error-message-color: red;
   }
 
   .refinement-list {
@@ -129,5 +141,11 @@
 
   .refinement-list input {
     margin-right: var(--refinement-list-item-gap);
+  }
+
+  .error-message {
+    color: var(--error-message-color);
+    font-weight: bold;
+    margin-top: 1rem;
   }
 </style>
