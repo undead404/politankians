@@ -17,6 +17,8 @@
   const matchedTokensSchema = z.array(nonEmptyString).min(1);
 
   const TRANSLATION: Record<string, string> = {
+    given_name: "власне ім'я",
+    middle_name: 'по батькові',
     note: 'примітка',
     primaryParticipants: 'Головні учасники',
     secondaryParticipants: 'Другорядні учасники',

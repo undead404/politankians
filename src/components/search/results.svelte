@@ -19,7 +19,7 @@
     <p class="loading-indicator" aria-live="assertive">Завантаження...</p>
   {/if}
   <div class="results-column">
-    <h2>Акти</h2>
+    <h2>Знайдене</h2>
     <Stats nbHits={resultsNumber} />
     <ul class="results" aria-live="polite">
       {#each results as result (getResultId(result))}
